@@ -42,53 +42,56 @@ body::before{
     pointer-events:none;
 }
 
-/* Home Button */
 .home-btn{
     position:absolute;
     top:25px;
     left:50%;
     transform:translateX(-50%);
-    
+
     padding:14px 30px;
-    
-    text-decoration:none;
+
     color:#fff;
-    font-size:16px;
     font-weight:700;
-    letter-spacing:0.5px;
+    font-size:16px;
+    text-decoration:none;
 
     border-radius:50px;
 
-    background:rgba(255,255,255,0.12);
-    backdrop-filter:blur(15px);
-
-    border:1px solid rgba(255,255,255,0.25);
-
-    box-shadow:
-        0 0 15px rgba(0,255,255,.35),
-        0 0 30px rgba(0,255,255,.15);
-
-    transition:all .35s ease;
-}
-
-/* Hover Effect */
-.home-btn:hover{
-    transform:translateX(-50%) translateY(-3px);
-    
     background:rgb(1, 179, 214);
 
-    box-shadow:
-        0 0 20px rgba(0,255,255,.8),
-        0 0 40px rgba(0,255,255,.4);
+    border:2px solid transparent;
 
-    letter-spacing:1px;
+    background-image:
+        linear-gradient(rgb(1,179,214), rgb(1,179,214)),
+        linear-gradient(90deg, #00b4d8, #ffd700, #00b4d8);
+
+    background-origin:border-box;
+    background-clip:padding-box, border-box;
+
+    background-size:100% 100%, 300% 100%;
+
+    animation:borderMove 3s linear infinite;
+
+    box-shadow:
+        0 0 15px rgba(1,179,214,.45);
+
+    transition:.3s;
 }
 
-/* Mobile */
-@media(max-width:600px){
-    .home-btn{
-        padding:12px 24px;
-        font-size:14px;
+.home-btn:hover{
+    transform:translateX(-50%) translateY(-2px);
+
+    box-shadow:
+        0 0 20px rgba(1,179,214,.7),
+        0 0 35px rgba(255,215,0,.4);
+}
+
+@keyframes borderMove{
+    0%{
+        background-position:0 0, 0% 50%;
+    }
+    100%{
+        background-position:0 0, 300% 50%;
     }
 }
 </style>
