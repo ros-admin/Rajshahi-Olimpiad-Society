@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>বিজ্ঞপ্তি - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  
+  <style>
+    :root {
+      --primary-color: #0d1b2a;
+      --secondary-color: #00b4d8;
+      --accent-color: #ffd700;
+      --bg-dark: #01060d;
+    }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      font-family: 'Hind Siliguri', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* সাইবার-গ্লোয়িং মাস্টার কন্টেইনার (বোর্ডের বর্ডার অ্যানিমেশন) */
+    .cyber-panel {
+      background: rgba(6, 11, 25, 0.85);
+      backdrop-filter: blur(25px);
+      position: relative;
+      border: 1px solid rgba(0, 180, 216, 0.1);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.8);
+    }
+
+    .cyber-panel::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      border-radius: 1rem;
+      padding: 2px;
+      background: linear-gradient(135deg, var(--secondary-color), transparent, var(--accent-color), transparent, var(--secondary-color));
+      background-size: 400% 400%;
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+      animation: gradientMovement 8s ease infinite;
+    }
+
+    @keyframes gradientMovement {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* স্ক্রোলবার কাস্টমাইজেশন (টেবিল মোবাইলে স্ক্রোল করার জন্য) */
+    .custom-scrollbar::-webkit-scrollbar {
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: rgba(0, 180, 216, 0.3);
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <ros-header></ros-header>
+
+  <main class="flex-grow container mx-auto px-4 py-16 max-w-4xl flex flex-col justify-center">
+    
+    <div class="text-center mb-12" data-aos="fade-up">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 text-[#00b4d8] relative inline-block pb-3">
+        বিজ্ঞপ্তি
+        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#ffd700] rounded"></span>
+      </h1>
+      <p class="text-gray-400 mt-2 text-sm md:text-base tracking-wide">সংগঠনের সকল অফিশিয়াল নোটিশ ও আপডেটসমূহ এখানে দেখতে পাবেন</p>
+    </div>
+
+    <div class="cyber-panel rounded-2xl p-4 md:p-8" data-aos="fade-up" data-aos-duration="1000">
+      
+      <div class="overflow-x-auto custom-scrollbar w-full">
+        <table class="w-full text-left border-collapse min-w-[600px]">
+          
+          <thead>
+            <tr class="border-b border-gray-800 text-sm md:text-base text-[#00b4d8] font-bold">
+              <th class="pb-4 pt-2 px-4 w-1/4"><i class="fa-regular fa-calendar-days mr-2"></i>তারিখ</th>
+              <th class="pb-4 pt-2 px-4 w-1/2"><i class="fa-regular fa-file-lines mr-2"></i>বিষয়</th>
+              <th class="pb-4 pt-2 px-4 w-1/4 text-center"><i class="fa-solid fa-circle-info mr-2"></i>বিস্তারিত</th>
+            </tr>
+          </thead>
+          
+          <tbody id="noticeTableBody" class="text-gray-300 text-xs md:text-sm divide-y divide-gray-900/60">
+            <tr>
+              <td colspan="3" class="py-12 text-center text-gray-500 font-light">
+                <i class="fa-solid fa-spinner animate-spin text-[#00b4d8] text-xl mb-2 block"></i>
+                বিজ্ঞপ্তি তালিকা লোড হচ্ছে...
+              </td>
+            </tr>
+          </tbody>
+
+        </table>
+      </div>
+
+    </div>
+
+  </main>
+
+  <ros-footer></ros-footer>
+
+  <script src="../navigation.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    AOS.init({ once: true });
+
+    // notice.json থেকে ডেটা ফেচ করার জাভাস্ক্রিপ্ট লজিক
+    document.addEventListener("DOMContentLoaded", () => {
+      const tableBody = document.getElementById("noticeTableBody");
+
+      fetch("../Notice/notice.json")
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("নেটওয়ার্ক রেসপন্স সঠিক ছিল না");
+          }
+          return response.json();
+        })
+        .then(data => {
+          // যদি ফাইলে কোনো ডেটা না থাকে
+          if (data.length === 0) {
+            tableBody.innerHTML = `
+              <tr>
+                <td colspan="3" class="py-12 text-center text-gray-500 font-light">
+                  <i class="fa-regular fa-folder-open text-2xl mb-2 block"></i>
+                  বর্তমানে কোনো বিজ্ঞপ্তি পাওয়া যায়নি।
+                </td>
+              </tr>`;
+            return;
+          }
+
+          // টেবিল বডি ক্লিয়ার করে নতুন ডেটা পুশ করা
+          tableBody.innerHTML = "";
+          
+          data.forEach(notice => {
+            const row = document.createElement("tr");
+            row.className = "hover:bg-slate-900/40 transition-colors duration-200 group";
+            
+            row.innerHTML = `
+              <td class="py-4 px-4 text-gray-400 group-hover:text-white transition-colors whitespace-nowrap">
+                ${notice.date || 'N/A'}
+              </td>
+              <td class="py-4 px-4 font-normal text-gray-200 group-hover:text-[#00b4d8] transition-colors leading-relaxed">
+                ${notice.title || 'শিরোনামহীন বিজ্ঞপ্তি'}
+              </td>
+              <td class="py-4 px-4 text-center">
+                <a href="${notice.pdf_url || '#'}" target="_blank" class="inline-flex items-center gap-1 bg-[#00b4d8]/10 hover:bg-[#00b4d8] text-[#00b4d8] hover:text-white text-[11px] md:text-xs font-semibold py-1.5 px-3 rounded border border-[#00b4d8]/20 hover:border-transparent transition-all duration-300 shadow-sm whitespace-nowrap">
+                  দেখুন <i class="fa-solid fa-file-pdf text-[10px]"></i>
+                </a>
+              </td>
+            `;
+            tableBody.appendChild(row);
+          });
+        })
+        .catch(error => {
+          console.error("Error fetching notices:", error);
+          tableBody.innerHTML = `
+            <tr>
+              <td colspan="3" class="py-12 text-center text-rose-500/80 font-light">
+                <i class="fa-solid fa-triangle-exclamation text-xl mb-2 block"></i>
+                বিজ্ঞপ্তি লোড করতে সমস্যা হয়েছে। দয়া করে JSON ফাইলের পাথ এবং গঠন চেক করুন।
+              </td>
+            </tr>`;
+        });
+    });
+  </script>
+</body>
+</html>
+
