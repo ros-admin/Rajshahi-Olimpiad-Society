@@ -285,24 +285,26 @@
   background-size: 300% 300%;
   animation: gradientBg 15s ease infinite;
   text-align: center;
-  border-bottom: none; /* শেষের পেজ তাই ফুটারের সাথে মিলবে */
+  border-bottom: none;
 }
 
-/* ১. লোগো হোভার করলে যেন ওপরে কেটে না যায়, তাই padding-top এবং bottom বাড়িয়ে ৩০px করা হয়েছে */
+/* ভিউপোর্টকে ফ্লেক্সিবল রাখা হলো এবং হোভারের জন্য প্যাডিং বাড়ানো হলো */
 .slider-viewport { 
-  max-width: 340px; /* মোবাইলে ৩টি লোগো গ্যাপসহ নিখুঁত দেখানোর জন্য */
+  max-width: 320px; /* ৩টি লোগোর জন্য একদম পারফেক্ট বেস উইডথ */
   margin: 0 auto; 
   overflow: hidden; 
   position: relative; 
-  padding: 30px 0; /* হোভার অ্যানিমেশনের জন্য পর্যাপ্ত জায়গা রাখা হয়েছে */
+  padding: 30px 5px; /* দুই পাশে ৫px সেফটি প্যাডিং দেওয়া হলো যাতে হোভার বর্ডার না কাটে */
 }
 
-/* ডেস্কটপ বা বড় স্ক্রিনের জন্য ভিউপোর্ট চওড়া করা হলো */
+@media (min-width: 480px) {
+  .slider-viewport { max-width: 360px; }
+}
 @media (min-width: 768px) {
   .slider-viewport { max-width: 420px; } 
 }
 
-/* ২. গ্যাপ ১৫px ফিক্সড করা হয়েছে যাতে ডাইনামিক ক্যালকুলেশনের সাথে মিলে এবং লোগো ডানপাশে কেটে না যায় */
+/* গ্যাপের কারণে যেন ডানের লোগো পুশ না হয়, তাই গ্যাপ ট্র্যাকিং ফিক্সড */
 .partner-track { 
   display: flex; 
   gap: 15px; 
@@ -311,27 +313,27 @@
 }
 
 .partner-logo {
-  /* ৩. ৩টি লোগো এবং ২টি গ্যাপের (১৫px * ২ = ৩০px) হিসাব নিখুঁত করা হয়েছে */
+  /* ৩টি লোগো এবং ২টি গ্যাপের পারফেক্ট গাণিতিক অনুপাত */
   width: calc((100% - 30px) / 3); 
-  aspect-ratio: 1 / 1; /* লোগো যেন সবসময় একদম গোল থাকে */
+  aspect-ratio: 1 / 1; 
   border-radius: 50%; 
   background: white;
-  padding: 8px; /* লোগোর ভেতরের ছবি যেন বর্ডারের সাথে লেগে কেটে না যায় */
+  padding: 8px; 
   object-fit: contain; 
   cursor: pointer; 
   transition: all 0.3s ease; 
   flex-shrink: 0;
   box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
   border: 2px solid rgba(0, 180, 216, 0.2);
-  box-sizing: border-box; /* প্যাডিং ও বর্ডার যেন উইডথের বাইরে না যায় */
+  box-sizing: border-box;
 }
 
-/* ৪. হোভার করার সময় scale(1.1) এর বদলে scale(1.05) করা হয়েছে যাতে ভিউপোর্টের বাইরে গিয়ে লোগো কেটে না যায় */
 .partner-logo:hover { 
   transform: translateY(-8px) scale(1.05); 
   box-shadow: 0 12px 25px var(--secondary); 
   border-color: var(--secondary); 
 }
+    
     
 
     /* --- নতুন আকর্ষণীয় অ্যানিমেশন কি-ফ্রেমস --- */
@@ -532,8 +534,7 @@
       } catch (e) { console.log("Notice table loaded."); }
     }
 
-    // --- ৪. রেসপন্সিভ অটো পার্টনার স্লাইডার (২ সেকেন্ড পরপর চেঞ্জ) ---
-    // --- ৪. ৩টি করে লোগো অটো স্লাইড করার নিখুঁত লজিক ---
+// --- ৪. ৩টি করে লোগো অটো স্লাইড করার নিখুঁত লজিক (অফসেট ফিক্সড) ---
 const track = document.getElementById('partnerTrack');
 let currentSlide = 0;
 
@@ -541,18 +542,21 @@ setInterval(() => {
   const logos = track.children;
   const totalLogos = logos.length;
   
-  currentSlide += 3; // প্রতিবারে ৩টি করে লোগো সরবে
+  // প্রতিবারে ৩টি করে লোগো জাম্প করবে
+  currentSlide += 3;
   
+  // যদি লুপ শেষ হয়ে যায় তবে আবার শুরুতে ফিরে আসবে
   if (currentSlide >= totalLogos) {
-    currentSlide = 0; // লুপ রিসেট
+    currentSlide = 0;
   }
   
-  if(logos.length > 0) {
-    // এখানে ১৫ হলো CSS-এর gap: 15px; এর সমান
-    const logoWidth = logos[0].clientWidth + 15; 
-    track.style.transform = `translateX(-${currentSlide * logoWidth}px)`;
+  if (logos.length > 0 && logos[currentSlide]) {
+    // পরবর্তী স্লাইডের প্রথম লোগোটি ট্র্যাকের শুরু থেকে ঠিক কত পিক্সেল দূরে আছে, ব্রাউজার থেকে সরাসরি সেই মান নেওয়া হচ্ছে
+    const nextTargetX = logos[currentSlide].offsetLeft;
+    track.style.transform = `translateX(-${nextTargetX}px)`;
   }
 }, 2000);
+    
     
 
     window.onload = () => {
