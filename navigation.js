@@ -407,15 +407,15 @@ class RosHeader extends HTMLElement {
 
           <nav>
             <ul class="nav-menu" id="navMenu">
-              <li class="nav-item"><a href="about.html" class="nav-link">আমাদের সম্পর্কে</a></li>
-              <li class="nav-item"><a href="notice.html" class="nav-link">বিজ্ঞপ্তি</a></li>
-              <li class="nav-item"><a href="activities.html" class="nav-link">আমাদের কার্যক্রম</a></li>
+              <li class="nav-item"><a href="../About-Us/" class="nav-link">আমাদের সম্পর্কে</a></li>
+              <li class="nav-item"><a href="../Notice/" class="nav-link">বিজ্ঞপ্তি</a></li>
+              <li class="nav-item"><a href="../Activities" class="nav-link">আমাদের কার্যক্রম</a></li>
               
               <li class="nav-item">
                 <span class="nav-link">কমিটি <i class="fa-solid fa-chevron-down" style="font-size:0.7rem"></i></span>
                 <ul class="dropdown-menu">
-                  <li class="dropdown-item"><a href="convening-committee.html">আহবায়ক কমিটি</a></li>
-                  <li class="dropdown-item"><a href="executive-committee-2026.html">কার্যনির্বাহী কমিটি-২০২৬</a></li>
+                  <li class="dropdown-item"><a href="../Committee/">আহবায়ক কমিটি</a></li>
+                  <li class="dropdown-item"><a href="../Committee/Executive-Committee-2026">কার্যনির্বাহী কমিটি-২০২৬</a></li>
                 </ul>
               </li>
               
