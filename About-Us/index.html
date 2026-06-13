@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আমাদের সম্পর্কে - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  
+  <style>
+    :root {
+      --primary-color: #0d1b2a;
+      --secondary-color: #00b4d8;
+      --accent-color: #ffd700;
+      --bg-dark: #020913;
+      --card-bg: #0a1420;
+    }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      font-family: 'Hind Siliguri', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* প্রিমিয়াম গ্রেডিয়েন্ট বর্ডার কার্ড */
+    .premium-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .premium-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+    }
+
+    .premium-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 180, 216, 0.15);
+      border-color: rgba(0, 180, 216, 0.3);
+    }
+    
+    /* আইকন ব্যাকগ্রাউন্ড গ্লো */
+    .icon-box {
+      background: rgba(0, 180, 216, 0.1);
+      border: 1px solid rgba(0, 180, 216, 0.2);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <ros-header></ros-header>
+
+  <main class="flex-grow container mx-auto px-5 py-12 max-w-5xl">
+    
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 text-[#00b4d8] relative inline-block pb-3">
+        আমাদের সম্পর্কে
+        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#ffd700] rounded"></span>
+      </h1>
+      <p class="text-gray-400 mt-2 text-sm md:text-base tracking-wide">রাজশাহী অলিম্পিয়াড সোসাইটি-এর পরিচিতি, লক্ষ্য ও উদ্দেশ্য</p>
+    </div>
+
+    <div class="premium-card rounded-xl p-6 md:p-10 mb-8" data-aos="fade-up" data-aos-delay="100">
+      <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+        <div class="icon-box w-16 h-16 rounded-full flex items-center justify-center shrink-0 text-2xl text-[#00b4d8]">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+          <p class="text-gray-200 leading-relaxed text-base md:text-lg">
+            <strong class="text-[#00b4d8]">রাজশাহী অলিম্পিয়াড সোসাইটি</strong> রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, কলেজ এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের প্রতিভা বিকাশের সুযোগ পায়।
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="premium-card rounded-xl p-6 md:p-10 mb-8" data-aos="fade-up">
+      <div class="flex flex-col md:flex-row items-center gap-6 md:gap-8">
+        <div class="icon-box w-16 h-16 rounded-full flex items-center justify-center shrink-0 text-2xl text-[#ffd700]">
+          <i class="fa-solid fa-lightbulb"></i>
+        </div>
+        <div>
+          <p class="text-gray-200 leading-relaxed text-base md:text-lg">
+            বর্তমান বিশ্বে একাডেমিক শিক্ষার পাশাপাশি সমস্যা সমাধান, যুক্তিভিত্তিক চিন্তাভাবনা এবং সৃজনশীলতার গুরুত্ব দিন দিন বৃদ্ধি পাচ্ছে। এই বাস্তবতাকে সামনে রেখে রাজশাহী শিক্ষার্থীদের জন্য একটি সহায়ক পরিবেশ তৈরি করতে প্রতিশ্রুতিবদ্ধ, যেখানে তারা শুধু পাঠ্যবইয়ের মধ্যে সীমাবদ্ধ না থেকে বাস্তবধর্মী জ্ঞান ও দক্ষতা অর্জন করতে পারে।
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+      
+      <div class="premium-card rounded-xl p-6 md:p-8 flex flex-col justify-between" data-aos="fade-up">
+        <div>
+          <div class="icon-box w-12 h-12 rounded-lg flex items-center justify-center text-xl text-[#00b4d8] mb-5">
+            <i class="fa-solid fa-cubes"></i>
+          </div>
+          <h3 class="text-xl font-bold text-[#00b4d8] mb-4">আমাদের কার্যক্রমসমূহ</h3>
+          <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+            আমাদের কার্যক্রমের মধ্যে রয়েছে বিভিন্ন বিষয়ে প্রতিযোগিতা (যেমন গণিত, বিজ্ঞান, আইসিটি, অর্থনীতি ইত্যাদি), প্রস্তুতিমূলক ক্লাস, কর্মশালা, সেমিনার, ক্যাম্প এবং কুইজ আয়োজন। এর মাধ্যমে শিক্ষার্থীরা নিজেদের দক্ষতা যাচাই করতে পারে, নতুন কিছু শেখার সুযোগ পায় এবং জাতীয় ও আন্তর্জাতিক পর্যায়ে অংশগ্রহণের জন্য প্রস্তুত হতে পারে।
+          </p>
+        </div>
+      </div>
+
+      <div class="premium-card rounded-xl p-6 md:p-8 flex flex-col justify-between" data-aos="fade-up" data-aos-delay="50">
+        <div>
+          <div class="icon-box w-12 h-12 rounded-lg flex items-center justify-center text-xl text-[#ffd700] mb-5">
+            <i class="fa-solid fa-handshake-angle"></i>
+          </div>
+          <h3 class="text-xl font-bold text-[#ffd700] mb-4">অন্তর্ভুক্তিমূলক শিক্ষা ও সমতা</h3>
+          <p class="text-gray-300 text-sm md:text-base leading-relaxed">
+            রাজশাহী অলিম্পিয়াড সোসাইটি-এর অন্যতম লক্ষ্য হলো শহর ও গ্রামের শিক্ষার্থীদের মধ্যে শিক্ষার সুযোগের বৈষম্য কমানো এবং একটি অন্তর্ভুক্তিমূলক (inclusive) শিক্ষাব্যবস্থা গড়ে তোলা। আমরা বিশ্বাস করি, সঠিক দিকनिर्देशना, অনুপ্রেরণা এবং সুযোগ পেলে প্রতিটি শিক্ষার্থী তার সর্বোচ্চ সম্ভাবনায় পৌঁছাতে সক্ষম।
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="premium-card rounded-xl p-8 text-center border-t-4 border-t-[#ffd700]" data-aos="zoom-in">
+      <div class="icon-box w-14 h-14 rounded-full flex items-center justify-center text-xl text-[#ffd700] mx-auto mb-4">
+        <i class="fa-solid fa-users"></i>
+      </div>
+      <h3 class="text-xl font-bold text-[#ffd700] mb-3">আমাদের ভবিষ্যৎ ভিশন</h3>
+      <p class="text-base md:text-lg italic text-gray-200 font-medium max-w-3xl mx-auto leading-relaxed">
+        "আমরা এমন একটি কমিউনিটি তৈরি করতে কাজ করছি যেখানে শিক্ষার্থীরা কৌতূহলী হতে উৎসাহিত হবে, নতুন কিছু আবিষ্কার করতে অনুপ্রাণিত হবে এবং ভবিষ্যতের চ্যালেঞ্জ মোকাবিলায় আত্মবিশ্বাসী হয়ে উঠবে।"
+      </p>
+    </div>
+
+  </main>
+
+  <ros-footer></ros-footer>
+
+  <script src="../navigation.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    // স্ক্রল অ্যানিমেশন অ্যাক্টিভেট করা
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+  </script>
+</body>
+</html>
+
