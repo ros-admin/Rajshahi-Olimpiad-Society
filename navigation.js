@@ -393,7 +393,7 @@ class RosHeader extends HTMLElement {
         <a href="index.html" class="header-left">
           <img src="../ros logo.png" alt="ROS Logo" class="header-logo">
           <div class="header-title-box">
-            <h1>রাজشাহী অলিম্পিয়াড সোসাইটি</h1>
+            <h1>রাজশাহী অলিম্পিয়াড সোসাইটি</h1>
           </div>
         </a>
 
@@ -507,7 +507,7 @@ class RosFooter extends HTMLElement {
               <img src="../ros logo.png" alt="ROS Logo" class="footer-logo">
               <div class="footer-text-group">
                 <h2>রাজশাহী অলিম্পিয়াড সোসাইটি</h2>
-                <p class="footer-slogan">"জ্ঞানের খোঁজে, অনন্য উচ্চতায়"</p>
+                <p class="footer-slogan">"মেধার লালন, দক্ষতার গঠন"</p>
               </div>
             </div>
           </div>
@@ -544,7 +544,7 @@ class RosFooter extends HTMLElement {
         </div>
 
         <div class="footer-bottom">
-          <p>Copyright © 2024-2026 All rights reserved <a href="index.html">Rajshahi Olympiad Society</a>.</p>
+          <p>Copyright © 2026 All rights reserved <a href="index.html">Rajshahi Olympiad Society</a>.</p>
           <p class="developer-credit">Developed by, <a href="https://www.facebook.com/share/18nJSiYvtY/" target="_blank">Utsab Sarker</a></p>
         </div>
       </footer>
