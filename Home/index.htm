@@ -179,18 +179,37 @@
     }
 
     .event-logo { width: 100px; height: 100px; object-fit: contain; margin-bottom: 20px; }
-    .countdown-container { display: flex; gap: 15px; margin: 25px 0; }
     
+
+    .countdown-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 450px;
+      margin: 25px auto;
+    }
+
     .countdown-box {
       background: #0d1b2a;
-      padding: 12px 18px;
+      padding: 10px 5px;
       border-radius: 10px;
-      min-width: 75px;
       border: 1px solid rgba(255, 213, 0, 0.3);
       border-bottom: 4px solid var(--accent);
     }
 
-    .countdown-box span { display: block; font-size: 2rem; font-weight: bold; color: var(--accent); }
+    .countdown-box span { 
+      display: block; 
+      font-size: 1.5rem; 
+      font-weight: bold; 
+      color: var(--accent); 
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .countdown-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
 
     .btn-details {
       padding: 12px 30px; background: var(--secondary); border: none; color: white;
@@ -269,7 +288,7 @@
       border-bottom: none; /* শেষের পেজ তাই ফুটারের সাথে মিলবে */
     }
     
-    .slider-viewport { max-width: 850px; margin: 0 auto; overflow: hidden; position: relative; padding: 10px 0; }
+    .slider-viewport { max-width: 900px; margin: 0 auto; overflow: hidden; position: relative; padding: 10px 0; }
     .partner-track { display: flex; gap: 45px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
     
     .partner-logo {
