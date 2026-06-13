@@ -390,7 +390,7 @@ class RosHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <header class="ros-header">
-        <a href="index.html" class="header-left">
+        <a href="../Home/" class="header-left">
           <img src="../ros logo.png" alt="ROS Logo" class="header-logo">
           <div class="header-title-box">
             <h1>রাজশাহী অলিম্পিয়াড সোসাইটি</h1>
