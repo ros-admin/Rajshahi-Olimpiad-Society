@@ -279,24 +279,60 @@
     .ad-banner:hover { transform: scale(1.02); box-shadow: 0 0 35px rgba(0,180,216,0.6); }
 
     /* --- ৬. পার্টনার স্লাইডার সেকশন (মুভিং ডায়ালগ থিম ব্যাকগ্রাউন্ড) --- */
-    .partner-section {
-      padding: 80px 10%;
-      background: linear-gradient(30deg, #020c1b, #0d1b2a, #010811);
-      background-size: 300% 300%;
-      animation: gradientBg 15s ease infinite;
-      text-align: center;
-      border-bottom: none; /* শেষের পেজ তাই ফুটারের সাথে মিলবে */
-    }
+.partner-section {
+  padding: 80px 10%;
+  background: linear-gradient(30deg, #020c1b, #0d1b2a, #010811);
+  background-size: 300% 300%;
+  animation: gradientBg 15s ease infinite;
+  text-align: center;
+  border-bottom: none; /* শেষের পেজ তাই ফুটারের সাথে মিলবে */
+}
+
+/* ১. লোগো হোভার করলে যেন ওপরে কেটে না যায়, তাই padding-top এবং bottom বাড়িয়ে ৩০px করা হয়েছে */
+.slider-viewport { 
+  max-width: 340px; /* মোবাইলে ৩টি লোগো গ্যাপসহ নিখুঁত দেখানোর জন্য */
+  margin: 0 auto; 
+  overflow: hidden; 
+  position: relative; 
+  padding: 30px 0; /* হোভার অ্যানিমেশনের জন্য পর্যাপ্ত জায়গা রাখা হয়েছে */
+}
+
+/* ডেস্কটপ বা বড় স্ক্রিনের জন্য ভিউপোর্ট চওড়া করা হলো */
+@media (min-width: 768px) {
+  .slider-viewport { max-width: 420px; } 
+}
+
+/* ২. গ্যাপ ১৫px ফিক্সড করা হয়েছে যাতে ডাইনামিক ক্যালকুলেশনের সাথে মিলে এবং লোগো ডানপাশে কেটে না যায় */
+.partner-track { 
+  display: flex; 
+  gap: 15px; 
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+  will-change: transform;
+}
+
+.partner-logo {
+  /* ৩. ৩টি লোগো এবং ২টি গ্যাপের (১৫px * ২ = ৩০px) হিসাব নিখুঁত করা হয়েছে */
+  width: calc((100% - 30px) / 3); 
+  aspect-ratio: 1 / 1; /* লোগো যেন সবসময় একদম গোল থাকে */
+  border-radius: 50%; 
+  background: white;
+  padding: 8px; /* লোগোর ভেতরের ছবি যেন বর্ডারের সাথে লেগে কেটে না যায় */
+  object-fit: contain; 
+  cursor: pointer; 
+  transition: all 0.3s ease; 
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+  border: 2px solid rgba(0, 180, 216, 0.2);
+  box-sizing: border-box; /* প্যাডিং ও বর্ডার যেন উইডথের বাইরে না যায় */
+}
+
+/* ৪. হোভার করার সময় scale(1.1) এর বদলে scale(1.05) করা হয়েছে যাতে ভিউপোর্টের বাইরে গিয়ে লোগো কেটে না যায় */
+.partner-logo:hover { 
+  transform: translateY(-8px) scale(1.05); 
+  box-shadow: 0 12px 25px var(--secondary); 
+  border-color: var(--secondary); 
+}
     
-    .slider-viewport { max-width: 700px; margin: 0 auto; overflow: hidden; position: relative; padding: 10px 0; }
-    .partner-track { display: flex; gap: 45px; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
-    
-    .partner-logo {
-      width: 85px; height: 85px; border-radius: 50%; background: white;
-      padding: 6px; object-fit: contain; cursor: pointer; transition: 0.3s; flex-shrink: 0;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 2px solid rgba(0, 180, 216, 0.2);
-    }
-    .partner-logo:hover { transform: translateY(-5px) scale(1.1); box-shadow: 0 10px 25px var(--secondary); border-color: var(--secondary); }
 
     /* --- নতুন আকর্ষণীয় অ্যানিমেশন কি-ফ্রেমস --- */
     @keyframes gradientBg {
@@ -497,16 +533,27 @@
     }
 
     // --- ৪. রেসপন্সিভ অটো পার্টনার স্লাইডার (২ সেকেন্ড পরপর চেঞ্জ) ---
-    const track = document.getElementById('partnerTrack');
-    let index = 0;
-    setInterval(() => {
-      const maxScroll = track.scrollWidth - track.parentElement.clientWidth;
-      if (maxScroll <= 0) return;
-      
-      index += 130; 
-      if (index > maxScroll) index = 0;
-      track.style.transform = `translateX(-${index}px)`;
-    }, 2000);
+    // --- ৪. ৩টি করে লোগো অটো স্লাইড করার নিখুঁত লজিক ---
+const track = document.getElementById('partnerTrack');
+let currentSlide = 0;
+
+setInterval(() => {
+  const logos = track.children;
+  const totalLogos = logos.length;
+  
+  currentSlide += 3; // প্রতিবারে ৩টি করে লোগো সরবে
+  
+  if (currentSlide >= totalLogos) {
+    currentSlide = 0; // লুপ রিসেট
+  }
+  
+  if(logos.length > 0) {
+    // এখানে ১৫ হলো CSS-এর gap: 15px; এর সমান
+    const logoWidth = logos[0].clientWidth + 15; 
+    track.style.transform = `translateX(-${currentSlide * logoWidth}px)`;
+  }
+}, 2000);
+    
 
     window.onload = () => {
       loadNextEvent();
