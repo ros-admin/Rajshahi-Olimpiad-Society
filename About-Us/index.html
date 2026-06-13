@@ -44,7 +44,7 @@
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
       border-radius: 1rem;
-      padding: 2px; /* বর্ডারের থিকনেস */
+      padding: 2px;
       background: linear-gradient(135deg, var(--secondary-color), transparent, var(--accent-color), transparent, var(--secondary-color));
       background-size: 400% 400%;
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -60,7 +60,6 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* গ্লোয়িং টেক্সট হাইলাইটার */
     .highlight-glow {
       color: var(--secondary-color);
       text-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
@@ -75,23 +74,24 @@
   <!-- প্রধান কন্টেন্ট এরিয়া -->
   <main class="flex-grow container mx-auto px-4 py-16 max-w-4xl flex flex-col justify-center">
     
+    <!-- টাইটেল (লোগো সম্পর্কে পেজের সাথে মিল রেখে সম্পূর্ণ ফিক্সড) -->
+    <div class="text-center mb-12" data-aos="fade-up">
+      <h1 class="text-3xl md:text-4xl font-bold mb-4 text-[#00b4d8] relative inline-block pb-3">
+        আমাদের সম্পর্কে
+        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#ffd700] rounded"></span>
+      </h1>
+      <p class="text-gray-400 mt-2 text-sm md:text-base tracking-wide">রাজশাহী অলিম্পিয়াড সোসাইটি-এর পরিচিতি, লক্ষ্য ও উদ্দেশ্য</p>
+    </div>
+
     <!-- মাস্টার প্যানেল (সব কন্টেন্ট একক ফ্রেমের ভেতর) -->
     <div class="cyber-panel rounded-2xl p-8 md:p-12" data-aos="fade-up" data-aos-duration="1000">
       
-      <!-- হেডার পার্ট (প্যানেলের ভেতরেই ব্র্যান্ডিং) -->
-      <div class="mb-10 text-center md:text-left border-b border-gray-800/60 pb-6">
-        <h1 class="text-3xl md:text-4xl font-black text-white tracking-wide mb-2">
-          আমাদের <span class="text-[#00b4d8]">গল্প</span> ও দর্শন
-        </h1>
-        <p class="text-xs font-mono uppercase tracking-widest text-[#ffd700]">Rajshahi Olympiad Society • Est. 2026</p>
-      </div>
-
       <!-- ফ্লুইড টেক্সট লেআউট (কোনো পয়েন্ট বা কড়া ডিভাইডার নেই) -->
       <div class="space-y-8 text-gray-300 text-base md:text-lg leading-relaxed font-light">
         
         <!-- প্যারাগ্রাফ ১ -->
         <p class="relative pl-0 md:pl-6 md:border-l-2 md:border-[#00b4d8]/40">
-          <span class="highlight-glow font-semibold text-white">রাজশাহী অলিম্পিয়াড সোসাইটি</span> রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, কলেজ এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের মেধা ও সুপ্ত প্রতিভা বিকশিত করার একটি নিরবচ্ছিন্ন সুযোগ পায়।
+          <span class="highlight-glow font-semibold text-white">রাজশাহী অলিম্পিয়াড সোসাইটি</span> রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে school, college এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের মেধা ও সুপ্ত প্রতিভা বিকশিত করার একটি নিরবচ্ছিন্ন সুযোগ পায়।
         </p>
 
         <!-- প্যারাগ্রাফ ২ -->
@@ -108,10 +108,10 @@
 
         <!-- প্যারাগ্রাফ ৪ -->
         <p>
-          সংগঠনটির অন্যতম প্রধান সামাজিক অঙ্গীকার হলো শহর ও প্রত্যন্ত অঞ্চলের শিক্ষার্থীদের মধ্যে বিদ্যমান শিক্ষার সুযোগের বৈষম্যকে দূর করা এবং একটি সর্বজনীন ও অন্তর্ভুক্তিমূলক (Inclusive) শিক্ষাব্যবস্থা গড়ে তোলা। আমরা দৃঢ়ভাবে বিশ্বাস করি, সঠিক দিকনির্দেশনা, উপযুক্ত অনুপ্রেরণা এবং সমান সুযোগ নিশ্চিত করা গেলে প্রতিটি শিক্ষার্থীই তার মেধার সর্বোচ্চ শিখরে পৌঁছাতে পুরোপুরি সক্ষম।
+          সংগঠনটির অন্যতম প্রধান সামাজিক অঙ্গীকার হলো শহর ও প্রত্যন্ত অঞ্চলের শিক্ষার্থীদের মধ্যে বিদ্যমান শিক্ষার সুযোগের বৈষম্যকে দূর করা এবং একটি সর্বজনীন ও অন্তর্ভুক্তিমূলক (Inclusive) শিক্ষাব্যবস্থা গড়ে তোলা। আমরা বিশ্বাস করি, সঠিক দিকনির্দেশনা, উপযুক্ত অনুপ্রেরণা এবং সমান সুযোগ নিশ্চিত করা গেলে প্রতিটি শিক্ষার্থীই তার মেধার সর্বোচ্চ শিখরে পৌঁছাতে পুরোপুরি সক্ষম।
         </p>
 
-        <!-- ফুটনোট/ভিশন (প্যানেলের একদম নিচে টাইপোগ্রাফিক ফিনিশিং) -->
+        <!-- ফুটনোট/ভিশন -->
         <div class="pt-8 border-t border-gray-800/60 text-center">
           <p class="text-base md:text-lg font-normal text-gray-200 italic max-w-2xl mx-auto tracking-wide">
             "আমরা এমন একটি সজীব কমিউনিটি তৈরি করতে বদ্ধপরিকর, যেখানে শিক্ষার্থীরা নতুন কিছু জানার জন্য কৌতূহলী হবে, নিত্যনতুন আবিষ্কারে অনুপ্রাণিত হবে এবং ভবিষ্যতের বৈশ্বিক চ্যালেঞ্জ মোকাবিলায় আত্মবিশ্বাসী হয়ে উঠবে।"
