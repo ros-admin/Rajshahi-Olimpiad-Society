@@ -397,7 +397,7 @@ class RosHeader extends HTMLElement {
           </div>
         </a>
 
-        <div class="header-right"
+        <div class="header-right">
 
           <button class="menu-toggle" id="menuToggle">
             <span></span>
