@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rajshahi Olympiad Society - Loading...</title>
+  <title>Rajshahi Olympiad Society</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -68,21 +68,21 @@
 
     /* লোগো কন্টেইনার এবং প্রিমিয়াম গ্লো অ্যানিমেশন */
     .logo-container {
-      width: 140px;
-      height: 140px;
-      margin-bottom: 25px;
-      opacity: 0;
-      transform: scale(0.8);
-      animation: logoEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-      filter: drop-shadow(0 0 20px rgba(0, 180, 216, 0.4));
-    }
+  width: 140px;
+  height: 140px;
+  margin-bottom: 25px;
+  opacity: 0;
+  transform: scale(0.8);
+  animation: logoEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
 
-    .logo-container img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      animation: pulseGlow 2.5s ease-in-out infinite alternate;
-    }
+.logo-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  animation: logoPulse 2.5s ease-in-out infinite alternate;
+}
+
 
     /* প্রতিষ্ঠানের নামের স্টাইল ও অ্যানিমেশন */
     .institution-name {
@@ -143,9 +143,13 @@
       100% { opacity: 1; transform: scale(1) translateY(0); }
     }
 
-    @keyframes pulseGlow {
-      0% { filter: drop-shadow(0 0 15px rgba(0, 180, 216, 0.3)); transform: scale(1); }
-      100% { filter: drop-shadow(0 0 30px rgba(255, 215, 0, 0.6)); transform: scale(1.03); }
+    @keyframes logoPulse {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.03);
+  }
     }
 
     @keyframes fadeInUp {
