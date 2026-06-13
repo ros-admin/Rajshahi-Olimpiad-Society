@@ -1,64 +1,107 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Page Not Found</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    *{
-      margin:0;
-      padding:0;
-      box-sizing:border-box;
-    }
+<title>404 | Page Not Found</title>
 
-    body{
-      width:100%;
-      height:100vh;
-      overflow:hidden;
-      background:black;
-      display:flex;
-      justify-content:center;
-      align-items:center;
-      position:relative;
-      font-family:Arial, sans-serif;
-    }
-
-    img{
-  width:100vw;
-  height:100vh;
-  object-fit:contain;
-  background:black;
-    }
-
-    .back-btn{
-  position:absolute;
-  top:20px;
-  left:50%;
-  transform:translateX(-50%);
-  text-decoration:none;
-  background:white;
-  color:black;
-  padding:12px 20px;
-  border-radius:10px;
-  font-weight:bold;
-  transition:0.3s;
-      box-shadow:0 4px 15px rgba(0,0,0,0.3);
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-.back-btn:hover{
-  background:#ddd;
+body{
+    width:100%;
+    height:100vh;
+    overflow:hidden;
+    background:#000;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    position:relative;
+    font-family:'Segoe UI',sans-serif;
 }
-  </style>
+
+/* 404 Image */
+img{
+    width:100vw;
+    height:100vh;
+    object-fit:contain;
+    background:#000;
+}
+
+/* Dark Overlay */
+body::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:rgba(0,0,0,0.15);
+    pointer-events:none;
+}
+
+/* Home Button */
+.home-btn{
+    position:absolute;
+    top:25px;
+    left:50%;
+    transform:translateX(-50%);
+    
+    padding:14px 30px;
+    
+    text-decoration:none;
+    color:#fff;
+    font-size:16px;
+    font-weight:700;
+    letter-spacing:0.5px;
+
+    border-radius:50px;
+
+    background:rgba(255,255,255,0.12);
+    backdrop-filter:blur(15px);
+
+    border:1px solid rgba(255,255,255,0.25);
+
+    box-shadow:
+        0 0 15px rgba(0,255,255,.35),
+        0 0 30px rgba(0,255,255,.15);
+
+    transition:all .35s ease;
+}
+
+/* Hover Effect */
+.home-btn:hover{
+    transform:translateX(-50%) translateY(-3px);
+    
+    background:rgba(255,255,255,0.2);
+
+    box-shadow:
+        0 0 20px rgba(0,255,255,.8),
+        0 0 40px rgba(0,255,255,.4);
+
+    letter-spacing:1px;
+}
+
+/* Mobile */
+@media(max-width:600px){
+    .home-btn{
+        padding:12px 24px;
+        font-size:14px;
+    }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- Your image -->
-  <img src="../404.png" alt="404 Image">
+<img src="../404.png" alt="404 Error">
 
-  <!-- Go Back Button -->
-  <a class="back-btn" href="/">Go Back</a>
+<a class="home-btn"
+   href="../Home/index.html">
+   Return Home
+</a>
 
 </body>
 </html>
