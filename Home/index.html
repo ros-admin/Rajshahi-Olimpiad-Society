@@ -5,10 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>রাজশাহী অলিম্পিয়াড সোসাইটি</title>
   
+  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
+  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
+  <!-- AOS (Animate On Scroll) CSS -->
   <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   
   <style>
@@ -59,85 +62,120 @@
 </head>
 <body class="flex flex-col min-h-screen">
 
-  <ros-header></ros-header>
+  <!-- 🧩 ১. সম্পূর্ণ সচল রেসপনসিভ ন্যাভবার (Header) -->
+  <header class="sticky top-0 z-[999] bg-[#01060d]/90 backdrop-blur-md border-b border-gray-800/60 px-4 py-4">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <a href="index.html" class="text-xl font-bold text-white flex items-center gap-2">
+        <span class="text-[#00b4d8]"><i class="fa-solid fa-graduation-cap"></i></span> ROS
+      </a>
+      
+      <!-- ডেস্কটপ মেনু -->
+      <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-gray-300">
+        <a href="index.html" class="text-[#00b4d8] hover:text-[#00b4d8] transition-colors">হোম</a>
+        <a href="About Us/about.html" class="hover:text-[#00b4d8] transition-colors">আমাদের সম্পর্কে</a>
+        <a href="Notice/index.html" class="hover:text-[#00b4d8] transition-colors">বিজ্ঞপ্তি</a>
+      </nav>
 
+      <!-- মোবাইল মেনু টগল বাটন (হ্যামবার্গার) -->
+      <button id="menuToggleBtn" class="md:hidden text-white text-xl focus:outline-none hover:text-[#00b4d8] transition-colors">
+        <i class="fa-solid fa-bars" id="menuIcon"></i>
+      </button>
+    </div>
+
+    <!-- মোবাইল ড্রপডাউন মেনু প্যানেল -->
+    <div id="mobileMenuPanel" class="hidden md:hidden absolute top-full left-0 w-full bg-[#01060d] border-b border-gray-800 p-4 flex flex-col gap-4 text-sm font-medium shadow-xl">
+      <a href="index.html" class="text-[#00b4d8] py-2 border-b border-gray-950">হোম</a>
+      <a href="About Us/about.html" class="text-gray-300 hover:text-[#00b4d8] py-2 border-b border-gray-950">আমাদের সম্পর্কে</a>
+      <a href="Notice/index.html" class="text-gray-300 hover:text-[#00b4d8] py-2">বিজ্ঞপ্তি</a>
+    </div>
+  </header>
+
+  <!-- ২. ভিডিও ব্যানার সেকশন -->
   <section class="relative h-[80vh] md:h-[85vh] flex justify-center items-center overflow-hidden text-center border-b-4 border-[#00b4d8]">
-    <video class="absolute top-0 left-0 w-full height-full object-cover z-10 w-full h-full" autoplay loop muted playsinline>
+    <video class="absolute top-0 left-0 w-full h-full object-cover z-10" autoplay loop muted playsinline>
       <source src="bg video.mp4" type="video/mp4">
     </video>
-    <div class="absolute top-0 left-0 w-full height-full bg-gradient-to-b from-[#0d1b2a]/60 to-[#01060d] z-20 w-full h-full"></div>
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-[#0d1b2a]/60 to-[#01060d] z-20"></div>
     <div class="relative z-30 px-4 max-w-3xl">
       <div class="text-xs md:text-sm font-semibold tracking-[4px] uppercase text-[#00b4d8] mb-3 animate-pulse">Welcome to</div>
       <h1 class="text-3xl md:text-6xl font-bold text-white drop-shadow-[0_0_20px_rgba(0,180,216,0.6)] leading-tight">
-        রাজশাহী অলিম্পিয়াড সোসাইটি
+        রাজশাহী অলিম্পিয়াড সোসাইটি[span_1](start_span)[span_1](end_span)
       </h1>
     </div>
   </section>
 
+  <!-- ৩. পরিচিতি সেকশন -->
   <section class="py-20 px-4 bg-gradient-to-b from-[#01060d] to-[#070f1e] border-b-4 border-[#00b4d8]/20">
     <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
       <p class="text-gray-300 text-base md:text-lg leading-relaxed mb-8 font-light max-w-3xl mx-auto">
-        রাজশাহী অলিম্পিয়াড সোসাইটি হলো রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, কলেজ এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের প্রতিভা বিকাশের সুযোগ পায়।
+        রাজশাহী অলিম্পিয়াড সোসাইটি হলো রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০籍লে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, কলেজ এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের প্রতিভা বিকাশের সুযোগ পায়।[span_2](start_span)[span_2](end_span)
       </p>
-      <a href="../About Us/about.html" class="inline-block px-8 py-3 bg-[#00b4d8] hover:bg-[#0077b6] text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-[#00b4d8]/20 hover:-translate-y-0.5">
-        আরও জানুন
+      <a href="../About-Us/" class="inline-block px-8 py-3 bg-[#00b4d8] hover:bg-[#0077b6] text-white font-semibold rounded-full transition-all duration-300 shadow-lg shadow-[#00b4d8]/20 hover:-translate-y-0.5">
+        আরও জানুন[span_3](start_span)[span_3](end_span)
       </a>
     </div>
   </section>
 
+  <!-- ৪. পরবর্তী ইভেন্ট সেকশন -->
   <section class="py-16 px-4 bg-[#01060d] border-b-4 border-[#ffd700]/30 hidden" id="eventSection">
     <div class="max-w-3xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-bold text-center text-[#00b4d8] mb-10"><i class="fa-regular fa-star mr-2 text-[#ffd700]"></i>আমাদের পরবর্তী ইভেন্ট</h2>
+      <h2 class="text-2xl md:text-3xl font-bold text-center text-[#00b4d8] mb-10"><i class="fa-regular fa-star mr-2 text-[#ffd700]"></i>আমাদের পরবর্তী ইভেন্ট[span_4](start_span)[span_4](end_span)</h2>
       <div class="cyber-panel rounded-2xl p-6 md:p-8 flex flex-col items-center" id="eventCard" data-aos="zoom-in">
-        </div>
+        <!-- জাভাস্ক্রিপ্ট থেকে ডাইনামিক ডেটা ঢুকবে[span_5](start_span)[span_5](end_span) -->
+      </div>
     </div>
   </section>
 
-  <div class="fixed inset-0 bg-black/80 z-[9999] flex justify-center items-center opacity-0 visibility-hidden transition-all duration-300 p-4" id="eventModal">
+  <!-- পপআপ মডাল -->
+  <div class="fixed inset-0 bg-black/80 z-[9999] flex justify-center items-center opacity-0 pointer-events-none transition-all duration-300 p-4" id="eventModal">
     <div class="bg-[#0b132b] w-full max-w-lg rounded-xl overflow-hidden relative border border-[#00b4d8]/30 shadow-2xl scale-95 transition-all duration-300" id="modalContainer">
       <button class="absolute top-4 right-4 bg-black/60 text-white w-9 h-9 rounded-full flex items-center justify-center text-xl cursor-pointer hover:bg-rose-600 transition-colors z-50" id="closeModal">&times;</button>
       <img src="" alt="Banner" class="w-full h-48 md:h-56 object-cover" id="modalBanner">
       <div class="p-6 md:p-8">
         <h3 class="text-xl font-bold text-[#00b4d8] mb-3" id="modalTitle"></h3>
         <p class="text-gray-300 text-sm leading-relaxed mb-6 overflow-y-auto max-h-40 pr-2" id="modalFullText"></p>
-        <a href="" target="_blank" class="block text-center w-full padding py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition-colors" id="volunteerLink">ভলিন্টিয়ার হতে চাই</a>
+        <a href="" target="_blank" class="block text-center w-full py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-lg transition-colors" id="volunteerLink">ভলিন্টিয়ার হতে চাই[span_6](start_span)[span_6](end_span)</a>
       </div>
     </div>
   </div>
 
+  <!-- ৫. বিজ্ঞপ্তি সেকশন -->
   <section class="py-20 px-4 bg-gradient-to-b from-[#070f1e] to-[#01060d] border-b-4 border-[#00b4d8]/20">
     <div class="max-w-4xl mx-auto">
-      <h2 class="text-2xl md:text-3xl font-bold text-center text-[#00b4d8] mb-10" data-aos="fade-up">বিজ্ঞপ্তি</h2>
+      <h2 class="text-2xl md:text-3xl font-bold text-center text-[#00b4d8] mb-10" data-aos="fade-up">বিজ্ঞপ্তি[span_7](start_span)[span_7](end_span)</h2>
       
       <div class="cyber-panel rounded-xl p-4 md:p-6" data-aos="fade-up">
         <div class="w-full">
           <table class="w-full text-left border-collapse table-fixed">
             <thead>
               <tr class="border-b border-gray-800 text-xs md:text-sm text-[#00b4d8] font-bold">
-                <th class="pb-3 pr-2 pl-1 w-[25%] md:w-[20%]">তারিখ</th>
-                <th class="pb-3 px-2 w-[55%] md:w-[60%]">বিষয়</th>
-                <th class="pb-3 pl-2 pr-1 w-[20%] text-center">বিস্তারিত</th>
+                <th class="pb-3 pr-2 pl-1 w-[25%] md:w-[20%]">তারিখ[span_8](start_span)[span_8](end_span)</th>
+                <th class="pb-3 px-2 w-[55%] md:w-[60%]">বিষয়[span_9](start_span)[span_9](end_span)</th>
+                <th class="pb-3 pl-2 pr-1 w-[20%] text-center">বিস্তারিত[span_10](start_span)[span_10](end_span)</th>
               </tr>
             </thead>
             <tbody id="noticeTableBody" class="text-gray-300 text-[11px] md:text-sm divide-y divide-gray-900/60">
-              </tbody>
+              <!-- জাভাস্ক্রিপ্ট থেকে ডেটা লোড হবে[span_11](start_span)[span_11](end_span) -->
+            </tbody>
           </table>
         </div>
       </div>
-      <a href="../Notice/index.html" class="block text-right text-xs md:text-sm text-[#00b4d8] font-semibold mt-4 hover:text-[#ffd700] transition-colors">সকল বিজ্ঞপ্তি দেখুন &rarr;</a>
+      <a href="../Notice/" class="block text-right text-xs md:text-sm text-[#00b4d8] font-semibold mt-4 hover:text-[#ffd700] transition-colors">সকল বিজ্ঞপ্তি দেখুন &rarr;[span_12](start_span)[span_12](end_span)</a>
     </div>
   </section>
 
+  <!-- ৬. এডভার্টাইজমেন্ট সেকশন -->
   <section class="py-12 px-4 bg-[#01060d] border-b-4 border-[#00b4d8]/20 flex justify-center">
     <div class="max-w-4xl w-full" data-aos="zoom-in">
-      <a href="../Home/." target="_blank" class="block rounded-xl overflow-hidden border border-white/5 hover:border-[#00b4d8]/50 shadow-lg hover:shadow-[#00b4d8]/30 transition-all duration-300">
-        <img src="../Advertisement/Advertisement.jpg" alt="Advertisement" class="w-full h-auto object-cover">
+      <a href="Home/." target="_blank" class="block rounded-xl overflow-hidden border border-white/5 hover:border-[#00b4d8]/50 shadow-lg hover:shadow-[#00b4d8]/30 transition-all duration-300">
+        <img src="Advertisement/Advertisement.jpg" alt="Advertisement" class="w-full h-auto object-cover">
       </a>
     </div>
   </section>
 
+  <!-- ৭. পার্টনার স্লাইডার সেকশন -->
   <section class="py-16 px-4 bg-gradient-to-b from-[#01060d] to-[#050b14]">
-    <h2 class="text-2xl md:text-3xl font-bold text-center text-[#00b4d8] mb-8" data-aos="fade-up">আমাদের পার্টনার</h2>
+    <h2 class="text-2xl md:text-3xl font-bold text-center text-[#00b4d8] mb-8" data-aos="fade-up">আমাদের পার্টনার[span_13](start_span)[span_13](end_span)</h2>
     <div class="max-w-[320px] md:max-w-lg mx-auto overflow-hidden relative py-4" data-aos="fade-up">
       <div class="flex gap-4 transition-transform duration-500 ease-[cubic-bezier(0.4,0,0.2,1)] will-change-transform" id="partnerTrack">
         <img src="p1.png" class="w-[calc((100%-32px)/3)] aspect-square rounded-full bg-white p-2 object-contain cursor-pointer hover:scale-105 border border-gray-800 hover:border-[#00b4d8] transition-all flex-shrink-0" onclick="window.open('https://partner1.com')" alt="Partner 1">
@@ -150,17 +188,41 @@
     </div>
   </section>
 
-  <ros-footer></ros-footer>
+  <!-- 🧩 ৮. স্ট্যাটিক সচল ফুটার (Footer) -->
+  <footer class="bg-[#01060d] border-t border-gray-800 text-center py-6 text-xs text-gray-500 mt-auto">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+      <p>&copy; ২০২৬ রাজশাহী অলিম্পিয়াড সোসাইটি। সর্বস্বত্ব সংরক্ষিত।</p>
+      <div class="flex gap-4 text-base text-gray-400">
+        <a href="#" class="hover:text-[#00b4d8] transition-colors"><i class="fa-brands fa-facebook"></i></a>
+        <a href="#" class="hover:text-[#00b4d8] transition-colors"><i class="fa-brands fa-linkedin"></i></a>
+        <a href="#" class="hover:text-[#00b4d8] transition-colors"><i class="fa-solid fa-envelope"></i></a>
+      </div>
+    </div>
+  </footer>
 
-  <script src="../navigation.js"></script>
+  <!-- স্ক্রিপ্ট ইঞ্জিন ও অ্যানিমেশন সংযোগ -->
   <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
   <script>
     AOS.init({ once: true });
 
-    // --- ১. পরবর্তী ইভেন্ট লোডার ও কাউন্টডাউন ---
+    // --- ১. মোবাইল মেনু টগল ফাংশনালিটি ---
+    const menuToggleBtn = document.getElementById('menuToggleBtn');
+    const mobileMenuPanel = document.getElementById('mobileMenuPanel');
+    const menuIcon = document.getElementById('menuIcon');
+
+    menuToggleBtn.addEventListener('click', () => {
+      mobileMenuPanel.classList.toggle('hidden');
+      if (mobileMenuPanel.classList.contains('hidden')) {
+        menuIcon.className = 'fa-solid fa-bars';
+      } else {
+        menuIcon.className = 'fa-solid fa-xmark';
+      }
+    });
+
+    // --- ২. পরবর্তী ইভেন্ট লোডার ও কাউন্টডাউন ---
     async function loadNextEvent() {
       try {
-        const response = await fetch('../Next Event/event.json');
+        const response = await fetch('Next Event/event.json');
         const data = await response.json();
         
         if (data.status !== "active") return; 
@@ -193,7 +255,7 @@
           document.getElementById('modalFullText').innerText = data.description;
           document.getElementById('volunteerLink').href = data.volunteer_url;
           
-          modal.classList.remove('opacity-0', 'visibility-hidden');
+          modal.classList.remove('opacity-0', 'pointer-events-none');
           modalContainer.classList.remove('scale-95');
         });
 
@@ -221,14 +283,14 @@
     const modal = document.getElementById('eventModal');
     const modalContainer = document.getElementById('modalContainer');
     document.getElementById('closeModal').addEventListener('click', () => {
-      modal.classList.add('opacity-0', 'visibility-hidden');
+      modal.classList.add('opacity-0', 'pointer-events-none');
       modalContainer.classList.add('scale-95');
     });
 
-    // --- ২. নোটিশ টেবিল ডাটা ফেচিং ---
+    // --- ৩. নোটিশ টেবিল ডাটা ফেচিং ---
     async function loadNotices() {
       try {
-        const response = await fetch('../Notice/notice.json');
+        const response = await fetch('Notice/notice.json');
         const notices = await response.json();
         const tableBody = document.getElementById('noticeTableBody');
         
@@ -251,7 +313,7 @@
       } catch (e) { console.log("Notice table loaded."); }
     }
 
-    // --- ৩. পার্টনার লোগো অটো-স্লাইডার ---
+    // --- ৪. পার্টনার লোগো অটো-স্লাইডার ---
     const track = document.getElementById('partnerTrack');
     let currentSlide = 0;
 
