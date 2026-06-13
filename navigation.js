@@ -406,7 +406,6 @@ class RosHeader extends HTMLElement {
           <img src="ros logo.png" alt="ROS Logo" class="header-logo">
           <div class="header-title-box">
             <h1>রাজশাহী অলিম্পিয়াড সোসাইটি</h1>
-            <p>Rajshahi Olympiad Society</p>
           </div>
         </a>
 
