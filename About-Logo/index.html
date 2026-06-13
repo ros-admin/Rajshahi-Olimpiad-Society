@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>লোগো সম্পর্কে - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- AOS (Animate On Scroll) CSS - ফেড-ইন ইফেক্টের জন্য -->
+  <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+  
+  <style>
+    :root {
+      --primary-color: #0d1b2a;
+      --secondary-color: #00b4d8;
+      --accent-color: #ffd700;
+      --bg-dark: #020913;
+      --card-bg: #0a1420;
+    }
+    
+    body {
+      background-color: var(--bg-dark);
+      color: #ffffff;
+      font-family: 'Hind Siliguri', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* কাস্টম গ্রেডিয়েন্ট বর্ডার কার্ড */
+    .premium-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .premium-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; width: 4px; height: 100%;
+      background: linear-gradient(to bottom, var(--secondary-color), var(--accent-color));
+    }
+
+    .premium-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0, 180, 216, 0.15);
+      border-color: rgba(0, 180, 216, 0.3);
+    }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <!-- কাস্টম হেডার কম্পোনেন্ট -->
+  <ros-header></ros-header>
+
+  <!-- প্রধান কন্টেন্ট এরিয়া -->
+  <main class="flex-grow container mx-auto px-5 py-12 max-w-5xl">
+    
+    <!-- শীর্ষ অংশ (টাইটেল, লোগো এবং নাম মাঝখানে) -->
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h1 class="text-3xl md:text-4xl font-bold mb-8 text-[#00b4d8] relative inline-block pb-3">
+        লোগো সম্পর্কে
+        <span class="absolute bottom-0 left-1/2 -translate-x-1/2 w-20 h-1 bg-[#ffd700] rounded"></span>
+      </h1>
+      
+      <!-- মেইন লোগো ডিসপ্লে -->
+      <div class="my-6 flex justify-center">
+        <div class="p-2 bg-[#0d1b2a] rounded-full border-4 border-[#00b4d8] shadow-2xl shadow-cyan-500/10">
+          <img src="../ros logo.png" alt="ROS Main Logo" class="w-36 h-36 md:w-44 md:h-44 rounded-full object-cover">
+        </div>
+      </div>
+      
+      <h2 class="text-xl md:text-2xl font-bold text-white tracking-wide mt-4">
+        রাজশাহী অলিম্পিয়াড সোসাইটি
+      </h2>
+    </div>
+
+    <!-- ভূমিকা অংশ -->
+    <div class="premium-card rounded-xl p-6 md:p-8 mb-12 text-center" data-aos="fade-up" data-aos-delay="100">
+      <p class="text-gray-300 leading-relaxed text-base md:text-lg">
+        রাজশাহী অলিম্পিয়াড সোসাইটি-এর অফিশিয়াল লোগোটি অত্যন্ত দূরদর্শী এবং অর্থবহ ভাবনার ওপর ভিত্তি করে তৈরি করা হয়েছে। লোগোটির প্রতিটি অংশ আমাদের মূল লক্ষ্য, आदर्श এবং আঞ্চলিক গৌরবকে ফুটিয়ে তোলে। নিচে এর প্রতিটি অংশের অর্থ তুলে ধরা হলো।
+      </p>
+    </div>
+
+    <!-- গ্রিড লেআউট: প্রতিটি অংশের আলাদা ডিজাইন -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
+      
+      <!-- ১. উন্মুক্ত গ্রন্থ -->
+      <div class="premium-card rounded-xl p-6 flex flex-col items-center text-center justify-between" data-aos="fade-up">
+        <div class="w-full">
+          <div class="bg-[#0d1b2a] p-4 rounded-lg mb-4 flex justify-center border border-gray-800">
+            <img src="Assets/Logo/book.png" alt="The Open Book" class="h-24 object-contain onerror-fallback">
+          </div>
+          <h3 class="text-lg font-bold text-[#00b4d8] mb-3">১. উন্মুক্ত গ্রন্থ (The Open Book)</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            লোগোর একদম নিচে স্থান পাওয়া খোলা বইটি <strong class="text-[#ffd700]">জ্ঞান, শিক্ষা এবং প্রগতির</strong> চিরন্তন प्रतीक। এটি নির্দেশ করে যে, আমাদের সংগঠনের প্রতিটি কার্যক্রমের মূল ভিত্তি হলো শিক্ষার আলো ছড়িয়ে দেওয়া এবং একটি জ্ঞানভিত্তিক সমাজ বিনির্মাণ করা।
+          </p>
+        </div>
+      </div>
+
+      <!-- ২. গতিশীল মানবাকৃতি -->
+      <div class="premium-card rounded-xl p-6 flex flex-col items-center text-center justify-between" data-aos="fade-up" data-aos-delay="50">
+        <div class="w-full">
+          <div class="bg-[#0d1b2a] p-4 rounded-lg mb-4 flex justify-center border border-gray-800">
+            <img src="Assets/Logo/man.png" alt="The Dynamic Human Figure" class="h-24 object-contain onerror-fallback">
+          </div>
+          <h3 class="text-lg font-bold text-[#00b4d8] mb-3">২. গতিশীল মানবাকৃতি (The Dynamic Human Figure)</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            গ্রন্থের ওপর থেকে আকাশের দিকে হাত বাড়িয়ে থাকা মানবাকৃতিটি <strong class="text-[#ffd700]">তরুণ প্রজন্মের অদম্য ইচ্ছা, আত্মবিশ্বাস এবং সাফল্যের শিখরে পৌঁছানোর</strong> আকুলতাকে প্রকাশ করে। জ্যামিতিক বহুভুজ (Polygon) স্টাইলের এই আধুনিক ডিজাইনটি তরুণদের বহুমুখী প্রতিভা এবং বৈচিত্র্যময় সম্ভাবনার প্রতীক।
+          </p>
+        </div>
+      </div>
+
+      <!-- ৩. দীপ্ত নক্ষত্রসমূহ -->
+      <div class="premium-card rounded-xl p-6 flex flex-col items-center text-center justify-between" data-aos="fade-up">
+        <div class="w-full">
+          <div class="bg-[#0d1b2a] p-4 rounded-lg mb-4 flex justify-center border border-gray-800">
+            <img src="Assets/Logo/star.png" alt="The Glowing Stars" class="h-24 object-contain onerror-fallback">
+          </div>
+          <h3 class="text-lg font-bold text-[#00b4d8] mb-3">৩. দীপ্ত নক্ষত্রসমূহ (The Glowing Stars)</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            মানব হাতটি যে উজ্জ্বল সোনালী নক্ষত্রটিকে স্পর্শ করছে, তা আমাদের <strong class="text-[#ffd700]">চূড়ান্ত লক্ষ্য এবং শ্রেষ্ঠত্ব (Excellence)</strong> অর্জনের ইঙ্গিত দেয়। চারপাশের রঙিন নক্ষত্রগুলো সাফল্যের বিভিন্ন ধাপ, সৃজনশীলতা এবং তরুণদের স্বপ্নপূরণের দীপ্তিময় প্রকাশ।
+          </p>
+        </div>
+      </div>
+
+      <!-- ৪. রাজশাহী বিভাগের মানচিত্র -->
+      <div class="premium-card rounded-xl p-6 flex flex-col items-center text-center justify-between" data-aos="fade-up" data-aos-delay="50">
+        <div class="w-full">
+          <div class="bg-[#0d1b2a] p-4 rounded-lg mb-4 flex justify-center border border-gray-800">
+            <img src="Assets/Logo/map.png" alt="The Map of Rajshahi Division" class="h-24 object-contain onerror-fallback">
+          </div>
+          <h3 class="text-lg font-bold text-[#00b4d8] mb-3">৪. রাজশাহী বিভাগের মানচিত্র (The Map of Rajshahi Division)</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            মানব অবয়বের পটভূমিতে থাকা সোনালী মানচিত্রটি বাংলাদেশের গৌরবময় <strong class="text-[#ffd700]">রাজশাহী বিভাগকে</strong> নির্দেশ করে। এটি স্পষ্ট করে যে, এই অঞ্চলের মেধা ও ঐতিহ্যকে বিশ্বমঞ্চে তুলে ধরা এবং স্থানীয় তরুণদের নিয়ে কাজ করাই আমাদের মূল অনুপ্রেরণা।
+          </p>
+        </div>
+      </div>
+
+      <!-- ৫. চারপাশের বৃত্তাকার রেখা -->
+      <div class="premium-card rounded-xl p-6 flex flex-col items-center text-center justify-between" data-aos="fade-up">
+        <div class="w-full">
+          <div class="bg-[#0d1b2a] p-4 rounded-lg mb-4 flex justify-center border border-gray-800">
+            <img src="Assets/Logo/circle.png" alt="The Circular Swoshes" class="h-24 object-contain onerror-fallback">
+          </div>
+          <h3 class="text-lg font-bold text-[#00b4d8] mb-3">৫. চারপাশের বৃত্তাকার রেখা (The Circular Swoshes)</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            লোগোটিকে দুই পাশ থেকে আগলে রাখা নীল ও সোনালী রঙের গতিশীল বাঁকা রেখাগুলো একতা এবং সুরক্ষার প্রতীক। একই সাথে এটি একটি অন্তহীন বৃত্তের আভাস দেয়, যা আমাদের <strong class="text-[#ffd700]">সুদূরপ্রসারী দূরদর্শিতা (Global Vision) এবং টেকসই ভবিষ্যৎ</strong> গড়ার প্রত্যয়কে ধারণ করে।
+          </p>
+        </div>
+      </div>
+
+      <!-- ৬. ROS (আরওএস) -->
+      <div class="premium-card rounded-xl p-6 flex flex-col items-center text-center justify-between" data-aos="fade-up" data-aos-delay="50">
+        <div class="w-full">
+          <div class="bg-[#0d1b2a] p-4 rounded-lg mb-4 flex justify-center border border-gray-800">
+            <img src="Assets/Logo/ros.png" alt="ROS Text" class="h-24 object-contain onerror-fallback">
+          </div>
+          <h3 class="text-lg font-bold text-[#00b4d8] mb-3">৬. ROS (আরওএস)</h3>
+          <p class="text-gray-300 text-sm leading-relaxed">
+            ROS (আরওএস) শব্দটি আমাদের মূল সংগঠন 'রাজশাহী অলিম্পিয়াড সোসাইটি'-এর সংক্ষিপ্ত রূপ হিসেবে ব্যবহৃত হয়েছে। লোগোর ওপরের অংশে যখন একঝাঁক গতিশীলতা ও স্বপ্ন ডানা মেলছে, তখন নিচের এই টেক্সটটি পুরো ডিজাইনটিকে একটি চমৎকার গাঠনিক ভারসাম্য ও মজবুত ভিত্তি প্রদান করেছে। এটি প্রকাশ করে যে, সংগঠনের সমস্ত স্বপ্ন ও গতিশীলতা একটি সুনির্দিষ্ট এবং সুদৃঢ় কাঠামোর ওপর প্রতিষ্ঠিত।
+          </p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- সামগ্রিক মূলভাব অংশ -->
+    <div class="premium-card rounded-xl p-8 text-center border-t-4 border-t-[#ffd700]" data-aos="zoom-in">
+      <h3 class="text-xl font-bold text-[#ffd700] mb-4">সামগ্রিক মূলভাব (Overall Essence)</h3>
+      <p class="text-lg italic text-gray-200 font-medium max-w-3xl mx-auto leading-relaxed">
+        "রাজশাহী অঞ্চলের মেধাকে ধারণ করে, শিক্ষার আলোয় উদ্বুদ্ধ হয়ে, তরুণ প্রজন্ম যেন সাফল্যের সর্বোচ্চ শিখরে পৌঁছাতে পারে—সেই লক্ষ্যে একটি সুদৃঢ় প্রাতিষ্ঠানিক ভিত্তির ওপর দাঁড়িয়ে ঐক্যবদ্ধভাবে কাজ করে যাচ্ছে রাজশাহী অলিম্পিয়াড সোসাইটি।”
+      </p>
+    </div>
+
+  </main>
+
+  <!-- কাস্টম ফুটার কম্পোনেন্ট -->
+  <ros-footer></ros-footer>
+
+  <!-- স্কিপ্ট ফাইল সংযোগ এবং AOS অ্যানিমেশন ইনিশিয়েট করা -->
+  <script src="../navigation.js"></script>
+  <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+  <script>
+    // স্ক্রল অ্যানিমেশন অ্যাক্টিভেট করা
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100
+    });
+
+    // কোনো ইমেজের পাথ খুঁজে না পেলে মেইন লোগোকে ব্যাকআপ হিসেবে দেখানোর ফলব্যাক স্ক্রিপ্ট
+    document.querySelectorAll('.onerror-fallback').forEach(img => {
+      img.onerror = function() {
+        this.src = '../ros logo.png'; // পাথ না মিললে মেইন লোগো দেখাবে
+        this.style.opacity = '0.4'; // এলিমেন্ট বোঝানোর জন্য হালকা অপাসিটি
+      };
+    });
+  </script>
+</body>
+</html>
+
