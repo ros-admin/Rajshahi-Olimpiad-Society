@@ -397,10 +397,7 @@ class RosHeader extends HTMLElement {
           </div>
         </a>
 
-        <div class="header-right">
-          <a href="https://www.facebook.com/share/18nJSiYvtY/" target="_blank" class="fb-icon-top" title="Facebook Page">
-            <i class="fa-brands fa-square-facebook"></i>
-          </a>
+        <div class="header-right"
 
           <button class="menu-toggle" id="menuToggle">
             <span></span>
