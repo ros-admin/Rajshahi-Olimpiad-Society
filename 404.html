@@ -25,7 +25,26 @@ body{
     font-family:'Segoe UI',sans-serif;
 }
 
-/* 404 Image */
+
+    /* ব্যাকগ্রাউন্ডের ভাসমান কণা (Glowing Particles) */
+    .particle {
+      position: absolute;
+      bottom: -20px;
+      background: rgba(0, 180, 216, 0.25);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: floatUp 4s linear infinite;
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+    }
+
+    /* কণাগুলোর বিভিন্ন সাইজ ও টাইমিং */
+    .particle:nth-child(1) { left: 15%; width: 6px; height: 6px; animation-duration: 3.5s; animation-delay: 0.2s; }
+    .particle:nth-child(2) { left: 35%; width: 10px; height: 10px; animation-duration: 4.5s; animation-delay: 0.7s; background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+    .particle:nth-child(3) { left: 55%; width: 5px; height: 5px; animation-duration: 3s; animation-delay: 0s; }
+    .particle:nth-child(4) { left: 75%; width: 12px; height: 12px; animation-duration: 5s; animation-delay: 1.2s; }
+    .particle:nth-child(5) { left: 90%; width: 8px; height: 8px; animation-duration: 4s; animation-delay: 0.5s; background: rgba(255, 215, 0, 0.2); }
+
+    /* 404 Image */
 img{
     width:100vw;
     height:100vh;
@@ -98,7 +117,11 @@ body::before{
 </head>
 
 <body>
-
+<div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
 <img src="../404.png" alt="404 Error">
 
 <a class="home-btn"
