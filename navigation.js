@@ -514,7 +514,7 @@ class RosFooter extends HTMLElement {
             <ul class="footer-links">
               <li><a href="../About-Us/">আমাদের সম্পর্কে</a></li>
               <li><a href="../About-Logo/">লোগো সম্পর্কে</a></li>
-              <li><a href="notice.html">বিজ্ঞপ্তি</a></li>
+              <li><a href="../Notice/">বিজ্ঞপ্তি</a></li>
               <li><a href="gallery.html">ছবি</a></li>
             </ul>
           </div>
