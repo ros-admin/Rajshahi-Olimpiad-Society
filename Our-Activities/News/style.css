@@ -4,6 +4,7 @@
   --accent: #ffd700;    
   --dark-bg: #020c1b;
   --text-light: #f1f5f9;
+  --text-muted: #94a3b8;
   --card-bg: rgba(10, 25, 47, 0.65);
 }
 
@@ -17,6 +18,7 @@ body {
   max-width: 800px; margin: 0 auto; padding: 40px 20px;
 }
 
+/* ফিরে যাওয়ার বাটন */
 .back-link-btn {
   display: inline-flex; align-items: center; gap: 8px;
   color: var(--secondary); text-decoration: none; font-weight: 600;
@@ -47,6 +49,7 @@ body {
 .cat-badge-link { background: rgba(0, 180, 216, 0.12); color: var(--secondary); padding: 5px 14px; border-radius: 20px; font-size: 0.85rem; text-decoration: none; border: 1px solid rgba(0, 180, 216, 0.2); transition: 0.2s; }
 .cat-badge-link:hover { background: var(--secondary); color: #fff; }
 
+/* মতামত জানান বাটন */
 .feedback-section { text-align: center; margin: 50px 0 30px; }
 .btn-feedback { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, #0077b6, #00b4d8); color: #fff; padding: 14px 30px; border-radius: 50px; text-decoration: none; font-weight: 600; box-shadow: 0 5px 15px rgba(0, 180, 216, 0.3); transition: 0.3s; }
 .btn-feedback:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(0, 180, 216, 0.5); }
@@ -54,12 +57,24 @@ body {
 .section-divider { border: 0; height: 1px; background: rgba(255,255,255,0.08); margin: 40px 0; }
 .section-subtitle { font-size: 1.4rem; color: var(--accent); margin-bottom: 25px; }
 
-/* সর্বশেষ সংবাদ গ্রিড */
+/* সর্বশেষ সংবাদ গ্রিড এবং কার্ড */
 .activities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
-.activity-card { background: var(--card-bg); border: 1px solid rgba(0, 180, 216, 0.15); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; }
+.activity-card { background: var(--card-bg); border: 1px solid rgba(0, 180, 216, 0.15); border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; opacity: 1; transform: none; }
 .card-banner-wrapper { width: 100%; height: 140px; overflow: hidden; }
 .card-banner { width: 100%; height: 100%; object-fit: cover; }
 .card-body { padding: 15px; flex-grow: 1; }
-.card-heading { font-size: 1.05rem; margin: 0 0 8px 0; line-height: 1.4; }
+.card-heading { font-size: 1.05rem; margin: 0 0 8px 0; line-height: 1.4; font-weight: 600; }
+.card-heading a { text-decoration: none; color: #e2e8f0; }
+.card-heading a:hover { color: var(--secondary); }
 .card-date { font-size: 0.8rem; color: #64748b; }
 
+/* অ্যানিমেটেড নোটিফিকেশন টোস্ট */
+.toast-notification {
+  position: fixed; bottom: -60px; left: 50%; transform: translateX(-50%);
+  background: #0f172a; border: 1px solid var(--secondary); color: #fff;
+  padding: 12px 24px; border-radius: 30px; display: flex; align-items: center; gap: 10px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.5); font-size: 0.95rem; z-index: 9999;
+  transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+.toast-notification.show { bottom: 30px; }
+.toast-icon { color: #22c55e; font-size: 1.1rem; }
