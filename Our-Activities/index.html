@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আমাদের কার্যক্রম - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  
+  <style>
+    :root {
+      --primary: #0a1128;
+      --secondary: #00b4d8; 
+      --accent: #ffd700;    
+      --dark-bg: #020c1b;
+      --text-light: #f1f5f9;
+      --card-bg: rgba(10, 25, 47, 0.65);
+      --glow: 0 0 20px rgba(0, 180, 216, 0.3);
+    }
+
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      background-color: var(--dark-bg); color: var(--text-light);
+      overflow-x: hidden;
+    }
+
+    /* --- ১. পেজ হেডার এবং ফিল্টার --- */
+    .page-header-container {
+      padding: 60px 10% 20px; display: flex; flex-direction: column; gap: 20px;
+      border-bottom: 1px solid rgba(0, 180, 216, 0.15);
+      background: linear-gradient(180deg, rgba(10, 25, 47, 0.5) 0%, transparent 100%);
+    }
+    @media (min-width: 768px) {
+      .page-header-container { flex-direction: row; justify-content: space-between; align-items: center; }
+    }
+    .page-title { font-size: 2.2rem; color: var(--secondary); margin: 0; position: relative; }
+    .page-title::after { content: ''; display: block; width: 60px; height: 3px; background: var(--accent); margin-top: 8px; }
+    
+    .filter-select {
+      background: rgba(2, 12, 27, 0.9); color: #fff; border: 1px solid rgba(0, 180, 216, 0.3);
+      padding: 10px 20px; border-radius: 30px; cursor: pointer; outline: none;
+    }
+
+    /* --- ২. কার্যক্রম গ্রিড --- */
+    .activities-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px; padding: 60px 10%; min-height: 400px; }
+    .activity-card {
+      background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 180, 216, 0.2); border-radius: 16px; overflow: hidden;
+      display: flex; flex-direction: column; opacity: 0; transform: translateY(30px);
+      transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .activity-card.show { opacity: 1; transform: translateY(0); }
+    .activity-card:hover { border-color: var(--secondary); box-shadow: 0 15px 35px rgba(0, 180, 216, 0.25); }
+    .card-banner-wrapper { width: 100%; height: 200px; overflow: hidden; }
+    .card-banner { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+    .activity-card:hover .card-banner { transform: scale(1.05); }
+    .card-body { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+    .card-heading { font-size: 1.4rem; margin: 0 0 12px 0; color: #ffffff; cursor: pointer; }
+    .card-heading:hover { color: var(--secondary); }
+    .card-date { font-size: 0.85rem; color: #64748b; margin-bottom: 20px; }
+    .cat-badge { background: rgba(0, 180, 216, 0.12); color: var(--secondary); padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; border: 1px solid rgba(0, 180, 216, 0.25); }
+    .card-categories { margin-top: auto; display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* --- ৩. পপআপ মডাল --- */
+    .popup-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(2, 12, 27, 0.85); backdrop-filter: blur(12px); z-index: 99999;
+      display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s;
+    }
+    .popup-overlay.active { opacity: 1; visibility: visible; }
+    .popup-window {
+      background: #061121; border: 1px solid rgba(0, 180, 216, 0.25); width: 90%; max-width: 800px;
+      height: 85vh; border-radius: 24px; overflow-y: auto; position: relative; transform: scale(0.9); transition: 0.3s;
+    }
+    .popup-overlay.active .popup-window { transform: scale(1); }
+    .popup-close-btn { position: absolute; top: 20px; right: 20px; background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.1); width: 40px; height: 40px; border-radius: 50%; font-size: 1.5rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+    .popup-content-area { padding: 40px; }
+    .popup-title { font-size: 2rem; color: #fff; margin: 0 0 15px 0; }
+    
+    .popup-meta {
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
+      margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 15px; color: #94a3b8; font-size: 0.9rem;
+    }
+    .popup-meta-left { display: flex; flex-wrap: wrap; gap: 20px; }
+    .popup-meta span i { color: var(--secondary); margin-right: 6px; }
+
+    .btn-share {
+      background: rgba(0, 180, 216, 0.1); color: var(--secondary); border: 1px solid rgba(0, 180, 216, 0.3);
+      padding: 6px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; gap: 8px;
+    }
+    .btn-share:hover { background: var(--secondary); color: #fff; box-shadow: 0 0 15px rgba(0, 180, 216, 0.5); }
+
+    .popup-body-flow p { font-size: 1.1rem; line-height: 1.8; color: #cbd5e1; margin-bottom: 25px; text-align: justify; }
+    .popup-media-container { margin: 30px 0; border-radius: 14px; overflow: hidden; border: 1px solid rgba(255,255,255,0.05); }
+    .popup-dynamic-img { width: 100%; max-height: 450px; object-fit: cover; display: block; }
+    .popup-img-caption-bar { padding: 14px 20px; background: rgba(2, 12, 27, 0.7); font-size: 0.95rem; color: #cbd5e1; border-top: 1px solid rgba(255,255,255,0.05); }
+    .credit-logo { color: var(--secondary); margin-left: 8px; margin-right: 5px; }
+    .credit-name { color: var(--accent); font-weight: 500; }
+
+    .popup-quote-box { background: rgba(0, 180, 216, 0.04); border-left: 4px solid var(--secondary); padding: 25px 30px; border-radius: 0 16px 16px 0; margin: 35px 0; position: relative; }
+    .quote-text { font-size: 1.2rem; font-style: italic; color: #e2e8f0; margin: 0 0 12px 0; }
+    .quote-author { display: block; text-align: right; font-size: 0.9rem; color: var(--accent); font-weight: 600; }
+
+    .popup-footer-categories-container { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
+    .popup-category-label { font-size: 1rem; font-weight: 600; color: #94a3b8; }
+    .popup-footer-categories { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* --- সবুজ অংশ স্ক্রিন ব্লক করার সমস্যার ফিক্সড সিএসএস --- */
+    .toast-notification {
+      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+      background: #10b981; color: white; padding: 12px 30px; border-radius: 30px;
+      font-weight: 600; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
+      z-index: 100000; 
+      display: none; /* প্রথমে বাটনটিকে সম্পূর্ণ অদৃশ্য এবং ইন-অ্যাক্টিভ করে রাখা হলো */
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .toast-notification.show { 
+      display: block; /* কেবল কপি করার সময়ই এটি স্ক্রিনে দৃশ্যমান হবে */
+      opacity: 1;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <ros-header></ros-header>
+
+  <main>
+    <div class="page-header-container">
+      <h1 class="page-title">আমাদের কার্যক্রম</h1>
+      <div class="filter-wrapper">
+        <select class="filter-select" id="categoryFilter"><option value="all">সব কার্যক্রম</option></select>
+      </div>
+    </div>
+    <div class="activities-grid" id="activitiesGrid"></div>
+  </main>
+
+  <div class="popup-overlay" id="activityPopup">
+    <div class="popup-window">
+      <button class="popup-close-btn" id="closePopup">&times;</button>
+      <div class="popup-content-area" id="popupDynamicContent"></div>
+    </div>
+  </div>
+
+  <div class="toast-notification" id="toast">📋 লিংকটি কপি করা হয়েছে!</div>
+
+  <ros-footer></ros-footer>
+
+  <script>
+    let allNewsData = [];
+
+    async function fetchActivities() {
+      try {
+        const response = await fetch('../Our-Activities/News.json');
+        allNewsData = await response.json();
+        
+        generateFilterOptions(allNewsData);
+        renderCards(allNewsData);
+        
+        checkUrlForDirectOpen();
+      } catch (error) {
+        console.error("News.json লোড ত্রুটি:", error);
+      }
+    }
+
+    function generateFilterOptions(newsArray) {
+      const filterSelect = document.getElementById('categoryFilter');
+      const categoriesSet = new Set();
+      newsArray.forEach(item => { if (item.category) item.category.forEach(cat => categoriesSet.add(cat.trim())); });
+      categoriesSet.forEach(cat => {
+        const option = document.createElement('option'); option.value = cat; option.innerText = cat; filterSelect.appendChild(option);
+      });
+      filterSelect.addEventListener('change', (e) => {
+        renderCards(e.target.value === 'all' ? allNewsData : allNewsData.filter(item => item.category && item.category.includes(e.target.value)));
+      });
+    }
+
+    function renderCards(newsArray) {
+      const grid = document.getElementById('activitiesGrid'); grid.innerHTML = '';
+      newsArray.forEach((news, index) => {
+        const globalIndex = allNewsData.findIndex(item => item.link === news.link);
+        const card = document.createElement('div'); card.className = 'activity-card';
+        let catBadges = '';
+        if(news.category) news.category.forEach(cat => { catBadges += `<span class="cat-badge">${cat}</span>`; });
+
+        card.innerHTML = `
+          <div class="card-banner-wrapper"><img src="${news.image || 'default-banner.jpg'}" class="card-banner"></div>
+          <div class="card-body">
+            <h2 class="card-heading" onclick="openActivityPopup(${globalIndex})">${news.title}</h2>
+            <div class="card-date"><i class="fa-solid fa-calendar-day"></i> ${news.date || 'N/A'}</div>
+            <div class="card-categories">${catBadges}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+        setTimeout(() => { card.classList.add('show'); }, index * 100);
+      });
+    }
+
+    function openActivityPopup(index) {
+      const news = allNewsData[index]; if (!news) return;
+
+      const currentUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path: currentUrl + '?news=' + news.link}, '', currentUrl + '?news=' + news.link);
+
+      const contentArea = document.getElementById('popupDynamicContent');
+      
+      let headHTML = `
+        <h2 class="popup-title">${news.title}</h2>
+        <div class="popup-meta">
+          <div class="popup-meta-left">
+            <span><i class="fa-solid fa-pen-nib"></i> লেখা: ${news.author || 'অজানা'}</span>
+            <span><i class="fa-solid fa-clock"></i> আপলোড: ${news.date || ''} ${news.time || ''}</span>
+          </div>
+          <button class="btn-share" onclick="copyShareLink('${news.link}')"><i class="fa-solid fa-share-nodes"></i> শেয়ার</button>
+        </div>
+        <div class="popup-body-flow">
+      `;
+
+      if (news.image) {
+        headHTML += `
+          <div class="popup-media-container">
+            <img src="${news.image}" class="popup-dynamic-img">
+            ${(news.image_description || news.image_credit) ? `
+              <div class="popup-img-caption-bar">
+                <span>${news.image_description || ''}</span>
+                ${news.image_credit ? `<i class="fa-solid fa-camera credit-logo"></i><span class="credit-name">${news.image_credit}</span>` : ''}
+              </div>` : ''}
+          </div>
+        `;
+      }
+
+      if (news.news_content) {
+        news.news_content.forEach(element => {
+          if (element.type === 'paragraph') headHTML += `<p>${element.text}</p>`;
+          else if (element.type === 'image') {
+            headHTML += `
+              <div class="popup-media-container">
+                <img src="${element.url}" class="popup-dynamic-img">
+                ${(element.description || element.credit) ? `
+                  <div class="popup-img-caption-bar">
+                    <span>${element.description || ''}</span>
+                    ${element.credit ? `<i class="fa-solid fa-camera credit-logo"></i><span class="credit-name">${element.credit}</span>` : ''}
+                  </div>` : ''}
+              </div>`;
+          } else if (element.type === 'quote') {
+            headHTML += `<div class="popup-quote-box"><p class="quote-text">${element.text}</p>${element.writer ? `<span class="quote-author">— ${element.writer}</span>` : ''}</div>`;
+          }
+        });
+      }
+
+      headHTML += `</div>`;
+
+      if (news.category) {
+        headHTML += `<div class="popup-footer-categories-container"><span class="popup-category-label">ক্যাটাগরি:</span><div class="popup-footer-categories">`;
+        news.category.forEach(cat => { headHTML += `<span class="cat-badge">${cat}</span>`; });
+        headHTML += `</div></div>`;
+      }
+
+      contentArea.innerHTML = headHTML;
+      document.getElementById('activityPopup').classList.add('active');
+      document.body.style.overflow = 'hidden'; 
+    }
+
+    // সংশোধিত লিংক কপি ও ডিসপ্লে নোটিফিকেশন ফাংশন
+    function copyShareLink(shortKey) {
+      const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      const finalShareLink = `${cleanUrl}?news=${shortKey}`;
+      
+      navigator.clipboard.writeText(finalShareLink).then(() => {
+        const toast = document.getElementById('toast');
+        toast.classList.add('show'); // display: block করবে
+        
+        setTimeout(() => { 
+          toast.classList.remove('show'); // ২.৫ সেকেন্ড পর আবার হাইড করে দেবে
+        }, 2500);
+      });
+    }
+
+    function checkUrlForDirectOpen() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const newsKey = urlParams.get('news');
+      if (newsKey) {
+        const targetIndex = allNewsData.findIndex(item => item.link === newsKey);
+        if (targetIndex !== -1) {
+          openActivityPopup(targetIndex);
+        }
+      }
+    }
+
+    document.getElementById('closePopup').addEventListener('click', () => {
+      document.getElementById('activityPopup').classList.remove('active');
+      document.body.style.overflow = '';
+      const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+      window.history.pushState({path: cleanUrl}, '', cleanUrl);
+    });
+
+    window.onload = fetchActivities;
+  </script>
+  <script src="../navigation.js"></script>
+</body>
+</html>
