@@ -329,18 +329,20 @@
     }
 
     .partner-logo {
-      width: calc((100% - 30px) / 3); 
-      aspect-ratio: 1 / 1; 
-      border-radius: 50%; 
-      background: white;
-      padding: 10px; 
-      object-fit: contain; 
-      cursor: pointer; 
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-      flex-shrink: 0;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.4); 
-      border: 2px solid rgba(0, 180, 216, 0.1);
-      box-sizing: border-box;
+  width: calc((100% - 30px) / 3);
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  background: white;
+  padding: 0; /* ফাঁকা জায়গা থাকবে না */
+  object-fit: cover; /* পুরো বৃত্ত ভরবে */
+  object-position: center;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  border: 2px solid rgba(0, 180, 216, 0.1);
+  box-sizing: border-box;
+  overflow: hidden;
     }
 
     .partner-logo:hover { 
@@ -417,12 +419,10 @@
     <h2 class="section-title">আমাদের পার্টনার</h2>
     <div class="slider-viewport">
       <div class="partner-track" id="partnerTrack">
-        <img src="https://pabsraj.wordpress.com/wp-content/uploads/2024/09/cropped-picsart_24-06-13_12-40-57-801.png" class="partner-logo" onclick="window.open('https://pabsraj.wordpress.com/')" alt="Partner 1">
-        <img src="p2.png" class="partner-logo" onclick="window.open('https://partner2.com')" alt="Partner 2">
-        <img src="p3.png" class="partner-logo" onclick="window.open('https://partner3.com')" alt="Partner 3">
-        <img src="p4.png" class="partner-logo" onclick="window.open('https://partner4.com')" alt="Partner 4">
-        <img src="p5.png" class="partner-logo" onclick="window.open('https://partner5.com')" alt="Partner 5">
-        <img src="p6.png" class="partner-logo" onclick="window.open('https://partner6.com')" alt="Partner 6">
+        <img src="https://pabsraj.wordpress.com/wp-content/uploads/2024/09/cropped-picsart_24-06-13_12-40-57-801.png" class="partner-logo" onclick="window.open('https://pabsraj.wordpress.com/')" alt="Prothom Alo Bondhushava, Rajshahi">
+        <img src="https://spsb.org/wp-content/uploads/2023/12/Unknown-removebg-preview.png" class="partner-logo" onclick="window.open('https://spsb.org/')" alt="Society For The Popularization Of Science, Bangladesh (SPSB)">
+        <img src="https://www.bdosn.org/images/bdosn-logo-128.png" class="partner-logo" onclick="window.open('https://www.bdosn.org/')" alt="Bangladesh Open Source Network (BdOSN)">
+        <img src="https://maslab.org/wp-content/uploads/2024/03/MASLab-Logo-1-1.png" class="partner-logo" onclick="window.open('https://maslab.org/')" alt="Maqsudul Alam Science Laboratory (MASLab)">
       </div>
     </div>
   </section>
@@ -556,7 +556,7 @@
     setInterval(() => {
       const logos = track.children;
       const totalLogos = logos.length;
-      currentSlide += 3;
+      currentSlide += 2;
       
       if (currentSlide >= totalLogos) { currentSlide = 0; }
       
