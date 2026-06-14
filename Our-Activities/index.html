@@ -63,49 +63,50 @@
       background-color: var(--secondary);
     }
 
-    /* নতুন আইকন সহ ফিল্টার বক্সের কন্টেইনার */
-    .filter-wrapper {
+    /* মূল ফিল্টার কন্টেইনার */
+    .filter-section-wrapper {
       display: flex;
       align-items: center;
-      background-color: rgba(10, 25, 47, 0.8);
-      border: 1px solid rgba(0, 180, 216, 0.3);
-      padding: 0 15px;
-      border-radius: 8px;
-      transition: 0.3s;
+      gap: 12px; /* লেখা এবং বক্সের মধ্যকার দূরত্ব */
     }
 
-    .filter-wrapper:focus-within {
-      border-color: var(--secondary);
-      box-shadow: 0 0 10px rgba(0, 180, 216, 0.2);
-    }
-
-    .filter-label {
+    /* বক্সের বাইরের আইকন ও টেক্সট স্টাইল */
+    .filter-outside-label {
       display: flex;
       align-items: center;
       gap: 8px;
       color: var(--text-muted);
-      font-size: 0.95rem;
-      white-space: nowrap;
-      padding-right: 5px;
-    }
-
-    .filter-label i {
-      color: var(--secondary);
-    }
-
-    .filter-select {
-      background: transparent;
-      color: var(--text-light);
-      border: none;
-      padding: 12px 10px 12px 5px;
       font-size: 1rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .filter-outside-label i {
+      color: var(--secondary);
+      font-size: 0.95rem;
+    }
+
+    /* ছোট ও সুন্দর ফিল্টার সিলেক্ট বক্স */
+    .filter-select-box {
+      background-color: rgba(10, 25, 47, 0.8);
+      color: var(--text-light);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+      padding: 8px 16px;
+      border-radius: 20px; /* রাউন্ডেড প্রিমিয়াম লুক */
+      font-size: 0.95rem;
       font-family: inherit;
       outline: none;
       cursor: pointer;
-      width: 100%;
+      min-width: 140px; /* অতিরিক্ত বড় হবে না, নির্দিষ্ট মাপে থাকবে */
+      transition: all 0.3s ease;
     }
 
-    .filter-select option {
+    .filter-select-box:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.2);
+    }
+
+    .filter-select-box option {
       background-color: var(--primary);
       color: var(--text-light);
     }
@@ -117,7 +118,7 @@
       gap: 30px;
     }
 
-    /* --- নিউজ কার্ড ডিজাইন --- */
+    /* --- নিউজカード ডিজাইন --- */
     .activity-card {
       background: var(--card-bg);
       border: 1px solid rgba(0, 180, 216, 0.15);
@@ -213,16 +214,19 @@
       border: 1px solid rgba(0, 180, 216, 0.15);
     }
 
-    /* --- মোবাইল ডিভাইসের জন্য স্পেশাল রেসপন্সিভ সিএসএস --- */
+    /* --- মোবাইল রেসপন্সিভ সিএসএস --- */
     @media (max-width: 600px) {
       .page-header-container {
         flex-direction: column;
         align-items: flex-start;
         gap: 15px;
       }
-      .filter-wrapper {
+      .filter-section-wrapper {
         width: 100%;
-        box-sizing: border-box;
+        justify-content: space-between; /* মোবাইলে লেখা বামে আর বক্স একদম ডানে সুন্দরভাবে এলাইন হবে */
+      }
+      .filter-select-box {
+        min-width: 130px;
       }
       .page-title {
         font-size: 1.8rem;
@@ -241,11 +245,11 @@
     <div class="page-header-container">
       <h1 class="page-title">আমাদের কার্যক্রম</h1>
       
-      <div class="filter-wrapper">
-        <span class="filter-label">
-          <i class="fa-solid fa-filter"></i> ফিল্টার:
-        </span>
-        <select class="filter-select" id="categoryFilter">
+      <div class="filter-section-wrapper">
+        <div class="filter-outside-label">
+          <i class="fa-solid fa-sliders"></i> ফিল্টার
+        </div>
+        <select class="filter-select-box" id="categoryFilter">
           <option value="all">সব কার্যক্রম</option>
         </select>
       </div>
