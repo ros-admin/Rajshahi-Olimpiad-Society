@@ -311,7 +311,7 @@
 
     /* নীল রঙের ক্রেডিট লোগো (ক্যামেরা) */
     .credit-logo {
-      color: var(--secondary);
+      color: var(--accent);
       margin-left: 8px;
       margin-right: 5px;
       font-size: 0.9rem;
@@ -319,7 +319,7 @@
 
     /* হলুদ রঙের ক্রেডিট নাম */
     .credit-name {
-      color: var(--accent);
+      color: var(--secondary);
       font-weight: 500;
     }
 
@@ -517,8 +517,8 @@
       let headHTML = `
         <h2 class="popup-title">${news.title}</h2>
         <div class="popup-meta">
-          <span><i class="fa-solid fa-pen-nib"></i> লেখা: ${news.author || 'অজানা'}</span>
-          <span><i class="fa-solid fa-clock"></i> আপলোড: ${news.date || ''} ${news.time || ''}</span>
+          <span><i class="fa-solid fa-pen-nib"></i> <b>লেখা:</b> ${news.author || 'অজানা'}</span>
+          <span><i class="fa-solid fa-clock"></i> <b>আপলোড:</b> ${news.date || ''} ${news.time || ''}</span>
         </div>
         <div class="popup-body-flow">
       `;
