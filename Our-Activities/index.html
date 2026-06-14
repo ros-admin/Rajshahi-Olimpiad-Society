@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>আমাদের কার্যক্রম - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  <link rel="stylesheet" href="News/style.css"> <!-- কমন স্টাইল ইন্টিগ্রেশন -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <ros-header></ros-header>
+
+  <main>
+    <div class="page-header-container">
+      <h1 class="page-title">আমাদের কার্যক্রম</h1>
+      <div class="filter-wrapper">
+        <select class="filter-select" id="categoryFilter"><option value="all">সব কার্যক্রম</option></select>
+      </div>
+    </div>
+    <div class="activities-grid" id="mainActivitiesGrid">
+       <p style="text-align:center; grid-column: 1/-1; padding:50px; color:#64748b;">কার্যক্রম স্ক্যান করা হচ্ছে...</p>
+    </div>
+  </main>
+
+  <ros-footer></ros-footer>
+
+  <script>
+    // এখানে আপনার তৈরি করা সংবাদের ফোল্ডারগুলোর নামের তালিকা (লিংক আইডি) এন্ট্রি করবেন মাত্র
+    const newsFolders = ["abc123"]; 
+    let allNewsData = [];
+
+    async function compileAndRenderActivities() {
+      try {
+        // প্রতিটি ফোল্ডারের data.json থেকে তথ্য ফেচ করা
+        const fetchPromises = newsFolders.map(folder => 
+          fetch(`News/${folder}/data.json`).then(res => res.json())
+        );
+        
+        allNewsData = await Promise.all(fetchPromises);
+        
+        // সংবাদের তারিখ এবং সময় অনুযায়ী ক্রমানুসারে (নতুন থেকে পুরনো) সাজানো
+        allNewsData.sort((a, b) => {
+          const dateTimeA = new Date(`${a.date} ${a.time || '00:00 AM'}`);
+          const dateTimeB = new Date(`${b.date} ${b.time || '00:00 AM'}`);
+          return dateTimeB - dateTimeA;
+        });
+
+        // গ্লোবালি উইন্ডোতে ডেটা সেট করা যাতে চাইল্ড স্ক্রিপ্ট রিড করতে পারে
+        window.allNewsData = allNewsData;
+
+        buildFilterOptions(allNewsData);
+        
+        // ইউআরএল-এ কোনো স্পেসিফিক ক্যাটাগরি ফিল্টার প্যারামিটার (?filter=) আছে কিনা চেক করা
+        const urlParams = new URLSearchParams(window.location.search);
+        const filterParam = urlParams.get('filter');
+        
+        if (filterParam) {
+          document.getElementById('categoryFilter').value = filterParam;
+          displayCards(allNewsData.filter(item => item.category && item.category.includes(filterParam)));
+        } else {
+          displayCards(allNewsData);
+        }
+
+      } catch (error) {
+        console.error("অ্যাক্টিভিটি এগ্রিগেশন ত্রুটি:", error);
+      }
+    }
+
+    function buildFilterOptions(newsArray) {
+      const select = document.getElementById('categoryFilter');
+      const cats = new Set();
+      newsArray.forEach(item => { if(item.category) item.category.forEach(c => cats.add(c.trim())); });
+      cats.forEach(c => {
+        const opt = document.createElement('option'); opt.value = c; opt.innerText = c; select.appendChild(opt);
+      });
+      select.addEventListener('change', (e) => {
+        displayCards(e.target.value === 'all' ? allNewsData : allNewsData.filter(item => item.category && item.category.includes(e.target.value)));
+      });
+    }
+
+    function displayCards(newsArray) {
+      const grid = document.getElementById('mainActivitiesGrid');
+      grid.innerHTML = '';
+      
+      if(newsArray.length === 0) {
+        grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:#64748b;'>এই ক্যাটাগরিতে কোনো সংবাদ পাওয়া যায়নি।</p>";
+        return;
+      }
+
+      newsArray.forEach(news => {
+        const card = document.createElement('div');
+        card.className = 'activity-card';
+        let badges = '';
+        if(news.category) news.category.forEach(c => { badges += `<span class="cat-badge-link" style="pointer-events:none;">${c}</span>`; });
+
+        card.innerHTML = `
+          <div class="card-banner-wrapper"><img src="${news.image || 'default-banner.jpg'}" class="card-banner"></div>
+          <div class="card-body">
+            <h2 class="card-heading">
+               <a href="News/${news.link}/index.html" style="text-decoration:none; color:inherit;">${news.title}</a>
+            </h2>
+            <div class="card-date"><i class="fa-solid fa-calendar-day"></i> ${news.date}</div>
+            <div class="card-categories" style="margin-top:15px; display:flex; gap:5px; flex-wrap:wrap;">${badges}</div>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    window.onload = compileAndRenderActivities;
+  </script>
+  <script src="../navigation.js"></script>
+</body>
+</html>
+
