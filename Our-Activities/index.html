@@ -103,6 +103,42 @@
     .popup-footer-categories-container { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
     .popup-category-label { font-size: 1rem; font-weight: 600; color: #94a3b8; }
     .popup-footer-categories { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    /* --- নতুন গ্লাস-মরফিজম প্রিমিয়াম টোস্ট নোটিফিকেশন সিএসএস --- */
+    .toast-notification {
+      position: fixed;
+      bottom: -100px; /* প্রথমে নিচে স্ক্রিনের বাইরে থাকবে */
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 25, 47, 0.85);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid var(--secondary);
+      color: #ffffff;
+      padding: 14px 28px;
+      border-radius: 50px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 30px rgba(0, 180, 216, 0.3);
+      z-index: 100005; /* মডালেরও ওপরে থাকবে */
+      transition: bottom 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+      opacity: 0;
+      pointer-events: none; /* যখন শো করবে না তখন পেছনের ক্লিকে বাঁধা দেবে না */
+    }
+    
+    .toast-notification.show {
+      bottom: 40px; /* আলতো ঝাকুনি দিয়ে উপরে উঠে আসবে */
+      opacity: 1;
+    }
+
+    .toast-icon {
+      color: #10b981; /* সবুজ চেক আইকন */
+      font-size: 1.1rem;
+    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -125,6 +161,11 @@
       <button class="popup-close-btn" id="closePopup">&times;</button>
       <div class="popup-content-area" id="popupDynamicContent"></div>
     </div>
+  </div>
+
+  <div class="toast-notification" id="toast">
+    <i class="fa-solid fa-circle-check toast-icon"></i>
+    <span>লিংকটি সফলভাবে কপি করা হয়েছে!</span>
   </div>
 
   <ros-footer></ros-footer>
@@ -244,12 +285,18 @@
       document.body.style.overflow = 'hidden'; 
     }
 
+    // নতুন অ্যানিমেটেড টোস্ট কন্ট্রোলার জাভাস্ক্রিপ্ট
     function copyShareLink(shortKey) {
       const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
       const finalShareLink = `${cleanUrl}?news=${shortKey}`;
       
       navigator.clipboard.writeText(finalShareLink).then(() => {
-        alert("📋 লিংকটি কপি করা হয়েছে!"); // এখানে সাধারণ অ্যালার্ট মেসেজ আসবে, কোনো এক্সট্রা সবুজ ব্যাকগ্রাউন্ড থাকবে না
+        const toast = document.getElementById('toast');
+        toast.classList.add('show'); // টোস্টটি স্ক্রিনে এনিমেট হয়ে আসবে
+        
+        setTimeout(() => { 
+          toast.classList.remove('show'); // ২.৫ সেকেন্ড পর স্মুথলি নিচে নেমে যাবে
+        }, 2500);
       });
     }
 
