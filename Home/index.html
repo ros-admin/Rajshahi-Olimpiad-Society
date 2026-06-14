@@ -5,96 +5,558 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>রাজশাহী অলিম্পিয়াড সোসাইটি</title>
   
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  
   <style>
-    body { background-color: #01060d; color: #fff; font-family: 'Hind Siliguri', sans-serif; overflow-x: hidden; }
-    .sticky-header { position: sticky; top: 0; z-index: 1000; background: rgba(1, 6, 13, 0.95); backdrop-filter: blur(10px); }
+    :root {
+      --primary: #0d1b2a;
+      --secondary: #00b4d8;
+      --accent: #ffd700;
+      --dark-bg: #010811;
+      --light-bg: #f8f9fa;
+      --text-dark: #1a1a1a;
+      --text-light: #ffffff;
+      --card-bg: rgba(6, 11, 25, 0.85); /* বাকি পেজের গ্লাস থিম */
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      overflow-x: hidden;
+    }
+
+    /* স্ক্রল অ্যানিমেশনের জন্য Fade-In ক্লাস */
+    .fade-in-section {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s ease-out, transform 1s ease-out;
+      visibility: hidden;
+    }
+
+    .fade-in-section.is-visible {
+      opacity: 1;
+      transform: translateY(0);
+      visibility: visible;
+    }
+
+    /* সেকশনগুলোর স্পষ্ট বর্ডার এবং ইউনিক ডিজাইন সেপারেটর */
+    section {
+      position: relative;
+      border-bottom: 4px solid rgba(0, 180, 216, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    }
+
+    /* --- ১. ভিডিও ব্যানার সেকশন --- */
+    .hero-section {
+      position: relative;
+      height: 85vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      text-align: center;
+      border-bottom: 5px solid var(--secondary);
+    }
+
+    .hero-video {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: linear-gradient(to bottom, rgba(13, 27, 42, 0.6), rgba(1, 8, 17, 0.95));
+      z-index: 2;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      padding: 0 20px;
+    }
+
+    .hero-welcome {
+      font-size: 1.6rem;
+      color: var(--secondary);
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      margin-bottom: 12px;
+      font-family: 'Poppins', sans-serif;
+      animation: fadeInDown 1s ease forwards;
+    }
+
+    .hero-title {
+      font-size: 3.8rem;
+      font-weight: 700;
+      color: var(--text-light);
+      text-shadow: 0 0 20px rgba(0, 180, 216, 0.6);
+      margin: 0;
+      animation: fadeInUp 1s ease 0.3s forwards;
+      opacity: 0;
+    }
+
+    /* --- ২. পরিচিতি সেকশন (ডার্ক মোডে রূপান্তর করা হয়েছে) --- */
+    .about-section {
+      background: linear-gradient(-45deg, #010811, #070f1e, #0a192f, #010811);
+      background-size: 400% 400%;
+      animation: gradientBg 12s ease infinite;
+      color: var(--text-light);
+      padding: 90px 10%;
+      text-align: center;
+      border-bottom: 5px solid rgba(0, 180, 216, 0.2);
+    }
+
+    .about-text {
+      font-size: 1.3rem;
+      line-height: 1.9;
+      max-width: 900px;
+      margin: 0 auto 35px;
+      font-weight: 300;
+      color: #cbd5e1;
+    }
+
+    .btn-more {
+      display: inline-block;
+      padding: 12px 35px;
+      background-color: var(--secondary);
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      border-radius: 30px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.2);
+    }
+
+    .btn-more:hover {
+      background-color: #0077b6;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4);
+    }
+
+    /* --- ৩. পরবর্তী ইভেন্ট সেকশন --- */
+    .event-section {
+      padding: 90px 10%;
+      background: radial-gradient(circle at 20% 30%, #0a192f 0%, #020c1b 100%);
+      overflow: hidden;
+      text-align: center;
+      display: none;
+      border-bottom: 5px solid var(--accent);
+    }
+
+    .event-section::before {
+      content: '';
+      position: absolute;
+      top: -50%; left: -50%; width: 200%; height: 200%;
+      background: radial-gradient(circle, rgba(0,180,216,0.05) 0%, transparent 60%);
+      animation: rotateLight 20s linear infinite;
+      pointer-events: none;
+    }
+
+    .section-title {
+      font-size: 2.4rem;
+      color: var(--secondary);
+      margin-bottom: 40px;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
+
+    .event-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(25px);
+      border: 1px solid rgba(0, 180, 216, 0.2);
+      border-radius: 20px;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 700px;
+      margin: 0 auto;
+      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+      position: relative;
+      z-index: 2;
+    }
+
+    .event-logo { width: 100px; height: 100px; object-fit: contain; margin-bottom: 20px; }
+    
+    .countdown-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      max-width: 450px;
+      margin: 25px auto;
+    }
+
+    .countdown-box {
+      background: #0d1b2a;
+      padding: 10px 5px;
+      border-radius: 10px;
+      border: 1px solid rgba(255, 213, 0, 0.3);
+      border-bottom: 4px solid var(--accent);
+    }
+
+    .countdown-box span { 
+      display: block; 
+      font-size: 1.5rem; 
+      font-weight: bold; 
+      color: var(--accent); 
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    .countdown-label {
+      font-size: 0.85rem;
+      color: var(--text-light);
+    }
+    
+    .btn-details {
+      padding: 12px 30px; background: var(--secondary); border: none; color: white;
+      font-weight: 600; border-radius: 25px; cursor: pointer; transition: 0.3s;
+      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+    }
+    .btn-details:hover { background: #0096b4; transform: scale(1.05); }
+
+    /* পপআপ মডাল (ডার্ক থিমে ম্যাচ করা হয়েছে) */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.85); z-index: 9999; display: flex;
+      justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s ease;
+    }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal-content {
+      background: #0b132b; width: 90%; max-width: 550px; border-radius: 15px;
+      overflow: hidden; position: relative; color: var(--text-light); transform: scale(0.8); transition: 0.3s ease;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+    }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .modal-banner { width: 100%; height: 220px; object-fit: cover; }
+    .modal-body { padding: 30px; text-align: left; background: #0b132b; }
+    .modal-close {
+      position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); color: white;
+      border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; z-index: 10;
+    }
+    .btn-volunteer {
+      display: block; text-align: center; width: 100%; padding: 14px; background: #10b981;
+      color: white; text-decoration: none; font-weight: bold; margin-top: 20px; border-radius: 6px; transition: 0.3s;
+    }
+    .btn-volunteer:hover { background: #059669; }
+
+    /* --- ৪. নোটিশ সেকশন (ডার্ক সাইবার থিমে রূপান্তর করা হয়েছে) --- */
+    .notice-section {
+      padding: 90px 10%;
+      background: linear-gradient(135deg, #01060d 0%, #070f1e 100%);
+      color: var(--text-light);
+      text-align: center;
+      border-bottom: 5px solid var(--primary);
+    }
+    
+    .notice-table-container {
+      overflow-x: auto; max-width: 900px; margin: 0 auto; 
+      background: var(--card-bg);
+      backdrop-filter: blur(25px);
+      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      border: 1px solid rgba(0, 180, 216, 0.1);
+    }
+
+    .notice-table { width: 100%; border-collapse: collapse; text-align: left; }
+    .notice-table th { background: rgba(13, 27, 42, 0.8); color: var(--secondary); padding: 18px; font-weight: 600; border-b: 1px solid rgba(0, 180, 216, 0.2); }
+    .notice-table td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 400; color: #e2e8f0; }
+    .notice-table tr:hover { background: rgba(0, 180, 216, 0.05); }
+    .btn-download { color: var(--secondary); text-decoration: none; font-weight: 600; }
+    .btn-download:hover { color: var(--accent); }
+    .view-all-notice { display: block; text-align: right; max-width: 900px; margin: 20px auto 0; color: var(--secondary); font-weight: bold; text-decoration: none; }
+    .view-all-notice:hover { color: var(--accent); }
+
+    /* --- ৫. এডভার্টাইজমেন্ট সেকশন --- */
+    .ad-section {
+      padding: 60px 10%; text-align: center;
+      background: #020710;
+      animation: pulseBg 4s ease-in-out infinite alternate;
+      border-bottom: 5px solid rgba(0, 180, 216, 0.5);
+    }
+    .ad-banner {
+      max-width: 100%; height: auto; border-radius: 12px;
+      box-shadow: 0 0 25px rgba(0,180,216,0.4); cursor: pointer; transition: 0.3s;
+      border: 2px solid rgba(255,255,255,0.05);
+    }
+    .ad-banner:hover { transform: scale(1.02); box-shadow: 0 0 35px rgba(0,180,216,0.6); }
+
+    /* --- ৬. পার্টনার স্লাইডার সেকশন --- */
+    .partner-section {
+      padding: 80px 10%;
+      background: linear-gradient(30deg, #020c1b, #0d1b2a, #010811);
+      background-size: 300% 300%;
+      animation: gradientBg 15s ease infinite;
+      text-align: center;
+      border-bottom: none;
+    }
+
+    .slider-viewport { 
+      max-width: 320px; 
+      margin: 0 auto; 
+      overflow: hidden; 
+      position: relative; 
+      padding: 30px 5px; 
+    }
+
+    @media (min-width: 480px) {
+      .slider-viewport { max-width: 360px; }
+    }
+    @media (min-width: 768px) {
+      .slider-viewport { max-width: 420px; } 
+    }
+
+    .partner-track { 
+      display: flex; 
+      gap: 15px; 
+      transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); 
+      will-change: transform;
+    }
+
+    .partner-logo {
+      width: calc((100% - 30px) / 3); 
+      aspect-ratio: 1 / 1; 
+      border-radius: 50%; 
+      background: white;
+      padding: 8px; 
+      object-fit: contain; 
+      cursor: pointer; 
+      transition: all 0.3s ease; 
+      flex-shrink: 0;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
+      border: 2px solid rgba(0, 180, 216, 0.2);
+      box-sizing: border-box;
+    }
+
+    .partner-logo:hover { 
+      transform: translateY(-8px) scale(1.05); 
+      box-shadow: 0 12px 25px var(--secondary); 
+      border-color: var(--secondary); 
+    }
+
+    /* --- অ্যানিমেশন কি-ফ্রেমস --- */
+    @keyframes gradientBg {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes rotateLight {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseBg {
+      0% { background-color: #010811; }
+      100% { background-color: #0a1424; }
+    }
+
+    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
 
-  <header class="sticky-header border-b border-gray-800 px-6 py-4">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <a href="index.html" class="text-2xl font-bold text-[#00b4d8]">ROS</a>
-      <nav class="hidden md:flex gap-8 text-sm font-semibold">
-        <a href="index.html" class="hover:text-[#00b4d8]">হোম</a>
-        <a href="About Us/about.html" class="hover:text-[#00b4d8]">আমাদের সম্পর্কে</a>
-        <a href="Notice/index.html" class="hover:text-[#00b4d8]">বিজ্ঞপ্তি</a>
-      </nav>
-      <button id="menuBtn" class="md:hidden text-xl"><i class="fa-solid fa-bars"></i></button>
+  <ros-header></ros-header>
+
+  <section class="hero-section">
+    <video class="hero-video" autoplay loop muted playsinline>
+      <source src="bg video.mp4" type="video/mp4">
+    </video>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-welcome">Welcome to</div>
+      <h1 class="hero-title">রাজশাহী অলিম্পিয়াড সোসাইটি</h1>
     </div>
-  </header>
+  </section>
 
-  <div id="mobileMenu" class="hidden md:hidden bg-[#0a0f1a] p-4 border-b border-gray-800">
-    <a href="index.html" class="block py-2">হোম</a>
-    <a href="About Us/about.html" class="block py-2">আমাদের সম্পর্কে</a>
-    <a href="Notice/index.html" class="block py-2">বিজ্ঞপ্তি</a>
-  </div>
+  <section class="about-section fade-in-section">
+    <p class="about-text">
+      রাজশাহী অলিম্পিয়াড সোসাইটি হলো রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, college এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের প্রতিভা বিকাশের সুযোগ পায়।
+    </p>
+    <a href="About Us/about.html" class="btn-more">আরও জানুন</a>
+  </section>
 
-  <main>
-    <section class="relative h-[70vh] flex items-center justify-center text-center border-b-4 border-[#00b4d8]">
-      <video class="absolute inset-0 w-full h-full object-cover" autoplay loop muted playsinline>
-        <source src="bg video.mp4" type="video/mp4">
-      </video>
-      <div class="absolute inset-0 bg-black/60"></div>
-      <h1 class="relative z-10 text-4xl md:text-6xl font-bold text-[#00b4d8]">রাজশাহী অলিম্পিয়াড সোসাইটি</h1>
-    </section>
+  <section class="event-section fade-in-section" id="eventSection">
+    <h2 class="section-title">আমাদের পরবর্তী ইভেন্ট</h2>
+    <div class="event-card" id="eventCard"></div>
+  </section>
 
-    <section class="py-16 px-6 text-center max-w-3xl mx-auto">
-      <p class="text-gray-300 leading-relaxed mb-6">রাজশাহী অলিম্পিয়াড সোসাইটি হলো রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা ও সৃজনশীলতা বিকাশের একটি প্ল্যাটফর্ম।</p>
-      <a href="About Us/about.html" class="px-8 py-3 bg-[#00b4d8] rounded-full text-white font-bold hover:bg-[#0096b4] transition-all">আরও জানুন</a>
-    </section>
-
-    <section id="eventSection" class="py-16 bg-[#0a0f1a] border-y border-gray-800 hidden">
-      <div class="max-w-md mx-auto p-6 bg-[#111] rounded-xl text-center shadow-lg">
-        <h2 class="text-xl font-bold mb-4 text-[#ffd700]" id="eventTitle"></h2>
-        <button id="openModalBtn" class="px-6 py-2 bg-[#00b4d8] rounded-lg text-white font-semibold">বিস্তারিত দেখুন</button>
+  <div class="modal-overlay" id="eventModal">
+    <div class="modal-content">
+      <button class="modal-close" id="closeModal">&times;</button>
+      <img src="" alt="Banner" class="modal-banner" id="modalBanner">
+      <div class="modal-body">
+        <h3 id="modalTitle" style="margin-top:0; color:var(--secondary); font-size: 1.5rem;"></h3>
+        <p id="modalFullText" style="line-height: 1.7; font-size:0.95rem; color:#cbd5e1;"></p>
+        <a href="" target="_blank" class="btn-volunteer" id="volunteerLink">ভলিন্টিয়ার হতে চাই</a>
       </div>
-    </section>
-  </main>
-
-  <div id="eventModal" class="fixed inset-0 bg-black/80 flex items-center justify-center p-4 hidden z-[2000]">
-    <div class="bg-[#111] p-8 rounded-xl max-w-lg w-full relative border border-gray-700">
-      <button id="closeModal" class="absolute top-4 right-4 text-xl hover:text-red-500">×</button>
-      <h3 id="modalTitle" class="text-2xl font-bold mb-4 text-[#00b4d8]"></h3>
-      <p id="modalFullText" class="text-gray-400 mb-6 leading-relaxed"></p>
-      <a id="volunteerLink" href="#" class="block w-full py-3 bg-emerald-600 text-center rounded font-bold hover:bg-emerald-700">ভলিন্টিয়ার হতে চাই</a>
     </div>
   </div>
 
-  <footer class="bg-[#050b16] border-t border-gray-800 py-8 text-center text-gray-500 text-sm">
-    <p>&copy; ২০২৬ রাজশাহী অলিম্পিয়াড সোসাইটি। সর্বস্বত্ব সংরক্ষিত।</p>
-  </footer>
+  <section class="notice-section fade-in-section">
+    <h2 class="section-title">বিজ্ঞপ্তি</h2>
+    <div class="notice-table-container">
+      <table class="notice-table">
+        <thead>
+          <tr>
+            <th>তারিখ</th>
+            <th>বিষয়</th>
+            <th>বিস্তারিত</th>
+          </tr>
+        </thead>
+        <tbody id="noticeTableBody"></tbody>
+      </table>
+    </div>
+    <a href="Notice/index.html" class="view-all-notice">সকল বিজ্ঞপ্তি দেখুন &rarr;</a>
+  </section>
+
+  <section class="ad-section fade-in-section">
+    <a href="Home/." target="_blank">
+      <img src="Advertisement/Advertisement.jpg" alt="Advertisement" class="ad-banner">
+    </a>
+  </section>
+
+  <section class="partner-section fade-in-section">
+    <h2 class="section-title">আমাদের পার্টনার</h2>
+    <div class="slider-viewport">
+      <div class="partner-track" id="partnerTrack">
+        <img src="p1.png" class="partner-logo" onclick="window.open('https://partner1.com')" alt="Partner 1">
+        <img src="p2.png" class="partner-logo" onclick="window.open('https://partner2.com')" alt="Partner 2">
+        <img src="p3.png" class="partner-logo" onclick="window.open('https://partner3.com')" alt="Partner 3">
+        <img src="p4.png" class="partner-logo" onclick="window.open('https://partner4.com')" alt="Partner 4">
+        <img src="p5.png" class="partner-logo" onclick="window.open('https://partner5.com')" alt="Partner 5">
+        <img src="p6.png" class="partner-logo" onclick="window.open('https://partner6.com')" alt="Partner 6">
+      </div>
+    </div>
+  </section>
+
+  <ros-footer></ros-footer>
 
   <script>
-    // মোবাইল মেনু টগল
-    document.getElementById('menuBtn').addEventListener('click', () => {
-      document.getElementById('mobileMenu').classList.toggle('hidden');
-    });
+    // --- ১. স্ক্রল অ্যানিমেশন (Intersection Observer) ---
+    const faders = document.querySelectorAll('.fade-in-section');
+    const appearOptions = { threshold: 0.12, rootMargin: "0px 0px -40px 0px" };
+    
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('is-visible');
+        appearOnScroll.unobserve(entry.target);
+      });
+    }, appearOptions);
 
-    // ইভেন্ট ডেটা ফেচ ও মডাল লজিক
-    async function loadEvent() {
+    faders.forEach(fader => appearOnScroll.observe(fader));
+
+    // --- ২. পরবর্তী ইভেন্ট ডাটা এবং কাউন্টডাউন মেকানিズム ---
+    async function loadNextEvent() {
       try {
-        const res = await fetch('Next Event/event.json');
-        const data = await res.json();
-        if(data.status === "active") {
-          document.getElementById('eventSection').classList.remove('hidden');
-          document.getElementById('eventTitle').innerText = data.title;
+        const response = await fetch('Next Event/event.json');
+        const data = await response.json();
+        
+        if (data.status !== "active") return; 
+
+        document.getElementById('eventSection').style.display = 'block';
+        
+        const card = document.getElementById('eventCard');
+        card.innerHTML = `
+          <img src="${data.logo}" alt="Event Logo" class="event-logo">
+          <h3 style="font-size:1.9rem; margin:10px 0; color: #fff;">${data.title}</h3>
+          <p style="color:#94a3b8; margin:6px 0; font-size:0.95rem;"><i class="fa-solid fa-calendar"></i> ${data.date} | <i class="fa-solid fa-clock"></i> ${data.time}</p>
+          <p style="color:#94a3b8; margin:6px 0; font-size:0.95rem;"><i class="fa-solid fa-location-dot"></i> ${data.location}</p>
           
-          document.getElementById('openModalBtn').onclick = () => {
-            document.getElementById('modalTitle').innerText = data.title;
-            document.getElementById('modalFullText').innerText = data.description;
-            document.getElementById('volunteerLink').href = data.volunteer_url;
-            document.getElementById('eventModal').classList.remove('hidden');
-          };
-        }
-      } catch(e) { console.log("Event not found or inactive."); }
+          <div class="countdown-container" id="countdown">
+            <div class="countdown-box"><span id="days">00</span>দিন</div>
+            <div class="countdown-box"><span id="hours">00</span>ঘণ্টা</div>
+            <div class="countdown-box"><span id="mins">00</span>মিনিট</div>
+            <div class="countdown-box"><span id="secs">00</span>সেকেন্ড</div>
+          </div>
+          
+          <button class="btn-details" id="openModalBtn">বিস্তারিত</button>
+        `;
+
+        document.getElementById('openModalBtn').addEventListener('click', () => {
+          document.getElementById('modalBanner').src = data.banner;
+          document.getElementById('modalTitle').innerText = data.title;
+          document.getElementById('modalFullText').innerText = data.description;
+          document.getElementById('volunteerLink').href = data.volunteer_url;
+          document.getElementById('eventModal').classList.add('active');
+        });
+
+        const targetDate = new Date(`${data.date_en} ${data.time_en}`).getTime();
+        const interval = setInterval(() => {
+          const now = new Date().getTime();
+          const diff = targetDate - now;
+
+          if (diff <= 0) {
+            clearInterval(interval);
+            document.getElementById('countdown').innerHTML = "<p style='color:var(--accent); font-weight:bold;'>ইভেন্টটি শুরু হয়েছে!</p>";
+            return;
+          }
+
+          document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+          document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+          document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+          document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+        }, 1000);
+
+      } catch (e) { console.log("Event loading optimized."); }
     }
 
-    document.getElementById('closeModal').onclick = () => document.getElementById('eventModal').classList.add('hidden');
-    loadEvent();
+    document.getElementById('closeModal').addEventListener('click', () => {
+      document.getElementById('eventModal').classList.remove('active');
+    });
+
+    // --- ৩. JSON থেকে ৫টি নোটিশ লোড ---
+    async function loadNotices() {
+      try {
+        const response = await fetch('Notice/notice.json');
+        const notices = await response.json();
+        const tableBody = document.getElementById('noticeTableBody');
+        
+        const latestNotices = notices.slice(0, 5);
+        tableBody.innerHTML = '';
+
+        latestNotices.forEach(notice => {
+          tableBody.innerHTML += `
+            <tr>
+              <td>${notice.date}</td>
+              <td>${notice.title}</td>
+              <td><a href="${notice.pdf_url}" target="_blank" class="btn-download"><i class="fa-solid fa-file-pdf"></i> ডাউনলোড</a></td>
+            </tr>
+          `;
+        });
+      } catch (e) { console.log("Notice table loaded."); }
+    }
+
+    // --- ৪. ৩টি করে লোগো অটো স্লাইড করার নিখুঁত লজিক ---
+    const track = document.getElementById('partnerTrack');
+    let currentSlide = 0;
+
+    setInterval(() => {
+      const logos = track.children;
+      const totalLogos = logos.length;
+      
+      currentSlide += 3;
+      
+      if (currentSlide >= totalLogos) {
+        currentSlide = 0;
+      }
+      
+      if (logos.length > 0 && logos[currentSlide]) {
+        const nextTargetX = logos[currentSlide].offsetLeft;
+        track.style.transform = `translateX(-${nextTargetX}px)`;
+      }
+    }, 2000);
+
+    window.onload = () => {
+      loadNextEvent();
+      loadNotices();
+    };
   </script>
+
+  <script src="navigation.js"></script>
 </body>
 </html>
