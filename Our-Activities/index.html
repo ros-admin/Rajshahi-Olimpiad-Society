@@ -63,22 +63,51 @@
       background-color: var(--secondary);
     }
 
-    .filter-select {
+    /* নতুন আইকন সহ ফিল্টার বক্সের কন্টেইনার */
+    .filter-wrapper {
+      display: flex;
+      align-items: center;
       background-color: rgba(10, 25, 47, 0.8);
-      color: var(--text-light);
       border: 1px solid rgba(0, 180, 216, 0.3);
-      padding: 10px 20px;
+      padding: 0 15px;
       border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .filter-wrapper:focus-within {
+      border-color: var(--secondary);
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.2);
+    }
+
+    .filter-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      white-space: nowrap;
+      padding-right: 5px;
+    }
+
+    .filter-label i {
+      color: var(--secondary);
+    }
+
+    .filter-select {
+      background: transparent;
+      color: var(--text-light);
+      border: none;
+      padding: 12px 10px 12px 5px;
       font-size: 1rem;
       font-family: inherit;
       outline: none;
       cursor: pointer;
-      transition: 0.3s;
+      width: 100%;
     }
 
-    .filter-select:focus {
-      border-color: var(--secondary);
-      box-shadow: 0 0 10px rgba(0, 180, 216, 0.2);
+    .filter-select option {
+      background-color: var(--primary);
+      color: var(--text-light);
     }
 
     /* --- কার্যকলাপে গ্রিড লেআউট --- */
@@ -102,7 +131,6 @@
       box-shadow: 0 10px 30px rgba(2, 12, 27, 0.7);
     }
 
-    /* কার্ড লোড হওয়ার অ্যানিমেশন ক্লাস */
     .activity-card.show {
       opacity: 1;
       transform: translateY(0);
@@ -114,7 +142,6 @@
       box-shadow: 0 20px 40px rgba(0, 180, 216, 0.15);
     }
 
-    /* ইমেজ রিলড এরিয়া */
     .card-banner-wrapper {
       width: 100%;
       height: 200px;
@@ -133,7 +160,6 @@
       transform: scale(1.05);
     }
 
-    /* কার্ড বডি */
     .card-body {
       padding: 25px;
       display: flex;
@@ -171,7 +197,6 @@
       color: var(--secondary);
     }
 
-    /* ক্যাটাগরি ব্যাজ */
     .card-categories {
       margin-top: auto;
       display: flex;
@@ -188,53 +213,54 @@
       border: 1px solid rgba(0, 180, 216, 0.15);
     }
 
-    /* রেসপন্সিভ ব্রেকপয়েন্ট */
+    /* --- মোবাইল ডিভাইসের জন্য স্পেশাল রেসপন্সিভ সিএসএস --- */
     @media (max-width: 600px) {
       .page-header-container {
         flex-direction: column;
         align-items: flex-start;
+        gap: 15px;
       }
       .filter-wrapper {
         width: 100%;
-      }
-      .filter-select {
-        width: 100%;
+        box-sizing: border-box;
       }
       .page-title {
         font-size: 1.8rem;
+      }
+      .page-title::after {
+        bottom: -16px;
       }
     }
   </style>
 </head>
 <body>
 
-  <!-- নেভিগেশন হেডার (navigation.js থেকে লোড হবে) -->
   <ros-header></ros-header>
 
   <main>
-    <!-- পেজ হেডার এবং ফিল্টার সেকশন -->
     <div class="page-header-container">
       <h1 class="page-title">আমাদের কার্যক্রম</h1>
+      
       <div class="filter-wrapper">
+        <span class="filter-label">
+          <i class="fa-solid fa-filter"></i> ফিল্টার:
+        </span>
         <select class="filter-select" id="categoryFilter">
           <option value="all">সব কার্যক্রম</option>
         </select>
       </div>
     </div>
 
-    <!-- কার্যক্রম প্রদর্শনের মেইন গ্রিড এরিয়া -->
     <div class="activities-grid" id="mainActivitiesGrid">
        <p style="text-align:center; grid-column: 1/-1; padding:50px; color:#64748b;">কার্যক্রম স্ক্যান করা হচ্ছে...</p>
     </div>
   </main>
 
-  <!-- নেভিগেশন ফুটার (navigation.js থেকে লোড হবে) -->
   <ros-footer></ros-footer>
 
   <script>
     let allNewsData = [];
 
-    // list.json থেকে ফোল্ডারের তালিকা নিয়ে স্বয়ংক্রিয়ভাবে ডেটা ফেচ করা
     async function compileAndRenderActivities() {
       try {
         const listResponse = await fetch('News/list.json');
@@ -242,7 +268,6 @@
         
         const newsFolders = await listResponse.json(); 
 
-        // প্রতিটি ফোল্ডারের ভেতর থাকা data.json ফাইল থেকে ডেটা আনা
         const fetchPromises = newsFolders.map(folder => 
           fetch(`News/${folder}/data.json`).then(res => {
             if (!res.ok) throw new Error(`News/${folder}/data.json লোড করা যায়নি`);
@@ -252,19 +277,16 @@
         
         allNewsData = await Promise.all(fetchPromises);
         
-        // সংবাদের তারিখ এবং সময় অনুযায়ী ক্রমানুসারে (নতুন থেকে পুরনো) সাজানো
         allNewsData.sort((a, b) => {
           const dateTimeA = new Date(`${a.date} ${a.time || '00:00 AM'}`);
           const dateTimeB = new Date(`${b.date} ${b.time || '00:00 AM'}`);
           return dateTimeB - dateTimeA;
         });
 
-        // লোকাল স্টোরেজে ডেটা সেভ করা (যাতে নিউজ পেজগুলো সর্বশেষ সংবাদ রিড করতে পারে)
         localStorage.setItem('allNewsData', JSON.stringify(allNewsData));
 
         buildFilterOptions(allNewsData);
         
-        // ইউআরএল ফিল্টার (?filter=কমিটি) চেক করা
         const urlParams = new URLSearchParams(window.location.search);
         const filterParam = urlParams.get('filter');
         
@@ -286,7 +308,6 @@
       }
     }
 
-    // ডাইনামিকভাবে সিলেক্ট ড্রপডাউনে ক্যাটাগরিগুলো যোগ করা
     function buildFilterOptions(newsArray) {
       const select = document.getElementById('categoryFilter');
       const cats = new Set();
@@ -307,7 +328,6 @@
       });
     }
 
-    // গ্রিডের ভেতরে সংবাদের কার্ডগুলো তৈরি ও প্রদর্শন করা
     function displayCards(newsArray) {
       const grid = document.getElementById('mainActivitiesGrid');
       grid.innerHTML = '';
@@ -343,7 +363,6 @@
         
         grid.appendChild(card);
         
-        // স্মুথ ফেড-ইন অ্যানিমেশন এফেক্ট
         setTimeout(() => { 
           card.classList.add('show'); 
         }, index * 80);
