@@ -7,14 +7,13 @@
   
   <style>
     :root {
-      --primary: #0d1b2a;
+      --primary: #0a1128;
       --secondary: #00b4d8;
       --accent: #ffd700;
-      --dark-bg: #010811;
-      --light-bg: #f8f9fa;
-      --text-dark: #1a1a1a;
-      --text-light: #ffffff;
-      --card-bg: rgba(6, 11, 25, 0.85); /* ডার্ক থিমের গ্লাস ব্যাকগ্রাউন্ড */
+      --dark-bg: #020c1b;
+      --text-light: #f1f5f9;
+      --card-bg: rgba(10, 25, 47, 0.7); /* প্রিমিয়াম গ্লাস ইফেক্ট */
+      --glow: 0 0 20px rgba(0, 180, 216, 0.4);
     }
 
     body {
@@ -30,7 +29,7 @@
     .fade-in-section {
       opacity: 0;
       transform: translateY(40px);
-      transition: opacity 1s ease-out, transform 1s ease-out;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
       visibility: hidden;
     }
 
@@ -40,11 +39,10 @@
       visibility: visible;
     }
 
-    /* সেকশনগুলোর স্পষ্ট বর্ডার এবং ইউনিক ডিজাইন সেপারেটর */
     section {
       position: relative;
-      border-bottom: 4px solid rgba(0, 180, 216, 0.2);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+      border-bottom: 1px solid rgba(0, 180, 216, 0.15);
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
     }
 
     /* --- ১. ভিডিও ব্যানার সেকশন --- */
@@ -56,7 +54,6 @@
       align-items: center;
       overflow: hidden;
       text-align: center;
-      border-bottom: 5px solid var(--secondary);
     }
 
     .hero-video {
@@ -69,7 +66,7 @@
     .hero-overlay {
       position: absolute;
       top: 0; left: 0; width: 100%; height: 100%;
-      background: linear-gradient(to bottom, rgba(13, 27, 42, 0.6), rgba(1, 8, 17, 0.95));
+      background: linear-gradient(to bottom, rgba(2, 12, 27, 0.5), var(--dark-bg));
       z-index: 2;
     }
 
@@ -80,217 +77,239 @@
     }
 
     .hero-welcome {
-      font-size: 1.6rem;
+      font-size: 1.4rem;
       color: var(--secondary);
       text-transform: uppercase;
-      letter-spacing: 5px;
-      margin-bottom: 12px;
+      letter-spacing: 6px;
+      margin-bottom: 15px;
       font-family: 'Poppins', sans-serif;
-      animation: fadeInDown 1s ease forwards;
+      text-shadow: var(--glow);
     }
 
     .hero-title {
-      font-size: 3.8rem;
+      font-size: 3.5rem;
       font-weight: 700;
-      color: var(--text-light);
-      text-shadow: 0 0 20px rgba(0, 180, 216, 0.6);
+      color: #ffffff;
+      text-shadow: 0 0 30px rgba(0, 180, 216, 0.8);
       margin: 0;
-      animation: fadeInUp 1s ease 0.3s forwards;
-      opacity: 0;
     }
 
-    /* --- ২. পরিচিতি সেকশন (ডার্ক মোডে রূপান্তর করা হয়েছে) --- */
+    /* --- ২. পরিচিতি সেকশন --- */
     .about-section {
-      background: linear-gradient(-45deg, #010811, #070f1e, #0a192f, #010811);
-      background-size: 400% 400%;
-      animation: gradientBg 12s ease infinite;
-      color: var(--text-light);
-      padding: 90px 10%;
+      background: linear-gradient(180deg, var(--dark-bg) 0%, #06152d 100%);
+      padding: 100px 10%;
       text-align: center;
-      border-bottom: 5px solid rgba(0, 180, 216, 0.2);
     }
 
     .about-text {
-      font-size: 1.3rem;
-      line-height: 1.9;
-      max-width: 900px;
-      margin: 0 auto 35px;
-      font-weight: 300;
-      color: #cbd5e1;
+      font-size: 1.25rem;
+      line-height: 2;
+      max-width: 850px;
+      margin: 0 auto 40px;
+      color: #94a3b8;
     }
 
     .btn-more {
       display: inline-block;
-      padding: 12px 35px;
-      background-color: var(--secondary);
-      color: var(--text-light);
+      padding: 12px 40px;
+      background: transparent;
+      color: var(--secondary);
       text-decoration: none;
       font-weight: 600;
       border-radius: 30px;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.2);
+      border: 2px solid var(--secondary);
+      transition: all 0.4s ease;
+      box-shadow: inset 0 0 0 0 var(--secondary);
     }
 
     .btn-more:hover {
-      background-color: #0077b6;
+      color: #fff;
+      background: var(--secondary);
+      box-shadow: 0 0 25px rgba(0, 180, 216, 0.6);
       transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 180, 216, 0.4);
     }
 
     /* --- ৩. পরবর্তী ইভেন্ট সেকশন --- */
     .event-section {
-      padding: 90px 10%;
-      background: radial-gradient(circle at 20% 30%, #0a192f 0%, #020c1b 100%);
-      overflow: hidden;
+      padding: 100px 10%;
+      background: radial-gradient(circle at 50% 50%, #0a192f 0%, var(--dark-bg) 100%);
       text-align: center;
       display: none;
-      border-bottom: 5px solid var(--accent);
-    }
-
-    .event-section::before {
-      content: '';
-      position: absolute;
-      top: -50%; left: -50%; width: 200%; height: 200%;
-      background: radial-gradient(circle, rgba(0,180,216,0.05) 0%, transparent 60%);
-      animation: rotateLight 20s linear infinite;
-      pointer-events: none;
     }
 
     .section-title {
-      font-size: 2.4rem;
-      color: var(--secondary);
-      margin-bottom: 40px;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+      font-size: 2.5rem;
+      color: #fff;
+      margin-bottom: 50px;
+      letter-spacing: 1px;
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 3px;
+      background: var(--secondary);
+      margin: 15px auto 0;
+      box-shadow: var(--glow);
     }
 
     .event-card {
       background: var(--card-bg);
-      backdrop-filter: blur(25px);
-      border: 1px solid rgba(0, 180, 216, 0.2);
-      border-radius: 20px;
-      padding: 40px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      max-width: 700px;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(0, 180, 216, 0.25);
+      border-radius: 24px;
+      padding: 50px 40px;
+      max-width: 650px;
       margin: 0 auto;
-      box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-      position: relative;
-      z-index: 2;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.02);
     }
 
-    .event-logo { width: 100px; height: 100px; object-fit: contain; margin-bottom: 20px; }
+    .event-logo { 
+      width: 110px; 
+      height: 110px; 
+      object-fit: contain; 
+      margin-bottom: 25px;
+      filter: drop-shadow(0 0 10px rgba(0,180,216,0.3));
+    }
     
     .countdown-container {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-      max-width: 450px;
-      margin: 25px auto;
+      gap: 15px;
+      max-width: 480px;
+      margin: 30px auto;
     }
 
     .countdown-box {
-      background: #0d1b2a;
-      padding: 10px 5px;
-      border-radius: 10px;
-      border: 1px solid rgba(255, 213, 0, 0.3);
-      border-bottom: 4px solid var(--accent);
+      background: rgba(2, 12, 27, 0.8);
+      padding: 15px 5px;
+      border-radius: 14px;
+      border: 1px solid rgba(0, 180, 216, 0.2);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
     .countdown-box span { 
       display: block; 
-      font-size: 1.5rem; 
-      font-weight: bold; 
+      font-size: 1.8rem; 
+      font-weight: 700; 
       color: var(--accent); 
       font-family: 'Poppins', sans-serif;
+      text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     }
     
     .countdown-label {
       font-size: 0.85rem;
-      color: var(--text-light);
+      color: #94a3b8;
+      margin-top: 4px;
+    }
+
+    /* ইউনিক নোটিফিকেশন টেক্সট (যদি সময় ০0 থাকে) */
+    .time-tba-message {
+      font-size: 1.25rem;
+      color: var(--accent);
+      background: rgba(255, 215, 0, 0.05);
+      border: 1px dashed rgba(255, 215, 0, 0.3);
+      padding: 18px;
+      border-radius: 12px;
+      margin: 30px auto;
+      max-width: 450px;
+      display: inline-block;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+      animation: pulseGlow 2s infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      from { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
+      to { transform: scale(1.02); box-shadow: 0 0 25px rgba(255, 215, 0, 0.25); }
     }
     
     .btn-details {
-      padding: 12px 30px; background: var(--secondary); border: none; color: white;
-      font-weight: 600; border-radius: 25px; cursor: pointer; transition: 0.3s;
-      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+      padding: 14px 40px; 
+      background: linear-gradient(135deg, var(--secondary), #0077b6); 
+      border: none; 
+      color: white;
+      font-weight: 600; 
+      border-radius: 30px; 
+      cursor: pointer; 
+      transition: 0.3s;
+      box-shadow: var(--glow);
     }
-    .btn-details:hover { background: #0096b4; transform: scale(1.05); }
+    .btn-details:hover { 
+      transform: scale(1.05); 
+      box-shadow: 0 0 30px rgba(0, 180, 216, 0.7); 
+    }
 
     /* পপআপ মডাল */
     .modal-overlay {
       position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(0,0,0,0.85); z-index: 9999; display: flex;
+      background: rgba(2, 12, 27, 0.9); z-index: 9999; display: flex;
       justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s ease;
+      backdrop-filter: blur(10px);
     }
     .modal-overlay.active { opacity: 1; visibility: visible; }
     .modal-content {
-      background: #0b132b; width: 90%; max-width: 550px; border-radius: 15px;
-      overflow: hidden; position: relative; color: var(--text-light); transform: scale(0.8); transition: 0.3s ease;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.8);
+      background: #061121; width: 90%; max-width: 550px; border-radius: 20px;
+      overflow: hidden; position: relative; transform: scale(0.8); transition: 0.3s ease;
       border: 1px solid rgba(0, 180, 216, 0.3);
+      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
     }
     .modal-overlay.active .modal-content { transform: scale(1); }
     .modal-banner { width: 100%; height: 220px; object-fit: cover; }
-    .modal-body { padding: 30px; text-align: left; background: #0b132b; }
+    .modal-body { padding: 35px; text-align: left; }
     .modal-close {
-      position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.6); color: white;
+      position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); color: white;
       border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; z-index: 10;
     }
     .btn-volunteer {
       display: block; text-align: center; width: 100%; padding: 14px; background: #10b981;
-      color: white; text-decoration: none; font-weight: bold; margin-top: 20px; border-radius: 6px; transition: 0.3s;
+      color: white; text-decoration: none; font-weight: bold; margin-top: 25px; border-radius: 30px; transition: 0.3s;
     }
-    .btn-volunteer:hover { background: #059669; }
+    .btn-volunteer:hover { background: #059669; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
 
-    /* --- ৪. নোটিশ সেকশন (ডার্ক সাইবার থিমে রূপান্তর করা হয়েছে) --- */
+    /* --- ৪. নোটিশ সেকশন --- */
     .notice-section {
-      padding: 90px 10%;
-      background: linear-gradient(135deg, #01060d 0%, #070f1e 100%);
-      color: var(--text-light);
+      padding: 100px 10%;
+      background: #040e1a;
       text-align: center;
-      border-bottom: 5px solid var(--primary);
     }
     
     .notice-table-container {
       overflow-x: auto; max-width: 900px; margin: 0 auto; 
       background: var(--card-bg);
-      backdrop-filter: blur(25px);
-      border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-      border: 1px solid rgba(0, 180, 216, 0.1);
+      backdrop-filter: blur(20px);
+      border-radius: 16px; 
+      box-shadow: 0 15px 40px rgba(0,0,0,0.5);
+      border: 1px solid rgba(0, 180, 216, 0.15);
     }
 
     .notice-table { width: 100%; border-collapse: collapse; text-align: left; }
-    .notice-table th { background: rgba(13, 27, 42, 0.8); color: var(--secondary); padding: 18px; font-weight: 600; border-bottom: 1px solid rgba(0, 180, 216, 0.2); }
-    .notice-table td { padding: 18px; border-bottom: 1px solid rgba(255,255,255,0.05); font-weight: 400; color: #e2e8f0; }
-    .notice-table tr:hover { background: rgba(0, 180, 216, 0.05); }
-    .btn-download { color: var(--secondary); text-decoration: none; font-weight: 600; }
-    .btn-download:hover { color: var(--accent); }
-    .view-all-notice { display: block; text-align: right; max-width: 900px; margin: 20px auto 0; color: var(--secondary); font-weight: bold; text-decoration: none; }
+    .notice-table th { background: rgba(2, 12, 27, 0.8); color: var(--secondary); padding: 20px; font-weight: 600; border-bottom: 2px solid rgba(0, 180, 216, 0.2); }
+    .notice-table td { padding: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); color: #cbd5e1; }
+    .notice-table tr:hover { background: rgba(0, 180, 216, 0.04); }
+    .btn-download { color: var(--secondary); text-decoration: none; font-weight: 600; transition: 0.2s; }
+    .btn-download:hover { color: var(--accent); text-shadow: 0 0 8px rgba(255,215,0,0.4); }
+    .view-all-notice { display: block; text-align: right; max-width: 900px; margin: 25px auto 0; color: var(--secondary); font-weight: bold; text-decoration: none; transition: 0.2s; }
     .view-all-notice:hover { color: var(--accent); }
 
     /* --- ৫. এডভার্টাইজমেন্ট সেকশন --- */
     .ad-section {
       padding: 60px 10%; text-align: center;
       background: #020710;
-      animation: pulseBg 4s ease-in-out infinite alternate;
-      border-bottom: 5px solid rgba(0, 180, 216, 0.5);
     }
     .ad-banner {
-      max-width: 100%; height: auto; border-radius: 12px;
-      box-shadow: 0 0 25px rgba(0,180,216,0.4); cursor: pointer; transition: 0.3s;
-      border: 2px solid rgba(255,255,255,0.05);
+      max-width: 100%; height: auto; border-radius: 16px;
+      box-shadow: 0 0 30px rgba(0,180,216,0.25); cursor: pointer; transition: 0.4s ease;
+      border: 1px solid rgba(255,255,255,0.05);
     }
-    .ad-banner:hover { transform: scale(1.02); box-shadow: 0 0 35px rgba(0,180,216,0.6); }
+    .ad-banner:hover { transform: scale(1.01); box-shadow: 0 0 40px rgba(0,180,216,0.5); }
 
     /* --- ৬. পার্টনার স্লাইডার সেকশন --- */
     .partner-section {
-      padding: 80px 10%;
-      background: linear-gradient(30deg, #020c1b, #0d1b2a, #010811);
-      background-size: 300% 300%;
-      animation: gradientBg 15s ease infinite;
+      padding: 100px 10%;
+      background: var(--dark-bg);
       text-align: center;
-      border-bottom: none;
     }
 
     .slider-viewport { 
@@ -298,15 +317,11 @@
       margin: 0 auto; 
       overflow: hidden; 
       position: relative; 
-      padding: 30px 5px; 
+      padding: 20px 5px; 
     }
 
-    @media (min-width: 480px) {
-      .slider-viewport { max-width: 360px; }
-    }
-    @media (min-width: 768px) {
-      .slider-viewport { max-width: 420px; } 
-    }
+    @media (min-width: 480px) { .slider-viewport { max-width: 360px; } }
+    @media (min-width: 768px) { .slider-viewport { max-width: 420px; } }
 
     .partner-track { 
       display: flex; 
@@ -320,41 +335,21 @@
       aspect-ratio: 1 / 1; 
       border-radius: 50%; 
       background: white;
-      padding: 8px; 
+      padding: 10px; 
       object-fit: contain; 
       cursor: pointer; 
-      transition: all 0.3s ease; 
+      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
       flex-shrink: 0;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.3); 
-      border: 2px solid rgba(0, 180, 216, 0.2);
+      box-shadow: 0 5px 15px rgba(0,0,0,0.4); 
+      border: 2px solid rgba(0, 180, 216, 0.1);
       box-sizing: border-box;
     }
 
     .partner-logo:hover { 
-      transform: translateY(-8px) scale(1.05); 
-      box-shadow: 0 12px 25px var(--secondary); 
+      transform: translateY(-8px) scale(1.08); 
+      box-shadow: 0 15px 30px rgba(0, 180, 216, 0.6); 
       border-color: var(--secondary); 
     }
-
-    /* --- অ্যানিমেশন কি-ফ্রেমস --- */
-    @keyframes gradientBg {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    @keyframes rotateLight {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes pulseBg {
-      0% { background-color: #010811; }
-      100% { background-color: #0a1424; }
-    }
-
-    @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
-    @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -364,7 +359,7 @@
 
   <section class="hero-section">
     <video class="hero-video" autoplay loop muted playsinline>
-      <source src="bg video.mp4" type="video/mp4">
+      <source src="../Home/bg video.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -377,7 +372,7 @@
     <p class="about-text">
       রাজশাহী অলিম্পিয়াড সোসাইটি হলো রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, college এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের প্রতিভা বিকাশের সুযোগ পায়।
     </p>
-    <a href="../About-Us/" class="btn-more">আরও জানুন</a>
+    <a href="../About Us/" class="btn-more">আরও জানুন</a>
   </section>
 
   <section class="event-section fade-in-section" id="eventSection">
@@ -416,7 +411,7 @@
 
   <section class="ad-section fade-in-section">
     <a href="Home/." target="_blank">
-      <img src="Advertisement/Advertisement.jpg" alt="Advertisement" class="ad-banner">
+      <img src="../Advertisement/Advertisement.jpg" alt="Advertisement" class="ad-banner">
     </a>
   </section>
 
@@ -437,9 +432,9 @@
   <ros-footer></ros-footer>
 
   <script>
-    // --- ১. স্ক্রল অ্যানিমেশন (Intersection Observer) ---
+    // --- ১. স্ক্রল অ্যানিমেশন ---
     const faders = document.querySelectorAll('.fade-in-section');
-    const appearOptions = { threshold: 0.12, rootMargin: "0px 0px -40px 0px" };
+    const appearOptions = { threshold: 0.1, rootMargin: "0px 0px -30px 0px" };
     
     const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
       entries.forEach(entry => {
@@ -451,7 +446,7 @@
 
     faders.forEach(fader => appearOnScroll.observe(fader));
 
-    // --- ২. পরবর্তী ইভেন্ট ডাটা এবং কাউন্টডাউন মেকানিズム ---
+    // --- ২. ইভেন্ট ডাটা এবং স্মার্ট কাউন্টডাউন মেকানিズム ---
     async function loadNextEvent() {
       try {
         const response = await fetch('../Next Event/event.json');
@@ -460,22 +455,36 @@
         if (data.status !== "active") return; 
 
         document.getElementById('eventSection').style.display = 'block';
-        
         const card = document.getElementById('eventCard');
+
+        // চেক করা হচ্ছে তারিখ বা সময় "00" অথবা ফাঁকা রাখা হয়েছে কিনা
+        const isTimeTBA = data.date_en === "00" || data.time_en === "00" || !data.date_en || !data.time_en;
+
+        let countdownHTML = '';
+        if (isTimeTBA) {
+          // তারিখ/সময় প্রকাশ না হলে সুন্দর কাস্টম মেসেজ দেখাবে
+          countdownHTML = `<div class="time-tba-message"><i class="fa-solid fa-clock-rotate-left"></i> তারিখ ও সময় শীঘ্রই প্রকাশ করা হবে</div>`;
+        } else {
+          // সঠিক তারিখ থাকলে কাউন্টডাউন বক্সগুলো রেন্ডার হবে (NaN আসার সুযোগ নেই)
+          countdownHTML = `
+            <div class="countdown-container" id="countdown">
+              <div class="countdown-box"><span id="days">00</span><div class="countdown-label">দিন</div></div>
+              <div class="countdown-box"><span id="hours">00</span><div class="countdown-label">ঘণ্টা</div></div>
+              <div class="countdown-box"><span id="mins">00</span><div class="countdown-label">মিনিট</div></div>
+              <div class="countdown-box"><span id="secs">00</span><div class="countdown-label">সেকেন্ড</div></div>
+            </div>
+          `;
+        }
+        
         card.innerHTML = `
           <img src="${data.logo}" alt="Event Logo" class="event-logo">
-          <h3 style="font-size:1.9rem; margin:10px 0; color: #fff;">${data.title}</h3>
-          <p style="color:#94a3b8; margin:6px 0; font-size:0.95rem;"><i class="fa-solid fa-calendar"></i> ${data.date} | <i class="fa-solid fa-clock"></i> ${data.time}</p>
-          <p style="color:#94a3b8; margin:6px 0; font-size:0.95rem;"><i class="fa-solid fa-location-dot"></i> ${data.location}</p>
+          <h3 style="font-size:2rem; margin:10px 0; color: #fff; font-weight:600;">${data.title}</h3>
+          <p style="color:#94a3b8; margin:8px 0; font-size:0.95rem;"><i class="fa-solid fa-calendar"></i> ${data.date} | <i class="fa-solid fa-clock"></i> ${data.time}</p>
+          <p style="color:#94a3b8; margin:8px 0; font-size:0.95rem;"><i class="fa-solid fa-location-dot"></i> ${data.location}</p>
           
-          <div class="countdown-container" id="countdown">
-            <div class="countdown-box"><span id="days">00</span>দিন</div>
-            <div class="countdown-box"><span id="hours">00</span>ঘণ্টা</div>
-            <div class="countdown-box"><span id="mins">00</span>মিনিট</div>
-            <div class="countdown-box"><span id="secs">00</span>সেকেন্ড</div>
-          </div>
+          ${countdownHTML}
           
-          <button class="btn-details" id="openModalBtn">বিস্তারিত</button>
+          <button class="btn-details" id="openModalBtn" style="margin-top: 15px;">বিস্তারিত</button>
         `;
 
         document.getElementById('openModalBtn').addEventListener('click', () => {
@@ -486,31 +495,34 @@
           document.getElementById('eventModal').classList.add('active');
         });
 
-        const targetDate = new Date(`${data.date_en} ${data.time_en}`).getTime();
-        const interval = setInterval(() => {
-          const now = new Date().getTime();
-          const diff = targetDate - now;
+        // যদি সময় TBA না হয়, শুধুমাত্র তখনই কাউন্টডাউন টাইমার রান করবে
+        if (!isTimeTBA) {
+          const targetDate = new Date(`${data.date_en} ${data.time_en}`).getTime();
+          const interval = setInterval(() => {
+            const now = new Date().getTime();
+            const diff = targetDate - now;
 
-          if (diff <= 0) {
-            clearInterval(interval);
-            document.getElementById('countdown').innerHTML = "<p style='color:var(--accent); font-weight:bold;'>ইভেন্টটি শুরু হয়েছে!</p>";
-            return;
-          }
+            if (diff <= 0) {
+              clearInterval(interval);
+              document.getElementById('countdown').innerHTML = "<p style='color:var(--accent); font-weight:bold; font-size:1.2rem;'>ইভেন্টটি শুরু হয়েছে!</p>";
+              return;
+            }
 
-          document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
-          document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
-          document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
-          document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
-        }, 1000);
+            document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24)).toString().padStart(2, '0');
+            document.getElementById('hours').innerText = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)).toString().padStart(2, '0');
+            document.getElementById('mins').innerText = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60)).toString().padStart(2, '0');
+            document.getElementById('secs').innerText = Math.floor((diff % (1000 * 60)) / 1000).toString().padStart(2, '0');
+          }, 1000);
+        }
 
-      } catch (e) { console.log("Event loading optimized."); }
+      } catch (e) { console.log("Event setup clean."); }
     }
 
     document.getElementById('closeModal').addEventListener('click', () => {
       document.getElementById('eventModal').classList.remove('active');
     });
 
-    // --- ৩. JSON থেকে ৫টি নোটিশ লোড ---
+    // --- ৩. নোটিশ লোড ---
     async function loadNotices() {
       try {
         const response = await fetch('../Notice/notice.json');
@@ -529,28 +541,25 @@
             </tr>
           `;
         });
-      } catch (e) { console.log("Notice table loaded."); }
+      } catch (e) { console.log("Notice ready."); }
     }
 
-    // --- ৪. ৩টি করে লোগো অটো স্লাইড করার নিখুঁত লজিক (অফসেট ফিক্সড) ---
+    // --- ৪. অটো স্লাইডার লজিক ---
     const track = document.getElementById('partnerTrack');
     let currentSlide = 0;
 
     setInterval(() => {
       const logos = track.children;
       const totalLogos = logos.length;
-      
       currentSlide += 3;
       
-      if (currentSlide >= totalLogos) {
-        currentSlide = 0;
-      }
+      if (currentSlide >= totalLogos) { currentSlide = 0; }
       
       if (logos.length > 0 && logos[currentSlide]) {
         const nextTargetX = logos[currentSlide].offsetLeft;
         track.style.transform = `translateX(-${nextTargetX}px)`;
       }
-    }, 2000);
+    }, 2500);
 
     window.onload = () => {
       loadNextEvent();
