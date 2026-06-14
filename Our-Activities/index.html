@@ -5,14 +5,204 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>আমাদের কার্যক্রম - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
   
-  <!-- সংবাদের কমন সিএসএস লিংক -->
-  <link rel="stylesheet" href="News/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* প্রধান পাতার জন্য অতিরিক্ত কিছু স্টাইলিং (প্রয়োজন হলে) */
-    .filter-wrapper {
-      margin-top: 5px;
+    /* --- গ্লোবাল ভেরিয়েবল ও রুট স্টাইল --- */
+    :root {
+      --primary: #0a1128;
+      --secondary: #00b4d8; 
+      --accent: #ffd700;    
+      --dark-bg: #020c1b;
+      --card-bg: rgba(10, 25, 47, 0.65);
+      --text-light: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Hind Siliguri', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+      min-height: 70vh;
+    }
+
+    /* --- পেজ হেডার এবং ফিল্টার এরিয়া --- */
+    .page-header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-bottom: 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding-bottom: 20px;
+    }
+
+    .page-title {
+      font-size: 2.2rem;
+      margin: 0;
+      color: #fff;
+      position: relative;
+    }
+
+    .page-title::after {
+      content: '';
+      position: absolute;
+      bottom: -21px;
+      left: 0;
+      width: 60px;
+      height: 3px;
+      background-color: var(--secondary);
+    }
+
+    .filter-select {
+      background-color: rgba(10, 25, 47, 0.8);
+      color: var(--text-light);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-family: inherit;
+      outline: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .filter-select:focus {
+      border-color: var(--secondary);
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.2);
+    }
+
+    /* --- কার্যকলাপে গ্রিড লেআউট --- */
+    .activities-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 30px;
+    }
+
+    /* --- নিউজ কার্ড ডিজাইন --- */
+    .activity-card {
+      background: var(--card-bg);
+      border: 1px solid rgba(0, 180, 216, 0.15);
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+      box-shadow: 0 10px 30px rgba(2, 12, 27, 0.7);
+    }
+
+    /* কার্ড লোড হওয়ার অ্যানিমেশন ক্লাস */
+    .activity-card.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .activity-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 180, 216, 0.4);
+      box-shadow: 0 20px 40px rgba(0, 180, 216, 0.15);
+    }
+
+    /* ইমেজ রিলড এরিয়া */
+    .card-banner-wrapper {
+      width: 100%;
+      height: 200px;
+      overflow: hidden;
+      background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .card-banner {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .activity-card:hover .card-banner {
+      transform: scale(1.05);
+    }
+
+    /* কার্ড বডি */
+    .card-body {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-heading {
+      font-size: 1.3rem;
+      margin: 0 0 12px 0;
+      line-height: 1.5;
+      font-weight: 600;
+    }
+
+    .card-heading a {
+      text-decoration: none;
+      color: #e2e8f0;
+      transition: color 0.2s;
+    }
+
+    .card-heading a:hover {
+      color: var(--secondary);
+    }
+
+    .card-date {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .card-date i {
+      color: var(--secondary);
+    }
+
+    /* ক্যাটাগরি ব্যাজ */
+    .card-categories {
+      margin-top: auto;
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .cat-badge {
+      background: rgba(0, 180, 216, 0.1);
+      color: var(--secondary);
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.8rem;
+      border: 1px solid rgba(0, 180, 216, 0.15);
+    }
+
+    /* রেসপন্সিভ ব্রেকপয়েন্ট */
+    @media (max-width: 600px) {
+      .page-header-container {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .filter-wrapper {
+        width: 100%;
+      }
+      .filter-select {
+        width: 100%;
+      }
+      .page-title {
+        font-size: 1.8rem;
+      }
     }
   </style>
 </head>
@@ -44,16 +234,15 @@
   <script>
     let allNewsData = [];
 
-    // ১. list.json থেকে ফোল্ডারের তালিকা নিয়ে স্বয়ংক্রিয়ভাবে ডেটা ফেচ করা
+    // list.json থেকে ফোল্ডারের তালিকা নিয়ে স্বয়ংক্রিয়ভাবে ডেটা ফেচ করা
     async function compileAndRenderActivities() {
       try {
-        // News ফোল্ডারের ভেতরের list.json ফাইলটি রিড করা হচ্ছে
         const listResponse = await fetch('News/list.json');
         if (!listResponse.ok) throw new Error('list.json ফাইলটি পাওয়া যায়নি');
         
         const newsFolders = await listResponse.json(); 
 
-        // প্রতিটি ফোল্ডারের ভেতর থাকা data.json ফাইল থেকে ডেটা আনা হচ্ছে
+        // প্রতিটি ফোল্ডারের ভেতর থাকা data.json ফাইল থেকে ডেটা আনা
         const fetchPromises = newsFolders.map(folder => 
           fetch(`News/${folder}/data.json`).then(res => {
             if (!res.ok) throw new Error(`News/${folder}/data.json লোড করা যায়নি`);
@@ -70,13 +259,12 @@
           return dateTimeB - dateTimeA;
         });
 
-        // ব্রাউজারের লোকাল স্টোরেজে ডেটা সেভ করে রাখা (যাতে নিউজ পেজগুলো সর্বশেষ সংবাদ রিড করতে পারে)
+        // লোকাল স্টোরেজে ডেটা সেভ করা (যাতে নিউজ পেজগুলো সর্বশেষ সংবাদ রিড করতে পারে)
         localStorage.setItem('allNewsData', JSON.stringify(allNewsData));
 
-        // ফিল্টার অপশন তৈরি করা
         buildFilterOptions(allNewsData);
         
-        // ইউআরএল-এ কোনো স্পেসিফিক ক্যাটাগরি ফিল্টার প্যারামিটার (?filter=কমিটি) আছে কিনা চেক করা
+        // ইউআরএল ফিল্টার (?filter=কমিটি) চেক করা
         const urlParams = new URLSearchParams(window.location.search);
         const filterParam = urlParams.get('filter');
         
@@ -91,13 +279,14 @@
         console.error("অ্যাক্টিভিটি অটো-লোড ত্রুটি:", error);
         document.getElementById('mainActivitiesGrid').innerHTML = `
           <p style='grid-column: 1/-1; text-align:center; color:#ef4444; padding: 40px;'>
-            <i class="fa-solid fa-circle-exclamation"></i> কার্যক্রম লোড করতে ব্যর্থ হয়েছে। <br>
+            <i class="fa-solid fa-circle-exclamation" style="font-size: 2rem; margin-bottom: 10px;"></i><br>
+            কার্যক্রম লোড করতে ব্যর্থ হয়েছে। <br>
             <span style="font-size:0.9rem; color:#64748b;">নিশ্চিত করুন News/list.json এবং প্রতিটি সংবাদের data.json ফাইল ঠিক আছে।</span>
           </p>`;
       }
     }
 
-    // ২. ডাইনামিকভাবে সিলেক্ট ড্রপডাউনে ক্যাটাগরিগুলো যোগ করা
+    // ডাইনামিকভাবে সিলেক্ট ড্রপডাউনে ক্যাটাগরিগুলো যোগ করা
     function buildFilterOptions(newsArray) {
       const select = document.getElementById('categoryFilter');
       const cats = new Set();
@@ -113,13 +302,12 @@
         select.appendChild(opt);
       });
       
-      // ফিল্টার চেঞ্জ ইভেন্ট লিসেনার
       select.addEventListener('change', (e) => {
         displayCards(e.target.value === 'all' ? allNewsData : allNewsData.filter(item => item.category && item.category.includes(e.target.value)));
       });
     }
 
-    // ৩. গ্রিডের ভেতরে সংবাদের কার্ডগুলো তৈরি ও প্রদর্শন করা
+    // গ্রিডের ভেতরে সংবাদের কার্ডগুলো তৈরি ও প্রদর্শন করা
     function displayCards(newsArray) {
       const grid = document.getElementById('mainActivitiesGrid');
       grid.innerHTML = '';
@@ -146,7 +334,7 @@
           </div>
           <div class="card-body">
             <h2 class="card-heading">
-               <a href="News/${news.link}/index.html" style="text-decoration:none; color:inherit;">${news.title}</a>
+               <a href="News/${news.link}/index.html">${news.title}</a>
             </h2>
             <div class="card-date"><i class="fa-solid fa-calendar-day"></i> ${news.date}</div>
             <div class="card-categories">${badges}</div>
@@ -155,18 +343,16 @@
         
         grid.appendChild(card);
         
-        // কার্ডগুলোতে স্মুথ অ্যানিমেশন এফেক্ট দেওয়া
+        // স্মুথ ফেড-ইন অ্যানিমেশন এফেক্ট
         setTimeout(() => { 
           card.classList.add('show'); 
         }, index * 80);
       });
     }
 
-    // পেজ লোড হওয়ার সাথে সাথে ফাংশন রান করা
     window.onload = compileAndRenderActivities;
   </script>
   
-  <!-- আপনার গ্লোবাল নেভিগেশন স্ক্রিপ্ট -->
   <script src="../navigation.js"></script>
 </body>
 </html>
