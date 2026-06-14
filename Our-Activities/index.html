@@ -4,37 +4,61 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>আমাদের কার্যক্রম - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
-  <link rel="stylesheet" href="News/style.css"> <!-- কমন স্টাইল ইন্টিগ্রেশন -->
+  
+  <!-- সংবাদের কমন সিএসএস লিংক -->
+  <link rel="stylesheet" href="News/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* প্রধান পাতার জন্য অতিরিক্ত কিছু স্টাইলিং (প্রয়োজন হলে) */
+    .filter-wrapper {
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
 
+  <!-- নেভিগেশন হেডার (navigation.js থেকে লোড হবে) -->
   <ros-header></ros-header>
 
   <main>
+    <!-- পেজ হেডার এবং ফিল্টার সেকশন -->
     <div class="page-header-container">
       <h1 class="page-title">আমাদের কার্যক্রম</h1>
       <div class="filter-wrapper">
-        <select class="filter-select" id="categoryFilter"><option value="all">সব কার্যক্রম</option></select>
+        <select class="filter-select" id="categoryFilter">
+          <option value="all">সব কার্যক্রম</option>
+        </select>
       </div>
     </div>
+
+    <!-- কার্যক্রম প্রদর্শনের মেইন গ্রিড এরিয়া -->
     <div class="activities-grid" id="mainActivitiesGrid">
        <p style="text-align:center; grid-column: 1/-1; padding:50px; color:#64748b;">কার্যক্রম স্ক্যান করা হচ্ছে...</p>
     </div>
   </main>
 
+  <!-- নেভিগেশন ফুটার (navigation.js থেকে লোড হবে) -->
   <ros-footer></ros-footer>
 
   <script>
-    // এখানে আপনার তৈরি করা সংবাদের ফোল্ডারগুলোর নামের তালিকা (লিংক আইডি) এন্ট্রি করবেন মাত্র
-    const newsFolders = ["abc123"]; 
     let allNewsData = [];
 
+    // ১. list.json থেকে ফোল্ডারের তালিকা নিয়ে স্বয়ংক্রিয়ভাবে ডেটা ফেচ করা
     async function compileAndRenderActivities() {
       try {
-        // প্রতিটি ফোল্ডারের data.json থেকে তথ্য ফেচ করা
+        // News ফোল্ডারের ভেতরের list.json ফাইলটি রিড করা হচ্ছে
+        const listResponse = await fetch('News/list.json');
+        if (!listResponse.ok) throw new Error('list.json ফাইলটি পাওয়া যায়নি');
+        
+        const newsFolders = await listResponse.json(); 
+
+        // প্রতিটি ফোল্ডারের ভেতর থাকা data.json ফাইল থেকে ডেটা আনা হচ্ছে
         const fetchPromises = newsFolders.map(folder => 
-          fetch(`News/${folder}/data.json`).then(res => res.json())
+          fetch(`News/${folder}/data.json`).then(res => {
+            if (!res.ok) throw new Error(`News/${folder}/data.json লোড করা যায়নি`);
+            return res.json();
+          })
         );
         
         allNewsData = await Promise.all(fetchPromises);
@@ -46,12 +70,13 @@
           return dateTimeB - dateTimeA;
         });
 
-        // গ্লোবালি উইন্ডোতে ডেটা সেট করা যাতে চাইল্ড স্ক্রিপ্ট রিড করতে পারে
-        window.allNewsData = allNewsData;
+        // ব্রাউজারের লোকাল স্টোরেজে ডেটা সেভ করে রাখা (যাতে নিউজ পেজগুলো সর্বশেষ সংবাদ রিড করতে পারে)
+        localStorage.setItem('allNewsData', JSON.stringify(allNewsData));
 
+        // ফিল্টার অপশন তৈরি করা
         buildFilterOptions(allNewsData);
         
-        // ইউআরএল-এ কোনো স্পেসিফিক ক্যাটাগরি ফিল্টার প্যারামিটার (?filter=) আছে কিনা চেক করা
+        // ইউআরএল-এ কোনো স্পেসিফিক ক্যাটাগরি ফিল্টার প্যারামিটার (?filter=কমিটি) আছে কিনা চেক করা
         const urlParams = new URLSearchParams(window.location.search);
         const filterParam = urlParams.get('filter');
         
@@ -63,54 +88,85 @@
         }
 
       } catch (error) {
-        console.error("অ্যাক্টিভিটি এগ্রিগেশন ত্রুটি:", error);
+        console.error("অ্যাক্টিভিটি অটো-লোড ত্রুটি:", error);
+        document.getElementById('mainActivitiesGrid').innerHTML = `
+          <p style='grid-column: 1/-1; text-align:center; color:#ef4444; padding: 40px;'>
+            <i class="fa-solid fa-circle-exclamation"></i> কার্যক্রম লোড করতে ব্যর্থ হয়েছে। <br>
+            <span style="font-size:0.9rem; color:#64748b;">নিশ্চিত করুন News/list.json এবং প্রতিটি সংবাদের data.json ফাইল ঠিক আছে।</span>
+          </p>`;
       }
     }
 
+    // ২. ডাইনামিকভাবে সিলেক্ট ড্রপডাউনে ক্যাটাগরিগুলো যোগ করা
     function buildFilterOptions(newsArray) {
       const select = document.getElementById('categoryFilter');
       const cats = new Set();
-      newsArray.forEach(item => { if(item.category) item.category.forEach(c => cats.add(c.trim())); });
-      cats.forEach(c => {
-        const opt = document.createElement('option'); opt.value = c; opt.innerText = c; select.appendChild(opt);
+      
+      newsArray.forEach(item => { 
+        if(item.category) item.category.forEach(c => cats.add(c.trim())); 
       });
+      
+      cats.forEach(c => {
+        const opt = document.createElement('option'); 
+        opt.value = c; 
+        opt.innerText = c; 
+        select.appendChild(opt);
+      });
+      
+      // ফিল্টার চেঞ্জ ইভেন্ট লিসেনার
       select.addEventListener('change', (e) => {
         displayCards(e.target.value === 'all' ? allNewsData : allNewsData.filter(item => item.category && item.category.includes(e.target.value)));
       });
     }
 
+    // ৩. গ্রিডের ভেতরে সংবাদের কার্ডগুলো তৈরি ও প্রদর্শন করা
     function displayCards(newsArray) {
       const grid = document.getElementById('mainActivitiesGrid');
       grid.innerHTML = '';
       
       if(newsArray.length === 0) {
-        grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:#64748b;'>এই ক্যাটাগরিতে কোনো সংবাদ পাওয়া যায়নি।</p>";
+        grid.innerHTML = "<p style='grid-column:1/-1; text-align:center; color:#64748b; padding:40px;'>এই ক্যাটাগরিতে কোনো কার্যক্রম পাওয়া যায়নি।</p>";
         return;
       }
 
-      newsArray.forEach(news => {
+      newsArray.forEach((news, index) => {
         const card = document.createElement('div');
         card.className = 'activity-card';
+        
         let badges = '';
-        if(news.category) news.category.forEach(c => { badges += `<span class="cat-badge-link" style="pointer-events:none;">${c}</span>`; });
+        if(news.category) {
+          news.category.forEach(c => { 
+            badges += `<span class="cat-badge">${c}</span>`; 
+          });
+        }
 
         card.innerHTML = `
-          <div class="card-banner-wrapper"><img src="${news.image || 'default-banner.jpg'}" class="card-banner"></div>
+          <div class="card-banner-wrapper">
+            <img src="${news.image || 'default-banner.jpg'}" class="card-banner" alt="${news.title}">
+          </div>
           <div class="card-body">
             <h2 class="card-heading">
                <a href="News/${news.link}/index.html" style="text-decoration:none; color:inherit;">${news.title}</a>
             </h2>
             <div class="card-date"><i class="fa-solid fa-calendar-day"></i> ${news.date}</div>
-            <div class="card-categories" style="margin-top:15px; display:flex; gap:5px; flex-wrap:wrap;">${badges}</div>
+            <div class="card-categories">${badges}</div>
           </div>
         `;
+        
         grid.appendChild(card);
+        
+        // কার্ডগুলোতে স্মুথ অ্যানিমেশন এফেক্ট দেওয়া
+        setTimeout(() => { 
+          card.classList.add('show'); 
+        }, index * 80);
       });
     }
 
+    // পেজ লোড হওয়ার সাথে সাথে ফাংশন রান করা
     window.onload = compileAndRenderActivities;
   </script>
+  
+  <!-- আপনার গ্লোবাল নেভিগেশন স্ক্রিপ্ট -->
   <script src="../navigation.js"></script>
 </body>
 </html>
-
