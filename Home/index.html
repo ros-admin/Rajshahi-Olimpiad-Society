@@ -12,7 +12,7 @@
       --accent: #ffd700;
       --dark-bg: #020c1b;
       --text-light: #f1f5f9;
-      --card-bg: rgba(10, 25, 47, 0.7); /* প্রিমিয়াম গ্লাস ইফেক্ট */
+      --card-bg: rgba(10, 25, 47, 0.7); /* গ্লাস-মরফিজম ব্যাকগ্রাউন্ড */
       --glow: 0 0 20px rgba(0, 180, 216, 0.4);
     }
 
@@ -163,7 +163,7 @@
       padding: 50px 40px;
       max-width: 650px;
       margin: 0 auto;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.4), inset 0 0 20px rgba(255,255,255,0.02);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
 
     .event-logo { 
@@ -187,7 +187,6 @@
       padding: 15px 5px;
       border-radius: 14px;
       border: 1px solid rgba(0, 180, 216, 0.2);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
 
     .countdown-box span { 
@@ -205,24 +204,23 @@
       margin-top: 4px;
     }
 
-    /* ইউনিক নোটিফিকেশন টেক্সট (যদি সময় ০0 থাকে) */
+    /* ইউনিক নোটিফিকেশন টেক্সট (তারিখ ০0 বা ডিফল্ট থাকলে) */
     .time-tba-message {
-      font-size: 1.25rem;
+      font-size: 1.2rem;
       color: var(--accent);
       background: rgba(255, 215, 0, 0.05);
       border: 1px dashed rgba(255, 215, 0, 0.3);
-      padding: 18px;
-      border-radius: 12px;
+      padding: 18px 30px;
+      border-radius: 30px;
       margin: 30px auto;
-      max-width: 450px;
       display: inline-block;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.1);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.05);
       animation: pulseGlow 2s infinite alternate;
     }
 
     @keyframes pulseGlow {
-      from { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.1); }
-      to { transform: scale(1.02); box-shadow: 0 0 25px rgba(255, 215, 0, 0.25); }
+      from { transform: scale(1); box-shadow: 0 0 15px rgba(255, 215, 0, 0.05); }
+      to { transform: scale(1.02); box-shadow: 0 0 25px rgba(255, 215, 0, 0.2); }
     }
     
     .btn-details {
@@ -305,7 +303,7 @@
     }
     .ad-banner:hover { transform: scale(1.01); box-shadow: 0 0 40px rgba(0,180,216,0.5); }
 
-    /* --- ৬. পার্টনার স্লাইডার সেকশন --- */
+    /* --- 六. পার্টনার স্লাইডার সেকশন --- */
     .partner-section {
       padding: 100px 10%;
       background: var(--dark-bg);
@@ -359,7 +357,7 @@
 
   <section class="hero-section">
     <video class="hero-video" autoplay loop muted playsinline>
-      <source src="../Home/bg video.mp4" type="video/mp4">
+      <source src="bg video.mp4" type="video/mp4">
     </video>
     <div class="hero-overlay"></div>
     <div class="hero-content">
@@ -370,9 +368,9 @@
 
   <section class="about-section fade-in-section">
     <p class="about-text">
-      রাজশাহী অলিম্পিয়াড সোসাইটি হলো রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, college এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের প্রতিভা বিকাশের সুযোগ পায়।
+      রাজশাহী অলিম্পিয়াড সোসাইটি হলো রাজশাহী অঞ্চলের শিক্ষার্থীদের মেধা, সৃজনশীলতা এবং বিশ্লেষণী দক্ষতা বিকাশের লক্ষ্যে প্রতিষ্ঠিত একটি শিক্ষা ও প্রতিযোগিতামূলক কার্যক্রমভিত্তিক সংগঠন। ২০২৬ সালে প্রতিষ্ঠিত এই সংগঠনটি একটি উদ্ভাবনী ও প্রগতিশীল প্ল্যাটফর্ম হিসেবে কাজ করছে, যেখানে স্কুল, কলেজ এবং বিশ্ববিদ্যালয় পর্যায়ের শিক্ষার্থীরা নিজেদের প্রতিভা বিকাশের সুযোগ পায়।
     </p>
-    <a href="../About Us/" class="btn-more">আরও জানুন</a>
+    <a href="../About Us/about.html" class="btn-more">আরও জানুন</a>
   </section>
 
   <section class="event-section fade-in-section" id="eventSection">
@@ -406,11 +404,11 @@
         <tbody id="noticeTableBody"></tbody>
       </table>
     </div>
-    <a href="../Notice/" class="view-all-notice">সকল বিজ্ঞপ্তি দেখুন &rarr;</a>
+    <a href="../Notice/index.html" class="view-all-notice">সকল বিজ্ঞপ্তি দেখুন &rarr;</a>
   </section>
 
   <section class="ad-section fade-in-section">
-    <a href="Home/." target="_blank">
+    <a href="../Home/." target="_blank">
       <img src="../Advertisement/Advertisement.jpg" alt="Advertisement" class="ad-banner">
     </a>
   </section>
@@ -457,15 +455,20 @@
         document.getElementById('eventSection').style.display = 'block';
         const card = document.getElementById('eventCard');
 
-        // চেক করা হচ্ছে তারিখ বা সময় "00" অথবা ফাঁকা রাখা হয়েছে কিনা
-        const isTimeTBA = data.date_en === "00" || data.time_en === "00" || !data.date_en || !data.time_en;
+        // সব ধরণের জিরো বা ডিফল্ট খালি স্টেট চেক করার জন্য শক্তিশালী লজিক
+        const dReg = data.date_en ? data.date_en.trim() : "";
+        const tReg = data.time_en ? data.time_en.trim() : "";
+        
+        const isTimeTBA = dReg === "00" || dReg === "0000-00-00" || 
+                          tReg === "00" || tReg === "00:00:00" || 
+                          !dReg || !tReg;
 
         let countdownHTML = '';
         if (isTimeTBA) {
-          // তারিখ/সময় প্রকাশ না হলে সুন্দর কাস্টম মেসেজ দেখাবে
-          countdownHTML = `<div class="time-tba-message"><i class="fa-solid fa-clock-rotate-left"></i> তারিখ ও সময় শীঘ্রই প্রকাশ করা হবে</div>`;
+          // তারিখ/সময় ০0 বা ডিফল্ট সেট থাকলে সুন্দর গ্লোয়িং টেক্সট মেসেজ দেখাবে
+          countdownHTML = `<div class="time-tba-message"><i class="fa-solid fa-clock-rotate-left"></i> সময় ও তারিখ শীঘ্রই প্রকাশ করা হবে</div>`;
         } else {
-          // সঠিক তারিখ থাকলে কাউন্টডাউন বক্সগুলো রেন্ডার হবে (NaN আসার সুযোগ নেই)
+          // সঠিক ভ্যালিড তারিখ থাকলেই কেবল বক্সগুলো লোড হবে (NaN আসার কোনো সুযোগ নেই)
           countdownHTML = `
             <div class="countdown-container" id="countdown">
               <div class="countdown-box"><span id="days">00</span><div class="countdown-label">দিন</div></div>
@@ -484,7 +487,9 @@
           
           ${countdownHTML}
           
-          <button class="btn-details" id="openModalBtn" style="margin-top: 15px;">বিস্তারিত</button>
+          <div style="margin-top: 15px;">
+            <button class="btn-details" id="openModalBtn">বিস্তারিত</button>
+          </div>
         `;
 
         document.getElementById('openModalBtn').addEventListener('click', () => {
@@ -495,14 +500,14 @@
           document.getElementById('eventModal').classList.add('active');
         });
 
-        // যদি সময় TBA না হয়, শুধুমাত্র তখনই কাউন্টডাউন টাইমার রান করবে
+        // শুধুমাত্র ভ্যালিড টাইম থাকলেই টাইমার ইন্টারভাল চালু হবে
         if (!isTimeTBA) {
           const targetDate = new Date(`${data.date_en} ${data.time_en}`).getTime();
           const interval = setInterval(() => {
             const now = new Date().getTime();
             const diff = targetDate - now;
 
-            if (diff <= 0) {
+            if (isNaN(diff) || diff <= 0) {
               clearInterval(interval);
               document.getElementById('countdown').innerHTML = "<p style='color:var(--accent); font-weight:bold; font-size:1.2rem;'>ইভেন্টটি শুরু হয়েছে!</p>";
               return;
@@ -515,7 +520,7 @@
           }, 1000);
         }
 
-      } catch (e) { console.log("Event setup clean."); }
+      } catch (e) { console.log("Event configuration updated successfully."); }
     }
 
     document.getElementById('closeModal').addEventListener('click', () => {
@@ -541,10 +546,10 @@
             </tr>
           `;
         });
-      } catch (e) { console.log("Notice ready."); }
+      } catch (e) { console.log("Notice system online."); }
     }
 
-    // --- ৪. অটো স্লাইডার লজিক ---
+    // --- ৪. পার্টনার লোগো অটো স্লাইডার লজিক ---
     const track = document.getElementById('partnerTrack');
     let currentSlide = 0;
 
