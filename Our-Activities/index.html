@@ -63,14 +63,13 @@
       background-color: var(--secondary);
     }
 
-    /* মূল ফিল্টার কন্টেইনার */
+    /* ফিল্টার কন্টেইনার */
     .filter-section-wrapper {
       display: flex;
       align-items: center;
-      gap: 12px; /* লেখা এবং বক্সের মধ্যকার দূরত্ব */
+      gap: 12px;
     }
 
-    /* বক্সের বাইরের আইকন ও টেক্সট স্টাইল */
     .filter-outside-label {
       display: flex;
       align-items: center;
@@ -86,18 +85,17 @@
       font-size: 0.95rem;
     }
 
-    /* ছোট ও সুন্দর ফিল্টার সিলেক্ট বক্স */
     .filter-select-box {
       background-color: rgba(10, 25, 47, 0.8);
       color: var(--text-light);
       border: 1px solid rgba(0, 180, 216, 0.3);
       padding: 8px 16px;
-      border-radius: 20px; /* রাউন্ডেড প্রিমিয়াম লুক */
+      border-radius: 20px;
       font-size: 0.95rem;
       font-family: inherit;
       outline: none;
       cursor: pointer;
-      min-width: 140px; /* অতিরিক্ত বড় হবে না, নির্দিষ্ট মাপে থাকবে */
+      min-width: 140px;
       transition: all 0.3s ease;
     }
 
@@ -118,7 +116,7 @@
       gap: 30px;
     }
 
-    /* --- নিউজカード ডিজাইন --- */
+    /* --- নিউজ কার্ড ডিজাইন --- */
     .activity-card {
       background: var(--card-bg);
       border: 1px solid rgba(0, 180, 216, 0.15);
@@ -214,7 +212,7 @@
       border: 1px solid rgba(0, 180, 216, 0.15);
     }
 
-    /* --- মোবাইল রেসপন্সিভ সিএসএস --- */
+    /* --- মোবাইল রেসপন্সিভ ফিক্স --- */
     @media (max-width: 600px) {
       .page-header-container {
         flex-direction: column;
@@ -222,11 +220,14 @@
         gap: 15px;
       }
       .filter-section-wrapper {
-        width: 100%;
-        justify-content: space-between; /* মোবাইলে লেখা বামে আর বক্স একদম ডানে সুন্দরভাবে এলাইন হবে */
+        width: auto;
+        justify-content: flex-start;
+        gap: 10px;
       }
       .filter-select-box {
-        min-width: 130px;
+        min-width: 120px;
+        padding: 6px 12px;
+        font-size: 0.9rem;
       }
       .page-title {
         font-size: 1.8rem;
