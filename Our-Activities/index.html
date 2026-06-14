@@ -103,21 +103,6 @@
     .popup-footer-categories-container { margin-top: 40px; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; align-items: center; flex-wrap: wrap; gap: 10px; }
     .popup-category-label { font-size: 1rem; font-weight: 600; color: #94a3b8; }
     .popup-footer-categories { display: flex; flex-wrap: wrap; gap: 8px; }
-
-    /* --- সবুজ অংশ স্ক্রিন ব্লক করার সমস্যার ফিক্সড সিএসএস --- */
-    .toast-notification {
-      position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
-      background: #10b981; color: white; padding: 12px 30px; border-radius: 30px;
-      font-weight: 600; box-shadow: 0 10px 25px rgba(16, 185, 129, 0.4);
-      z-index: 100000; 
-      display: none; /* প্রথমে বাটনটিকে সম্পূর্ণ অদৃশ্য এবং ইন-অ্যাক্টিভ করে রাখা হলো */
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .toast-notification.show { 
-      display: block; /* কেবল কপি করার সময়ই এটি স্ক্রিনে দৃশ্যমান হবে */
-      opacity: 1;
-    }
   </style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -141,8 +126,6 @@
       <div class="popup-content-area" id="popupDynamicContent"></div>
     </div>
   </div>
-
-  <div class="toast-notification" id="toast">📋 লিংকটি কপি করা হয়েছে!</div>
 
   <ros-footer></ros-footer>
 
@@ -261,18 +244,12 @@
       document.body.style.overflow = 'hidden'; 
     }
 
-    // সংশোধিত লিংক কপি ও ডিসপ্লে নোটিফিকেশন ফাংশন
     function copyShareLink(shortKey) {
       const cleanUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
       const finalShareLink = `${cleanUrl}?news=${shortKey}`;
       
       navigator.clipboard.writeText(finalShareLink).then(() => {
-        const toast = document.getElementById('toast');
-        toast.classList.add('show'); // display: block করবে
-        
-        setTimeout(() => { 
-          toast.classList.remove('show'); // ২.৫ সেকেন্ড পর আবার হাইড করে দেবে
-        }, 2500);
+        alert("📋 লিংকটি কপি করা হয়েছে!"); // এখানে সাধারণ অ্যালার্ট মেসেজ আসবে, কোনো এক্সট্রা সবুজ ব্যাকগ্রাউন্ড থাকবে না
       });
     }
 
