@@ -419,7 +419,7 @@ class RosHeader extends HTMLElement {
                 </ul>
               </li>
               
-              <li class="nav-item"><a href="members.html" class="nav-link">সদস্য তালিকা</a></li>
+              <li class="nav-item"><a href="../Member-List/" class="nav-link">সদস্য তালিকা</a></li>
               <li class="nav-item"><a href="gallery.html" class="nav-link">ছবি</a></li>
               <li class="nav-item"><a href="contact.html" class="nav-link">যোগাযোগ</a></li>
               
