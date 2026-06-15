@@ -18,6 +18,30 @@
       --accent-color: #ffd700;
       --bg-dark: #01060d;
     }
+
+    
+    /* হেডারটি স্ক্রিনের ওপরে ফিক্সড রাখার জন্য */
+ros-header {
+  display: block;
+  width: 100%;
+  position: fixed; /* স্ক্রিনের সাথে আটকে থাকবে */
+  top: 0;
+  left: 0;
+  z-index: 1000; /* যেন এটি অন্য সব কন্টেন্টের ওপরে থাকে */
+  background-color: var(--dark-bg); /* স্ক্রল করার সময় পেছনের কন্টেন্ট যেন দেখা না যায় */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3); /* নিচে একটি হালকা শ্যাডো */
+}
+
+/* হেডার ফিক্সড করায় মেইন কন্টেন্ট যেন হেডারের নিচে ঢাকা না পড়ে, 
+তাই মেইন কন্টেন্টের ওপরে কিছুটা মার্জিন বা প্যাডিং দিতে হবে */
+main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 120px 20px 60px 20px; /* ওপরে প্যাডিং বাড়িয়ে ৮০px থেকে ১২০px করা হলো */
+  flex-grow: 1;
+  width: 100%;
+  box-sizing: border-box;
+}
     
     body {
       background-color: var(--bg-dark);
