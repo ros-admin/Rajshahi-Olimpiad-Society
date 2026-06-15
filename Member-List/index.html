@@ -66,6 +66,8 @@
       border: 1px solid rgba(0, 180, 216, 0.2);
       border-radius: 16px; padding: 25px; margin-bottom: 30px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      position: relative;
+      z-index: 10; /* ড্রপডাউনকে টেবিলের উপরে রাখার জন্য */
     }
 
     .search-row {
@@ -121,13 +123,13 @@
     .custom-dropdown-panel {
       display: none; position: absolute; top: 100%; left: 0; width: 100%;
       background: #040d1a; border: 1px solid var(--secondary);
-      border-radius: 8px; z-index: 100; max-height: 250px; overflow-y: auto;
-      box-shadow: 0 8px 16px rgba(0,0,0,0.5); margin-top: 4px; padding: 8px; box-sizing: border-box;
+      border-radius: 8px; z-index: 999; max-height: 250px; overflow-y: auto;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.6); margin-top: 4px; padding: 8px; box-sizing: border-box;
     }
 
     .dropdown-search-input {
       width: 100%; background: rgba(2, 12, 27, 0.8); color: #fff;
-      border: 1px solid rgba(0, 180, 216, 0.4); padding: 6px 10px;
+      border: 1px solid rgba(0, 180, 216, 0.4); padding: 8px 10px;
       border-radius: 6px; outline: none; font-family: inherit; margin-bottom: 8px;
       box-sizing: border-box; font-size: 0.85rem;
     }
@@ -139,6 +141,7 @@
 
     .dropdown-opt-item {
       padding: 8px 10px; cursor: pointer; border-radius: 4px; transition: 0.2s; font-size: 0.9rem;
+      color: #cbd5e1;
     }
     .dropdown-opt-item:hover, .dropdown-opt-item.selected {
       background: rgba(0, 180, 216, 0.2); color: #fff;
@@ -156,8 +159,16 @@
       background: var(--card-bg); backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(0, 180, 216, 0.15);
-      border-radius: 16px; overflow: hidden;
+      border-radius: 16px; 
+      overflow: visible; /* ড্রপডাউন কেটে যাওয়া রোধ করতে দৃশ্যমান করা হলো */
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      position: relative;
+      z-index: 1;
+    }
+
+    .table-responsive-wrapper {
+      width: 100%;
+      overflow-x: auto; /* শুধুমাত্র এক্স-অক্ষে স্ক্রল হবে */
     }
 
     table {
@@ -363,21 +374,23 @@
     </div>
 
     <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>সিরিয়াল</th>
-            <th>নিবন্ধন নং</th>
-            <th>নাম</th>
-            <th>লিঙ্গ</th>
-            <th>নিবন্ধনের তারিখ</th>
-            <th>পেশা</th>
-            <th>রক্তের গ্রুপ</th>
-            <th>ঠিকানা</th>
-          </tr>
-        </thead>
-        <tbody id="memberTableBody"></tbody>
-      </table>
+      <div class="table-responsive-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>সিরিয়াল</th>
+              <th>নিবন্ধন নং</th>
+              <th>নাম</th>
+              <th>লিঙ্গ</th>
+              <th>নিবন্ধনের তারিখ</th>
+              <th>পেশা</th>
+              <th>রক্তের গ্রুপ</th>
+              <th>ঠিকানা</th>
+            </tr>
+          </thead>
+          <tbody id="memberTableBody"></tbody>
+        </table>
+      </div>
     </div>
   </main>
 
@@ -393,23 +406,23 @@
 
       <div class="modal-details-list">
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ:</span>
           <span class="detail-value" id="modalDate"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ:</span>
           <span class="detail-value" id="modalGenderTextWrapper"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা:</span>
           <span class="detail-value" id="modalPesa"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ:</span>
           <span class="detail-value" id="modalBlood"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা:</span>
           <span class="detail-value" id="modalAddress"></span>
         </div>
       </div>
@@ -420,8 +433,6 @@
 
   <script>
     let rawMembersData = [];
-    
-    // গ্লোবাল ফিল্টার স্টেট ভ্যারিয়েবল
     let selectedPesaValue = 'all';
     let selectedAddressValue = 'all';
 
@@ -436,8 +447,11 @@
         
         sortData('name-asc');
         populateStandardFilters(rawMembersData);
-        renderCustomDropdown('pesa', 'all');
-        renderCustomDropdown('address', 'all');
+        
+        // ডেটা সফলভাবে লোড হওয়ার পর ড্রপডাউনগুলো জেনারেট করা হচ্ছে
+        renderCustomDropdown('pesa', '');
+        renderCustomDropdown('address', '');
+        
         applyFiltersAndSearch();
       } catch (error) {
         console.error('Error fetching member data:', error);
@@ -478,22 +492,20 @@
       });
     }
 
-    // পেশা ও ঠিকানার কাস্টম সার্চ-ড্রপডাউন রেন্ডার করার লজিক
+    // কাস্টম সার্চ-ড্রপডাউন রেন্ডার করার মূল লজিক (ফিক্সড)
     function renderCustomDropdown(type, searchKey = '') {
       const listContainer = document.getElementById(`${type}OptionsList`);
-      const trigger = document.getElementById(`custom${type.charAt(0).toUpperCase() + type.slice(1)}Trigger`);
       const currentSelected = type === 'pesa' ? selectedPesaValue : selectedAddressValue;
       
       listContainer.innerHTML = '';
       
-      // ইউনিক ডেটা সেট তৈরি
       const uniqueItems = new Set();
       rawMembersData.forEach(m => {
         let val = type === 'pesa' ? m.pesa : m.address;
         if (val) uniqueItems.add(val.trim());
       });
 
-      // 'সব' অপশনটি ডিফল্ট হিসেবে রাখা
+      // 'সব' অপশন যুক্ত করা
       const allItem = document.createElement('div');
       allItem.className = `dropdown-opt-item ${currentSelected === 'all' ? 'selected' : ''}`;
       allItem.innerText = type === 'pesa' ? 'সব পেশা' : 'সব ঠিকানা';
@@ -502,7 +514,7 @@
       });
       listContainer.appendChild(allItem);
 
-      // সার্চ কিওয়ার্ড অনুযায়ী তালিকা ফিল্টার করে যুক্ত করা
+      // ইউনিক লিস্ট ফিল্টার করে ড্রপডাউনে বসানো
       Array.from(uniqueItems).forEach(item => {
         if (searchKey === '' || item.toLowerCase().includes(searchKey.toLowerCase())) {
           const itemEl = document.createElement('div');
@@ -526,24 +538,39 @@
       applyFiltersAndSearch();
     }
 
-    // ট্রিগার ক্লিক লজিক (ড্রপডাউন অন/অফ)
+    // ট্রিগার ক্লিক হ্যান্ডলার
     document.getElementById('customPesaTrigger').addEventListener('click', (e) => {
       e.stopPropagation();
       const panel = document.getElementById('customPesaPanel');
-      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+      const isVisible = panel.style.display === 'block';
+      
+      // অন্য সব কাস্টম প্যানেল বন্ধ করা
       document.getElementById('customAddressPanel').style.display = 'none';
-      if (panel.style.display === 'block') document.getElementById('pesaSearchInside').focus();
+      
+      panel.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible) {
+        document.getElementById('pesaSearchInside').value = '';
+        renderCustomDropdown('pesa', '');
+        setTimeout(() => document.getElementById('pesaSearchInside').focus(), 50);
+      }
     });
 
     document.getElementById('customAddressTrigger').addEventListener('click', (e) => {
       e.stopPropagation();
       const panel = document.getElementById('customAddressPanel');
-      panel.style.display = panel.style.display === 'block' ? 'none' : 'block';
+      const isVisible = panel.style.display === 'block';
+      
       document.getElementById('customPesaPanel').style.display = 'none';
-      if (panel.style.display === 'block') document.getElementById('addressSearchInside').focus();
+      
+      panel.style.display = isVisible ? 'none' : 'block';
+      if (!isVisible) {
+        document.getElementById('addressSearchInside').value = '';
+        renderCustomDropdown('address', '');
+        setTimeout(() => document.getElementById('addressSearchInside').focus(), 50);
+      }
     });
 
-    // ইন-ড্রপডাউন সার্চ বক্সের ইভেন্ট লিসেনার
+    // রিয়েল-টাইম সার্চ ইনপুট প্রসেসিং
     document.getElementById('pesaSearchInside').addEventListener('input', (e) => {
       renderCustomDropdown('pesa', e.target.value.trim());
     });
@@ -552,7 +579,7 @@
       renderCustomDropdown('address', e.target.value.trim());
     });
 
-    // বাইরে ক্লিক করলে কাস্টম প্যানেল বন্ধ হবে
+    // বাইরে ক্লিক করলে বন্ধ করার লজিক
     window.addEventListener('click', () => {
       document.getElementById('customPesaPanel').style.display = 'none';
       document.getElementById('customAddressPanel').style.display = 'none';
@@ -560,7 +587,6 @@
 
     document.getElementById('customPesaPanel').addEventListener('click', (e) => e.stopPropagation());
     document.getElementById('customAddressPanel').addEventListener('click', (e) => e.stopPropagation());
-
 
     function sortData(criteria) {
       if (criteria === 'name-asc') {
@@ -570,7 +596,7 @@
       } else if (criteria === 'reg-asc') {
         rawMembersData.sort((a, b) => String(a.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
       } else if (criteria === 'reg-desc') {
-        rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
+        rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(a.regNo), undefined, {numeric: true}));
       }
     }
 
@@ -654,7 +680,6 @@
       modal.classList.add('active');
     }
 
-    // Manual Entry টগল লজিক
     document.getElementById('filterDate').addEventListener('change', (e) => {
       const container = document.getElementById('manualDateContainer');
       if (e.target.value === 'manual') {
