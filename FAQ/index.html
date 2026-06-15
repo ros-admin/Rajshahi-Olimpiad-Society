@@ -8,29 +8,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* --- কার্যক্রম পেজের অফিশিয়াল প্রিমিয়াম ব্র্যান্ড কালার থিম --- */
+    /* --- আপনার অফিশিয়াল ব্র্যান্ড কালার থিম --- */
     :root {
-      --primary: #0a1128;
-      --secondary: #00b4d8; 
-      --accent: #ffd700;    
       --dark-bg: #020c1b;
-      --text-light: #f1f5f9;
-      --card-bg: rgba(10, 25, 47, 0.65);
+      --card-bg: #0a192f;
       --panel-inner: #040d1a;
+      --secondary: #00b4d8; /* নীল */
+      --accent: #ffd700;    /* হলুদ */
+      --text-light: #f1f5f9;
       --text-muted: #94a3b8;
     }
 
     body {
-      margin: 0; padding: 0;
-      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
-      background-color: var(--dark-bg); color: var(--text-light);
-      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+      font-family: 'Hind Siliguri', sans-serif;
+      background-color: var(--dark-bg);
+      color: var(--text-light);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
     }
 
-    /* --- গ্লোবাল হেডার ও ফুটার লেআউট (কার্যক্রম পেজের মতো স্বাভাবিক) --- */
+    /* --- গ্লোবাল হেডার ও ফুটার লেআউট (স্বাভাবিক পজিশন) --- */
     ros-header {
       display: block;
       width: 100%;
@@ -45,51 +45,76 @@
     main {
       max-width: 900px;
       margin: 0 auto;
-      padding: 60px 10% 80px;
+      padding: 60px 20px 80px 20px;
       flex-grow: 1;
       width: 100%;
       box-sizing: border-box;
     }
 
-    /* --- পেজ হেডার এবং সেন্ট্রাল আন্ডারলাইন --- */
+    /* --- পেজ হেডার এরিয়া (সেন্ট্রাল অ্যালাইনড) --- */
     .page-header-container {
-      padding: 20px 0 20px; 
-      display: flex; 
-      flex-direction: column; 
-      align-items: center; /* কন্টেন্ট মাঝখানে রাখার জন্য */
-      text-align: center;  /* টেক্সট মাঝখানে রাখার জন্য */
-      gap: 20px;
-      border-bottom: 1px solid rgba(0, 180, 216, 0.15);
-      background: linear-gradient(180deg, rgba(10, 25, 47, 0.5) 0%, transparent 100%);
-      margin-bottom: 40px;
+      text-align: center;
+      margin-bottom: 30px;
     }
-    
-    .page-title { 
-      font-size: 2.2rem; 
-      color: var(--secondary); 
-      margin: 0; 
-      display: inline-block;
+
+    .page-title {
+      font-size: 2.6rem;
+      margin: 0 0 15px 0;
+      color: var(--secondary);
+      font-weight: 700;
     }
-    
-    /* আন্ডারলাইনটি যেন টাইটেলের নিচে ঠিক মাঝখানে থাকে */
-    .page-title::after { 
-      content: ''; 
-      display: block; 
-      width: 60px; 
-      height: 3px; 
-      background: var(--accent); 
-      margin: 8px auto 0 auto; 
+
+    .title-divider {
+      width: 100px;
+      height: 4px;
+      background-color: var(--accent);
+      margin: 0 auto 20px;
+      border-radius: 2px;
     }
 
     .page-subtitle {
       color: var(--text-light);
-      font-size: 1.1rem;
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto;
       line-height: 1.6;
-      margin: 0;
-      max-width: 600px; /* পড়ার সুবিধার জন্য সর্বোচ্চ উইডথ */
     }
 
-    /* --- মডার্ন ৩ডি গ্লাস-মরফিজম FAQ অ্যাকর্ডিয়ন --- */
+    /* --- ফিল্টার বাটন সেকশন (আগের বাটন স্টাইল) --- */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 40px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(0, 180, 216, 0.05);
+      border: 1px solid rgba(0, 180, 216, 0.2);
+      color: var(--text-light);
+      padding: 10px 24px;
+      border-radius: 30px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover {
+      background: rgba(0, 180, 216, 0.15);
+      border-color: var(--secondary);
+    }
+
+    .filter-btn.active {
+      background: var(--secondary);
+      border-color: var(--secondary);
+      color: var(--dark-bg);
+      box-shadow: 0 0 15px rgba(0, 180, 216, 0.4);
+    }
+
+    /* --- মডার্ন ৩ডি FAQ অ্যাকর্ডিয়ন --- */
     .faq-container {
       display: flex;
       flex-direction: column;
@@ -97,25 +122,19 @@
     }
 
     .faq-item {
-      background: var(--card-bg); 
-      backdrop-filter: blur(15px); 
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(0, 180, 216, 0.2); 
-      border-radius: 16px; 
+      background: var(--card-bg);
+      border-radius: 12px;
+      border: 1px solid rgba(0, 180, 216, 0.15);
       overflow: hidden;
-      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      display: block; /* ডিফল্টভাবে দৃশ্যমান */
     }
 
-    .faq-item:hover { 
-      border-color: var(--secondary); 
-      box-shadow: 0 15px 35px rgba(0, 180, 216, 0.25); 
-    }
-
-    /* বর্ডারে সূক্ষ্ম পালস আলো অ্যানিমেশন */
+    /* অ্যাক্টিভ বর্ডারে সূক্ষ্ম পালস আলো */
     .faq-item.active {
       border-color: var(--secondary);
-      box-shadow: 0 0 20px rgba(0, 180, 216, 0.3);
+      box-shadow: 0 0 15px rgba(0, 180, 216, 0.25);
       animation: pulseBorder 3s infinite alternate;
     }
 
@@ -125,7 +144,7 @@
       100% { border-color: var(--secondary); }
     }
 
-    /* প্রশ্নের অংশ (উщую গ্লাস প্যানেল) */
+    /* প্রশ্নের অংশ (উঁ‌চু বক্স) */
     .faq-question-btn {
       width: 100%;
       background: transparent;
@@ -170,7 +189,7 @@
       color: var(--dark-bg);
     }
 
-    /* উত্তরের অংশ (নিখুঁত ডার্ক ইনার ডেপথ) */
+    /* উত্তরের অংশ (গভীর বক্স লুক) */
     .faq-answer-panel {
       max-height: 0;
       overflow: hidden;
@@ -184,56 +203,49 @@
       font-size: 1.05rem;
       line-height: 1.8;
       color: #cbd5e1;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      text-align: justify;
+      border-top: 1px solid rgba(0, 0, 0, 0.2);
     }
 
-    /* আরও জিজ্ঞাসা সেকশন (গ্লাস কার্ড লুক) */
+    /* আরও জিজ্ঞাসা সেকশন */
     .more-help-section {
       text-align: center;
       margin-top: 60px;
       padding: 40px 35px;
-      background: var(--card-bg);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      background: rgba(0, 180, 216, 0.01);
       border-radius: 16px;
-      border: 1px dashed rgba(0, 180, 216, 0.3);
-      margin-bottom: 20px;
+      border: 1px dashed rgba(0, 180, 216, 0.15);
+      margin-bottom: 40px;
     }
 
     .more-help-text {
       font-size: 1.15rem;
       color: var(--text-muted);
-      margin-bottom: 25px;
+      margin-bottom: 20px;
     }
 
-    /* বাটন স্টাইল */
     .btn-contact-faq {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: rgba(0, 180, 216, 0.1); 
-      color: var(--secondary); 
-      border: 1px solid rgba(0, 180, 216, 0.3);
-      padding: 12px 30px; 
-      border-radius: 30px; 
-      font-weight: 600; 
-      cursor: pointer; 
-      transition: 0.2s;
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: #fff;
+      padding: 13px 32px;
+      border-radius: 50px;
       text-decoration: none;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(0, 180, 216, 0.15);
+      transition: 0.3s ease;
     }
 
-    .btn-contact-faq:hover { 
-      background: var(--secondary); 
-      color: #fff; 
-      box-shadow: 0 0 15px rgba(0, 180, 216, 0.5); 
+    .btn-contact-faq:hover {
       transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(0, 180, 216, 0.3);
     }
 
-    /* --- মোবাইল রেসপন্সিভ মিডিয়া কুয়েরি --- */
-    @media (max-width: 768px) {
-      main { padding: 40px 5% 60px; }
-      .page-title { font-size: 1.9rem; }
+    /* --- মোবাইল রেসপন্সিভ --- */
+    @media (max-width: 600px) {
+      .page-title { font-size: 2.1rem; }
+      .filter-btn { padding: 8px 18px; font-size: 0.9rem; }
       .faq-question-btn { padding: 20px 18px; font-size: 1.1rem; }
       .faq-answer-content { padding: 15px 18px 20px 18px; font-size: 0.98rem; }
     }
@@ -241,21 +253,25 @@
 </head>
 <body>
 
-  <!-- গ্লোবাল নেভিগেশন হেডার (স্বাভাবিক পজিশন) -->
   <ros-header></ros-header>
 
   <main>
-    <!-- পেজ হেডার এরিয়া (এখন সম্পূর্ণ সেন্ট্রাল অ্যালাইনড) -->
     <div class="page-header-container">
       <h1 class="page-title">সাধারণ জিজ্ঞাসা</h1>
+      <div class="title-divider"></div>
       <p class="page-subtitle">রাজশাহী অলিম্পিয়াড সোসাইটি সম্পর্কে আপনার মনে থাকা সাধারণ কিছু প্রশ্নের উত্তর</p>
     </div>
 
-    <!-- FAQ কন্টেইনার -->
+    <div class="filter-container">
+      <button class="filter-btn active" data-filter="all">সব জিজ্ঞাসা</button>
+      <button class="filter-btn" data-filter="general">সাধারণ</button>
+      <button class="filter-btn" data-filter="events">ইভেন্ট ও প্রতিযোগিতা</button>
+      <button class="filter-btn" data-filter="membership">মেম্বারশিপ</button>
+    </div>
+
     <div class="faq-container">
       
-      <!-- প্রশ্ন ১ -->
-      <div class="faq-item">
+      <div class="faq-item" data-category="general">
         <button class="faq-question-btn">
           <span>১. রাজশাহী অলিম্পিয়াড সোসাইটি (ROS) কী ধরনের সংস্থা?</span>
           <div class="faq-icon-box">
@@ -269,8 +285,7 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ২ -->
-      <div class="faq-item">
+      <div class="faq-item" data-category="events">
         <button class="faq-question-btn">
           <span>২. আপনাদের আয়োজিত কার্যক্রমে কারা অংশগ্রহণ করতে পারবে?</span>
           <div class="faq-icon-box">
@@ -284,8 +299,7 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৩ -->
-      <div class="faq-item">
+      <div class="faq-item" data-category="membership">
         <button class="faq-question-btn">
           <span>৩. সোসাইটির সদস্য (Volunteer) হওয়ার উপায় কী?</span>
           <div class="faq-icon-box">
@@ -299,8 +313,7 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৪ -->
-      <div class="faq-item">
+      <div class="faq-item" data-category="events">
         <button class="faq-question-btn">
           <span>৪. প্রতিযোগিতার ফলাফল বা আপকামিং ইভেন্টের খবর কোথায় পাওয়া যাবে?</span>
           <div class="faq-icon-box">
@@ -314,8 +327,7 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৫ -->
-      <div class="faq-item">
+      <div class="faq-item" data-category="general">
         <button class="faq-question-btn">
           <span>৫. আপনাদের সাথে যেকোনো প্রয়োজনে কীভাবে যোগাযোগ করব?</span>
           <div class="faq-icon-box">
@@ -324,14 +336,13 @@
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
-            আমাদের সাথে যোগাযোগ করার জন্য সরাসরি এই ওয়েবসাইটের 'যোগাযোগ' পাতায় চলে যান। সেখানে আমাদের ইমেইল এড্রেস, অফিশিয়াল ফোন নম্বর এবং আমাদের ঠিকানার বিবরণ পেয়ে যাবেন। lifestyle সরাসরি মেসেজ পাঠানোর সুবিধাও রয়েছে।
+            আমাদের সাথে যোগাযোগ করার জন্য সরাসরি এই ওয়েবসাইটের 'যোগাযোগ' পাতায় চলে যান। সেখানে আমাদের ইমেইল এড্রেস, অফিশিয়াল ফোন নম্বর এবং আমাদের ঠিকানার বিবরণ পেয়ে যাবেন। এছাড়া সরাসরি মেসেজ পাঠানোর সুবিধাও রয়েছে।
           </div>
         </div>
       </div>
 
     </div>
 
-    <!-- অতিরিক্ত জিজ্ঞাসা সেকশন -->
     <div class="more-help-section">
       <p class="more-help-text">আপনার প্রয়োজনীয় প্রশ্নের উত্তর এখানে খুঁজে পাননি?</p>
       <a href="../contact.html" class="btn-contact-faq">
@@ -340,11 +351,10 @@
     </div>
   </main>
 
-  <!-- গলোবাল ফুটার কম্পোনেন্ট -->
   <ros-footer></ros-footer>
 
-  <!-- জাভাস্ক্রিপ্ট অ্যাকর্ডিয়ন লজিক -->
   <script>
+    // ১. অ্যাকর্ডিয়ন ওপেন/ক্লোজ টগল লজিক
     document.querySelectorAll('.faq-question-btn').forEach(button => {
       button.addEventListener('click', () => {
         const faqItem = button.parentElement;
@@ -354,6 +364,7 @@
           panel.style.maxHeight = null;
           faqItem.classList.remove('active');
         } else {
+          // একসাথে একাধিক প্রশ্ন ওপেন না রাখার জন্য বাকিগুলো ক্লোজ করা
           document.querySelectorAll('.faq-item').forEach(item => {
             item.classList.remove('active');
             const innerPanel = item.querySelector('.faq-answer-panel');
@@ -365,9 +376,36 @@
         }
       });
     });
+
+    // ২. আগের মত স্ট্যাটিক বাটন ভিত্তিক ফিল্টারিং লজিক
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const faqItems = document.querySelectorAll('.faq-item');
+
+    filterButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        // একটিভ ক্লাস পরিবর্তন
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+
+        const filterValue = button.getAttribute('data-filter');
+
+        faqItems.forEach(item => {
+          // ফিল্টার করার সময় চলমান কোনো খোলা প্যানেল থাকলে তা বন্ধ করে দেওয়া
+          item.classList.remove('active');
+          const panel = item.querySelector('.faq-answer-panel');
+          if(panel) panel.style.maxHeight = null;
+
+          // ক্যাটাগরি মিললে দেখাবে, না মিললে হাইড করবে
+          if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+    });
   </script>
 
-  <!-- সাব-ফোল্ডার স্ট্রাকচার অনুযায়ী রুট ফাইলে কানেকশন -->
   <script src="../navigation.js"></script>
 </body>
 </html>
