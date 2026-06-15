@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>সদস্য তালিকা - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- অফিশিয়াল প্রিমিয়াম ব্র্যান্ড কালার থিম --- */
+    :root {
+      --dark-bg: #020c1b;
+      --card-bg: rgba(10, 25, 47, 0.65);
+      --panel-inner: #040d1a;
+      --secondary: #00b4d8; /* নীল */
+      --accent: #ffd700;    /* হলুদ */
+      --text-light: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      background-color: var(--dark-bg); color: var(--text-light);
+      overflow-x: hidden;
+      display: flex; flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* --- গ্লোবাল হেডার ও ফুটার লেআউট --- */
+    ros-header { display: block; width: 100%; }
+    ros-footer { display: block; width: 100%; margin-top: auto; }
+
+    main {
+      max-width: 1200px; margin: 0 auto;
+      padding: 60px 20px 80px 20px;
+      flex-grow: 1; width: 100%; box-sizing: border-box;
+    }
+
+    /* --- পেজ হেডার সেকশন --- */
+    .page-header-container {
+      text-align: center; margin-bottom: 40px;
+    }
+
+    .page-title {
+      font-size: 2.6rem; margin: 0 0 15px 0;
+      color: var(--secondary); font-weight: 700;
+    }
+
+    .title-divider {
+      width: 100px; height: 4px; background-color: var(--accent);
+      margin: 0 auto 20px; border-radius: 2px;
+    }
+
+    .page-subtitle {
+      color: var(--text-light); font-size: 1.15rem;
+      max-width: 600px; margin: 0 auto; line-height: 1.6;
+    }
+
+    /* --- সার্চ ও কন্ট্রোল প্যানেল (গ্লাস কার্ড লুক) --- */
+    .control-panel {
+      background: var(--card-bg); backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 180, 216, 0.2);
+      border-radius: 16px; padding: 25px; margin-bottom: 30px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+    }
+
+    .search-row {
+      display: flex; gap: 15px; margin-bottom: 20px;
+    }
+
+    .search-box-wrapper {
+      position: relative; flex: 1;
+    }
+
+    .search-box-wrapper i {
+      position: absolute; left: 15px; top: 50%;
+      transform: translateY(-50%); color: var(--text-muted);
+    }
+
+    .search-input {
+      width: 100%; background: rgba(2, 12, 27, 0.8);
+      border: 1px solid rgba(0, 180, 216, 0.2); color: #fff;
+      padding: 12px 15px 12px 45px; border-radius: 30px;
+      font-family: inherit; outline: none; box-sizing: border-box;
+      transition: all 0.3s;
+    }
+
+    .search-input:focus {
+      border-color: var(--secondary); box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
+    }
+
+    /* ফিল্টার গ্রিড এরিয়া */
+    .filters-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+    }
+
+    .filter-group {
+      display: flex; flex-direction: column; gap: 5px;
+    }
+
+    .filter-group label {
+      font-size: 0.85rem; color: var(--text-muted); font-weight: 600;
+    }
+
+    .filter-select {
+      background: rgba(2, 12, 27, 0.8); color: #fff;
+      border: 1px solid rgba(0, 180, 216, 0.2);
+      padding: 10px 15px; border-radius: 8px; outline: none;
+      font-family: inherit; cursor: pointer; transition: 0.3s;
+    }
+
+    .filter-select:focus { border-color: var(--secondary); }
+
+    /* --- রেসপন্সিভ ৩ডি টেবিল ডিজাইন --- */
+    .table-container {
+      background: var(--card-bg); backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 180, 216, 0.15);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    }
+
+    table {
+      width: 100%; border-collapse: collapse; text-align: left;
+    }
+
+    th {
+      background: rgba(4, 13, 26, 0.8); color: var(--secondary);
+      padding: 16px 20px; font-weight: 700; font-size: 1.05rem;
+      border-bottom: 2px solid rgba(0, 180, 216, 0.3);
+    }
+
+    td {
+      padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 1rem; color: #cbd5e1; transition: all 0.2s;
+    }
+
+    tr:last-child td { border-bottom: none; }
+
+    /* টেবিল রো হোভার ইফেক্ট */
+    tbody tr { cursor: pointer; transition: 0.2s; }
+    tbody tr:hover td {
+      background: rgba(0, 180, 216, 0.08); color: #fff;
+    }
+
+    .clickable-name {
+      color: var(--secondary); font-weight: 600;
+      text-decoration: none; position: relative;
+    }
+    tbody tr:hover .clickable-name { color: var(--accent); }
+
+    /* ব্লাড গ্রুপ ব্যাজ স্টাইল */
+    .blood-badge {
+      background: rgba(239, 68, 68, 0.15); color: #f87171;
+      padding: 4px 10px; border-radius: 6px; font-weight: 600;
+      border: 1px solid rgba(239, 68, 68, 0.3);
+    }
+
+    /* --- আল্ট্রা ইউনিক পপআপ (Modal) স্টাইল --- */
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(2, 12, 27, 0.85); backdrop-filter: blur(10px);
+      z-index: 9999; display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: all 0.3s ease;
+    }
+
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .modal-card {
+      background: #0a192f; border: 1px solid var(--secondary);
+      border-radius: 24px; width: 90%; max-width: 450px;
+      padding: 35px 30px; box-shadow: 0 20px 50px rgba(0, 180, 216, 0.3);
+      position: relative; transform: scale(0.85); transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .modal-overlay.active .modal-card { transform: scale(1); }
+
+    .modal-close-btn {
+      position: absolute; top: 20px; right: 20px; background: transparent;
+      border: none; color: var(--text-muted); font-size: 1.4rem; cursor: pointer;
+      transition: 0.2s;
+    }
+    .modal-close-btn:hover { color: #f87171; transform: rotate(90deg); }
+
+    /* পপআপ কন্টেন্ট লেআউট */
+    .modal-header-profile {
+      text-align: center; margin-bottom: 25px;
+    }
+
+    /* আপনার পাঠানো ছবির আদলে মিনিমালিস্ট এভাটার ফ্রেম */
+    .theme-avatar-container {
+      width: 110px; height: 90px; margin: 0 auto 15px auto;
+      display: flex; align-items: center; justify-content: center;
+    }
+    
+    .theme-avatar-container svg {
+      width: 100%; height: 100%;
+    }
+
+    .modal-reg-no {
+      font-family: 'Poppins', sans-serif; color: var(--accent);
+      font-size: 0.95rem; font-weight: 600; letter-spacing: 1px; margin: 0 0 5px 0;
+    }
+
+    .modal-member-name {
+      font-size: 1.6rem; color: #fff; margin: 0; font-weight: 700;
+    }
+
+    .modal-details-list {
+      background: var(--panel-inner); border-radius: 16px;
+      padding: 20px; display: flex; flex-direction: column; gap: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .detail-item {
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px dashed rgba(255, 255, 255, 0.05); padding-bottom: 10px;
+    }
+    .detail-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .detail-label {
+      color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 10px;
+    }
+    .detail-label i { color: var(--secondary); width: 16px; }
+    
+    .detail-value { 
+      color: var(--text-light); font-weight: 600; 
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    /* পপআপ লিঙ্গ চিহ্নের সঠিক কালার (স্কাই ব্লু ও হট পিংক) */
+    .gender-inline-icon { font-size: 1.1rem; }
+    .gender-inline-icon.male { color: #52c4ff; }
+    .gender-inline-icon.female { color: #ff60b5; }
+
+    /* --- মোবাইল ও ট্যাবলেট রেসপন্সিভ মিডিয়া কুয়েরি --- */
+    @media (max-width: 768px) {
+      .search-row { flex-direction: column; }
+      
+      th:nth-child(4), td:nth-child(4),
+      th:nth-child(5), td:nth-child(5),
+      th:nth-child(6), td:nth-child(6),
+      th:nth-child(7), td:nth-child(7) {
+        display: none;
+      }
+      
+      .page-title { font-size: 2.1rem; }
+      th, td { padding: 12px 15px; font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <ros-header></ros-header>
+
+  <main>
+    <div class="page-header-container">
+      <h1 class="page-title">সদস্য তালিকা</h1>
+      <div class="title-divider"></div>
+      <p class="page-subtitle">রাজশাহী অলিম্পিয়াড সোসাইটির নিবন্ধিত গর্বিত সদস্যবৃন্দের তালিকা</p>
+    </div>
+
+    <div class="control-panel">
+      <div class="search-row">
+        <div class="search-box-wrapper">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="text" id="memberSearch" class="search-input" placeholder="নিবন্ধন নং অথবা নাম লিখে সার্চ করুন...">
+        </div>
+      </div>
+
+      <div class="filters-grid">
+        <div class="filter-group">
+          <label>ক্রমানুসারে সাজান</label>
+          <select id="sortControl" class="filter-select">
+            <option value="name-asc">নামের ক্রমানুসারে (ক-ৎ)</option>
+            <option value="name-desc">নামের ক্রমানুসারে (ৎ-অ)</option>
+            <option value="reg-asc">নিবন্ধন নং (প্রথম থেকে শেষ)</option>
+            <option value="reg-desc">নিবন্ধন নং (শেষ থেকে শুরু)</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>লিঙ্গ</label>
+          <select id="filterGender" class="filter-select">
+            <option value="all">সব লিঙ্গ</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>রক্তের গ্রুপ</label>
+          <select id="filterBlood" class="filter-select">
+            <option value="all">সব ব্লাড গ্রুপ</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>নিবন্ধনের তারিখ</label>
+          <select id="filterDate" class="filter-select">
+            <option value="all">সব তারিখ</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
+          <label>ঠিকানা</label>
+          <select id="filterAddress" class="filter-select">
+            <option value="all">সব ঠিকানা</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>সিরিয়াল</th>
+            <th>নিবন্ধন নং</th>
+            <th>নাম</th>
+            <th>লিঙ্গ</th>
+            <th>নিবন্ধনের তারিখ</th>
+            <th>রক্তের গ্রুপ</th>
+            <th>ঠিকানা</th>
+          </tr>
+        </thead>
+        <tbody id="memberTableBody"></tbody>
+      </table>
+    </div>
+  </main>
+
+  <div class="modal-overlay" id="memberModal">
+    <div class="modal-card">
+      <button class="modal-close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
+      
+      <div class="modal-header-profile">
+        <div class="theme-avatar-container" id="modalAvatarBox"></div>
+        <p class="modal-reg-no" id="modalRegNo"></p>
+        <h2 class="modal-member-name" id="modalName"></h2>
+      </div>
+
+      <div class="modal-details-list">
+        <div class="detail-item">
+          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ চিহ্ন:</span>
+          <span class="detail-value" id="modalDate"></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ চিহ্ন:</span>
+          <span class="detail-value" id="modalGenderTextWrapper"></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ চিহ্ন:</span>
+          <span class="detail-value" id="modalBlood"></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা চিহ্ন:</span>
+          <span class="detail-value" id="modalAddress"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ros-footer></ros-footer>
+
+  <script>
+    let rawMembersData = [];
+
+    // আপনার আপলোডকৃত অবিকল গ্রাফিক্স ভেক্টর শেপ (কাস্টম ইনলাইন এসভিজি)
+    const maleAvatarSVG = `
+      <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="50" r="45" fill="rgba(82, 196, 255, 0.03)" stroke="rgba(82, 196, 255, 0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+        <path d="M52 24 C48 24, 46 27, 44 31 C43 33, 44 38, 47 41 C48 42, 50 45, 50 48 C50 54, 47 57, 41 61 C31 67, 24 74, 24 84 L96 84 C96 74, 89 67, 79 61 C73 57, 70 54, 70 48 C70 45, 72 42, 73 41 C76 38, 77 33, 76 31 C74 27, 72 24, 68 24 C64 24, 60 27, 60 27 C60 27, 56 24, 52 24 Z" fill="none" />
+        <path d="M63 26 C59.5 24.5, 57 28, 55 31 C53.5 33.5, 54 38.5, 56.5 41 C57.5 42, 58.5 45, 58.5 48.5 C58.5 54, 56.5 56, 52 59.5 C44.5 65, 39 71.5, 39 80 L87 80 C87 71.5, 81.5 65, 74 59.5 C69.5 56, 67.5 54, 67.5 48.5 C67.5 45, 68.5 42, 69.5 41 C72 38.5, 72.5 33.5, 71 31 C69 28, 66.5 24.5, 63 26 Z" fill="#52c4ff"/>
+      </svg>`;
+
+    const femaleAvatarSVG = `
+      <svg viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="60" cy="50" r="45" fill="rgba(255, 96, 181, 0.03)" stroke="rgba(255, 96, 181, 0.15)" stroke-width="1" stroke-dasharray="3 3"/>
+        <path d="M60 18 C46 18, 41 27, 41 40 C41 45, 43 46, 45 49 C47 52, 49 53, 49 56 C49 61, 44 65, 37 69 C24 76, 16 82, 16 92 L104 92 C104 82, 96 76, 83 69 C76 65, 71 61, 71 56 C71 53, 73 52, 75 49 C77 46, 79 45, 79 40 C79 27, 74 18, 60 18 Z" fill="#ff60b5"/>
+      </svg>`;
+
+    async function loadMembersData() {
+      try {
+        const response = await fetch('../Member-List/Member List.json');
+        if (!response.ok) throw new Error('Network error or file not found');
+        rawMembersData = await response.json();
+        
+        sortData('name-asc');
+        populateDropdownFilters(rawMembersData);
+        applyFiltersAndSearch();
+      } catch (error) {
+        console.error('Error fetching member data:', error);
+        document.getElementById('memberTableBody').innerHTML = `
+          <tr><td colspan="7" style="text-align:center; color:#f87171; padding: 30px;">মেম্বার তালিকা লোড করা যায়নি! '../Member-List/Member List.json' ফাইলটি নিশ্চিত করুন।</td></tr>
+        `;
+      }
+    }
+
+    function populateDropdownFilters(data) {
+      const genders = new Set();
+      const bloodGroups = new Set();
+      const dates = new Set();
+      const addresses = new Set();
+
+      data.forEach(m => {
+        if (m.gender) genders.add(m.gender.trim());
+        if (m.bloodGroup) bloodGroups.add(m.bloodGroup.trim());
+        if (m.regDate) dates.add(m.regDate.trim());
+        if (m.address) addresses.add(m.address.trim());
+      });
+
+      appendOptions('filterGender', genders);
+      appendOptions('filterBlood', bloodGroups);
+      appendOptions('filterDate', dates);
+      appendOptions('filterAddress', addresses);
+    }
+
+    function appendOptions(selectId, setValues) {
+      const selectEl = document.getElementById(selectId);
+      setValues.forEach(val => {
+        const opt = document.createElement('option');
+        opt.value = val; opt.innerText = val;
+        selectEl.appendChild(opt);
+      });
+    }
+
+    function sortData(criteria) {
+      if (criteria === 'name-asc') {
+        rawMembersData.sort((a, b) => a.name.localeCompare(b.name, 'bn'));
+      } else if (criteria === 'name-desc') {
+        rawMembersData.sort((a, b) => b.name.localeCompare(a.name, 'bn'));
+      } else if (criteria === 'reg-asc') {
+        rawMembersData.sort((a, b) => String(a.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
+      } else if (criteria === 'reg-desc') {
+        rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(a.regNo), undefined, {numeric: true}));
+      }
+    }
+
+    function applyFiltersAndSearch() {
+      const searchQuery = document.getElementById('memberSearch').value.toLowerCase().trim();
+      const genderFilter = document.getElementById('filterGender').value;
+      const bloodFilter = document.getElementById('filterBlood').value;
+      const dateFilter = document.getElementById('filterDate').value;
+      const addressFilter = document.getElementById('filterAddress').value;
+
+      const filteredList = rawMembersData.filter(m => {
+        const matchSearch = m.name.toLowerCase().includes(searchQuery) || String(m.regNo).toLowerCase().includes(searchQuery);
+        const matchGender = genderFilter === 'all' || m.gender === genderFilter;
+        const matchBlood = bloodFilter === 'all' || m.bloodGroup === bloodFilter;
+        const matchDate = dateFilter === 'all' || m.regDate === dateFilter;
+        const matchAddress = addressFilter === 'all' || m.address === addressFilter;
+
+        return matchSearch && matchGender && matchBlood && matchDate && matchAddress;
+      });
+
+      renderTable(filteredList);
+    }
+
+    function renderTable(dataList) {
+      const tbody = document.getElementById('memberTableBody');
+      tbody.innerHTML = '';
+
+      if (dataList.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:30px;">কোনো সদস্যের তথ্য খুঁজে পাওয়া যায়নি।</td></tr>`;
+        return;
+      }
+
+      dataList.forEach((member, index) => {
+        const tr = document.createElement('tr');
+        tr.addEventListener('click', () => openMemberModal(member));
+
+        tr.innerHTML = `
+          <td style="font-family:'Poppins', sans-serif; font-weight:600; color:var(--text-muted);">${index + 1}</td>
+          <td style="font-family:'Poppins', sans-serif; color:var(--accent); font-weight:600;">${member.regNo}</td>
+          <td><span class="clickable-name">${member.name}</span></td>
+          <td>${member.gender}</td>
+          <td>${member.regDate}</td>
+          <td><span class="blood-badge">${member.bloodGroup}</span></td>
+          <td>${member.address}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    // পপআপ ওপেন ও কাস্টমাইজড ইমেজ এভাটার মডিউল
+    function openMemberModal(member) {
+      const modal = document.getElementById('memberModal');
+      const avatarBox = document.getElementById('modalAvatarBox');
+      const genderWrapper = document.getElementById('modalGenderTextWrapper');
+      
+      const isFemale = member.gender.trim() === 'মেয়ে' || member.gender.toLowerCase().includes('female') || member.gender.trim() === 'নারী';
+
+      // ১. ওপরে আপনার ইমেজ গ্রাফিক্সের আদলে তৈরি করা এভাটার সেট করা
+      if (isFemale) {
+        avatarBox.innerHTML = femaleAvatarSVG;
+      } else {
+        avatarBox.innerHTML = maleAvatarSVG;
+      }
+
+      // ২. শব্দের ঠিক বাম পাশে নির্দিষ্ট থিম কালারড আইকন ইনজেক্ট করা
+      if (isFemale) {
+        genderWrapper.innerHTML = `<i class="fa-solid fa-venus gender-inline-icon female"></i> <span>${member.gender}</span>`;
+      } else {
+        genderWrapper.innerHTML = `<i class="fa-solid fa-mars gender-inline-icon male"></i> <span>${member.gender}</span>`;
+      }
+
+      // বাকি ডাটা সেটআপ
+      document.getElementById('modalRegNo').innerText = `REG: ${member.regNo}`;
+      document.getElementById('modalName').innerText = member.name;
+      document.getElementById('modalDate').innerText = member.regDate;
+      document.getElementById('modalBlood').innerText = member.bloodGroup;
+      document.getElementById('modalAddress').innerText = member.address;
+
+      modal.classList.add('active');
+    }
+
+    document.getElementById('closeModalBtn').addEventListener('click', () => {
+      document.getElementById('memberModal').classList.remove('active');
+    });
+
+    document.getElementById('memberModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('memberModal')) {
+        document.getElementById('memberModal').classList.remove('active');
+      }
+    });
+
+    document.getElementById('memberSearch').addEventListener('input', applyFiltersAndSearch);
+    document.getElementById('filterGender').addEventListener('change', applyFiltersAndSearch);
+    document.getElementById('filterBlood').addEventListener('change', applyFiltersAndSearch);
+    document.getElementById('filterDate').addEventListener('change', applyFiltersAndSearch);
+    document.getElementById('filterAddress').addEventListener('change', applyFiltersAndSearch);
+    
+    document.getElementById('sortControl').addEventListener('change', (e) => {
+      sortData(e.target.value);
+      applyFiltersAndSearch();
+    });
+
+    window.addEventListener('DOMContentLoaded', loadMembersData);
+  </script>
+
+  <script src="../navigation.js"></script>
+</body>
+</html>
