@@ -8,38 +8,29 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* --- আল্ট্রা লাক্সারি থিম ভেরিয়েবল --- */
+    /* --- নিও-ফিউচারিস্টিক থিম ভেরিয়েবল --- */
     :root {
-      --bg-dark: #030712;
-      --primary-blue: #00b4d8;
-      --accent-yellow: #ffd700;
-      --card-bg: rgba(10, 25, 47, 0.3);
-      --card-border: rgba(0, 180, 216, 0.15);
-      --text-main: #f3f4f6;
-      --text-muted: #9ca3af;
+      --bg-cyber: #05050a;
+      --neon-blue: #00f0ff;
+      --neon-yellow: #ffd700;
+      --terminal-dark: #0a0a14;
+      --border-color: #1a1a2e;
+      --text-cyber: #ececf2;
+      --text-dim: #747485;
     }
 
     body {
       margin: 0;
       padding: 0;
       font-family: 'Hind Siliguri', sans-serif;
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      background-color: var(--bg-cyber);
+      background-image: radial-gradient(rgba(0, 240, 255, 0.03) 1px, transparent 0);
+      background-size: 24px 24px; /* সূক্ষ্ম টেক গ্রিড ব্যাকগ্রাউন্ড */
+      color: var(--text-cyber);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       overflow-x: hidden;
-      position: relative;
-    }
-
-    /* --- ১. ডাইনামিক স্পটলাইট ব্যাকগ্রাউন্ড ইফেক্ট --- */
-    body::before {
-      content: '';
-      position: fixed;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle 800px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 180, 216, 0.06), transparent 80%);
-      pointer-events: none;
-      z-index: 1;
     }
 
     /* --- ফিক্সড প্রিমিয়াম হেডার --- */
@@ -49,143 +40,121 @@
       position: fixed;
       top: 0; left: 0;
       z-index: 1000;
-      background-color: rgba(3, 7, 18, 0.75);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+      background-color: rgba(5, 5, 10, 0.85);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-bottom: 2px solid var(--border-color);
     }
 
     main {
-      max-width: 900px;
+      max-width: 950px;
       margin: 0 auto;
-      padding: 160px 20px 100px 20px; /* হেডার ফিক্সড স্পেসিং */
+      padding: 160px 20px 100px 20px;
       flex-grow: 1;
       width: 100%;
       box-sizing: border-box;
-      position: relative;
-      z-index: 2;
     }
 
     ros-footer {
       display: block;
       width: 100%;
       margin-top: auto;
-      position: relative;
-      z-index: 2;
+      border-top: 2px solid var(--border-color);
     }
 
-    /* --- পেজ হেডার এরিয়া --- */
+    /* --- শার্প পেজ হেডার এরিয়া --- */
     .page-header-container {
-      text-align: center;
-      margin-bottom: 50px;
+      text-align: left; /* অন্যরকম লুক দেওয়ার জন্য লেফট-অ্যালাইনড */
+      margin-bottom: 60px;
+      border-left: 5px solid var(--neon-blue);
+      padding-left: 20px;
     }
 
     /* শিরোনাম নীল */
     .page-title {
-      font-size: 3rem;
-      margin: 0 0 15px 0;
-      color: var(--primary-blue);
-      font-weight: 800;
-      letter-spacing: -0.5px;
-      background: linear-gradient(135deg, #00b4d8, #90e0ef);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      font-size: 3.2rem;
+      margin: 0 0 10px 0;
+      color: var(--neon-blue);
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: 1px;
     }
 
     /* নিচের টানটি হলুদ */
     .title-divider {
-      width: 80px;
-      height: 4px;
-      background: linear-gradient(90deg, transparent, var(--accent-yellow), transparent);
-      margin: 0 auto 25px;
-      border-radius: 50px;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+      width: 150px;
+      height: 3px;
+      background: var(--neon-yellow);
+      margin: 10px 0 20px 0;
+      box-shadow: 0 0 12px var(--neon-yellow);
     }
 
-    /* টান-এর নিচে নির্দিষ্ট সাবটাইটেল */
+    /* নির্দিষ্ট সাবটাইটেল */
     .page-subtitle {
-      color: #e5e7eb;
-      font-size: 1.25rem;
-      max-width: 650px;
-      margin: 0 auto;
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0;
       line-height: 1.7;
-      font-weight: 300;
     }
 
-    /* --- ডাইনামিক ফিল্টার ট্যাব --- */
+    /* --- সাইবার ফিল্টার ট্যাব --- */
     .filter-tabs {
       display: flex;
-      justify-content: center;
-      gap: 15px;
-      margin-bottom: 50px;
+      justify-content: flex-start;
+      gap: 10px;
+      margin-bottom: 40px;
       flex-wrap: wrap;
     }
 
     .tab-btn {
-      background: rgba(255, 255, 255, 0.02);
-      border: 1px solid rgba(255, 255, 255, 0.05);
-      color: var(--text-muted);
-      padding: 12px 26px;
-      border-radius: 14px;
-      cursor: pointer;
+      background: var(--terminal-dark);
+      border: 1px solid var(--border-color);
+      color: var(--text-dim);
+      padding: 12px 24px;
       font-family: inherit;
-      font-size: 1rem;
-      font-weight: 600;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      transition: all 0.25s ease;
+      position: relative;
     }
 
     .tab-btn:hover {
-      color: #fff;
-      border-color: rgba(0, 180, 216, 0.4);
-      background: rgba(0, 180, 216, 0.03);
+      color: var(--neon-blue);
+      border-color: var(--neon-blue);
     }
 
     .tab-btn.active {
-      background: linear-gradient(135deg, #0077b6, #00b4d8);
-      color: #fff;
-      border-color: transparent;
-      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.25);
+      background: var(--neon-blue);
+      color: var(--bg-cyber);
+      border-color: var(--neon-blue);
+      box-shadow: 4px 4px 0px var(--neon-yellow); /* নিও-ব্রুটালিজম শ্যাডো */
     }
 
-    /* --- আল্ট্রা-লাক্সারি অ্যাকর্ডিয়ন --- */
+    /* --- সাইবারপঙ্ক অ্যাকর্ডিয়ন স্ট্রাকচার --- */
     .faq-container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 15px;
     }
 
     .faq-item {
-      background: var(--card-bg);
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
-      border: 1px solid var(--card-border);
-      border-radius: 20px;
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      background: var(--terminal-dark);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       position: relative;
     }
 
     .faq-item:hover {
-      border-color: rgba(0, 180, 216, 0.4);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 240, 255, 0.3);
+      transform: translateX(5px); /* ডানে স্লাইড ইফেক্ট */
     }
 
-    /* ২. একটিভ অবস্থায় অনবরত ঘূর্ণায়মান নিয়ন বর্ডার ইফেক্ট */
     .faq-item.active {
-      background: rgba(10, 25, 47, 0.7);
-    }
-
-    .faq-item.active::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      border-radius: 20px;
-      padding: 1.5px;
-      background: linear-gradient(135deg, var(--primary-blue), var(--accent-yellow));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-              mask-composite: exclude;
-      pointer-events: none;
+      border-color: var(--neon-blue);
+      box-shadow: -4px 0px 0px var(--neon-blue), 0 10px 30px rgba(0, 240, 255, 0.05);
     }
 
     .faq-question-btn {
@@ -194,8 +163,8 @@
       border: none;
       color: #fff;
       padding: 24px 30px;
-      font-size: 1.3rem;
-      font-weight: 600;
+      font-size: 1.25rem;
+      font-weight: 700;
       font-family: inherit;
       text-align: left;
       display: flex;
@@ -206,107 +175,111 @@
       outline: none;
     }
 
-    .faq-icon-container {
-      width: 36px;
-      height: 36px;
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 12px;
+    /* কাস্টম শার্প ইন্ডিকেটর বক্স */
+    .faq-status-indicator {
+      width: 24px;
+      height: 24px;
+      border: 1px solid var(--text-dim);
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-      flex-shrink: 0;
+      transition: all 0.3s ease;
     }
 
-    .faq-icon {
-      color: var(--primary-blue);
-      font-size: 0.95rem;
-      transition: transform 0.4s ease;
+    .faq-status-indicator::before {
+      content: '+';
+      color: var(--text-dim);
+      font-size: 1.2rem;
+      font-weight: 400;
     }
 
-    .faq-item.active .faq-icon-container {
-      background: var(--accent-yellow);
-      border-color: transparent;
-      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
+    .faq-item.active .faq-status-indicator {
+      border-color: var(--neon-yellow);
+      background: var(--neon-yellow);
     }
 
-    .faq-item.active .faq-icon {
-      transform: rotate(180deg);
-      color: #000;
+    .faq-item.active .faq-status-indicator::before {
+      content: '-';
+      color: var(--bg-cyber);
+      font-weight: 700;
     }
 
     .faq-answer-panel {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: max-height 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+      background: rgba(0, 240, 255, 0.01);
     }
 
-    /* ৩. মাইক্রো-ইন্টারঅ্যাকশন অ্যানিমেশন টেক্সটের জন্য */
     .faq-answer-content {
-      padding: 0 30px 26px 30px;
+      padding: 0 30px 24px 30px;
       font-size: 1.1rem;
       line-height: 1.8;
-      color: #d1d5db;
-      opacity: 0;
-      transform: translateY(10px);
-      transition: all 0.4s ease;
-    }
-
-    .faq-item.active .faq-answer-content {
-      opacity: 1;
-      transform: translateY(0);
-      transition-delay: 0.1s;
+      color: #b4b4c7;
+      border-top: 1px solid rgba(0, 240, 255, 0.05);
+      padding-top: 15px;
     }
 
     .faq-item.hide {
       display: none;
     }
 
-    /* --- আল্ট্রা লাক্সারি কন্টাক্ট সেকশন --- */
+    /* --- ফিউচারিস্টিক কন্টাক্ট সেকশন --- */
     .more-help-section {
-      text-align: center;
-      margin-top: 80px;
-      padding: 50px 40px;
-      background: radial-gradient(circle at top, rgba(0, 180, 216, 0.08), transparent 70%);
-      border-radius: 24px;
-      border: 1px solid rgba(0, 180, 216, 0.1);
+      margin-top: 60px;
+      padding: 40px;
+      background: #0e0e1f;
+      border: 1px solid var(--border-color);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* একটি সাইবার কোণা ডেকোরেশন */
+    .more-help-section::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 20px; height: 20px;
+      background: var(--neon-blue);
+      clip-path: polygon(100% 0, 0 0, 100% 100%);
     }
 
     .more-help-text {
       font-size: 1.2rem;
-      color: var(--text-muted);
-      margin-bottom: 25px;
+      color: var(--text-cyber);
+      margin-bottom: 20px;
+      font-weight: 600;
     }
 
     .btn-contact-faq {
       display: inline-flex;
       align-items: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #00b4d8, #0077b6);
-      color: #fff;
-      padding: 16px 40px;
-      border-radius: 16px;
+      gap: 10px;
+      background: transparent;
+      color: var(--neon-blue);
+      border: 2px solid var(--neon-blue);
+      padding: 14px 32px;
       text-decoration: none;
-      font-weight: 600;
-      font-size: 1.1rem;
-      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.3);
+      font-weight: 700;
+      font-size: 1rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
       transition: all 0.3s ease;
     }
 
     .btn-contact-faq:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 35px rgba(0, 180, 216, 0.5);
+      background: var(--neon-blue);
+      color: var(--bg-cyber);
+      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
     }
 
     /* --- মোবাইল রেসপন্সিভ --- */
     @media (max-width: 600px) {
       main { padding-top: 130px; }
-      .page-title { font-size: 2.3rem; }
+      .page-title { font-size: 2.4rem; }
       .page-subtitle { font-size: 1.05rem; }
-      .faq-question-btn { padding: 20px; font-size: 1.15rem; }
+      .faq-question-btn { padding: 20px; font-size: 1.1rem; }
       .faq-answer-content { padding: 0 20px 20px 20px; font-size: 1rem; }
-      .tab-btn { padding: 10px 20px; font-size: 0.95rem; }
     }
   </style>
 </head>
@@ -325,10 +298,10 @@
 
     <!-- ডাইনামিক ফিল্টার ট্যাব -->
     <div class="filter-tabs">
-      <button class="tab-btn active" data-filter="all">সব প্রশ্ন</button>
-      <button class="tab-btn" data-filter="about">সংগঠন বিষয়ক</button>
-      <button class="tab-btn" data-filter="event">ইভেন্ট ও অলিম্পিয়াড</button>
-      <button class="tab-btn" data-filter="member">সদস্যপদ</button>
+      <button class="tab-btn active" data-filter="all">// সব_প্রশ্ন</button>
+      <button class="tab-btn" data-filter="about">// সংগঠন_বিষয়ক</button>
+      <button class="tab-btn" data-filter="event">// ইভেন্ট_ও_অলিম্পিয়াড</button>
+      <button class="tab-btn" data-filter="member">// সদস্যপদ</button>
     </div>
 
     <!-- FAQ কন্টেইনার -->
@@ -338,9 +311,7 @@
       <div class="faq-item" data-category="about">
         <button class="faq-question-btn">
           <span>১. রাজশাহী অলিম্পিয়াড সোসাইটি (ROS) কী ধরনের সংস্থা?</span>
-          <div class="faq-icon-container">
-            <i class="fa-solid fa-chevron-down faq-icon"></i>
-          </div>
+          <div class="faq-status-indicator"></div>
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
@@ -353,9 +324,7 @@
       <div class="faq-item" data-category="event">
         <button class="faq-question-btn">
           <span>২. আপনাদের আয়োজিত কার্যক্রমে কারা অংশগ্রহণ করতে পারবে?</span>
-          <div class="faq-icon-container">
-            <i class="fa-solid fa-chevron-down faq-icon"></i>
-          </div>
+          <div class="faq-status-indicator"></div>
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
@@ -368,9 +337,7 @@
       <div class="faq-item" data-category="member">
         <button class="faq-question-btn">
           <span>৩. সোসাইটির সদস্য (Volunteer) হওয়ার উপায় কী?</span>
-          <div class="faq-icon-container">
-            <i class="fa-solid fa-chevron-down faq-icon"></i>
-          </div>
+          <div class="faq-status-indicator"></div>
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
@@ -383,8 +350,8 @@
       <div class="faq-item" data-category="event">
         <button class="faq-question-btn">
           <span>৪. প্রতিযোগিতার ফলাফল বা আপকামিং ইভেন্টের খবর কোথায় পাওয়া যাবে?</span>
-          <div class="faq-icon-container">
-            <i class="fa-solid fa-chevron-down faq-icon"></i>
+          <div class="faq-icon-wrapper">
+            <div class="faq-status-indicator"></div>
           </div>
         </button>
         <div class="faq-answer-panel">
@@ -398,9 +365,7 @@
       <div class="faq-item" data-category="about">
         <button class="faq-question-btn">
           <span>৫. আপনাদের সাথে যেকোনো প্রয়োজনে কীভাবে যোগাযোগ করব?</span>
-          <div class="faq-icon-container">
-            <i class="fa-solid fa-chevron-down faq-icon"></i>
-          </div>
+          <div class="faq-status-indicator"></div>
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
@@ -415,7 +380,7 @@
     <div class="more-help-section">
       <p class="more-help-text">আপনার প্রয়োজনীয় প্রশ্নের উত্তর এখানে খুঁজে পাননি?</p>
       <a href="contact.html" class="btn-contact-faq">
-        <i class="fa-regular fa-envelope"></i> সরাসরি আমাদের প্রশ্ন করুন
+        <i class="fa-regular fa-envelope"></i> সরাসরি বার্তা পাঠান
       </a>
     </div>
   </main>
@@ -423,14 +388,8 @@
   <!-- গ্লোবাল নেভিগেশন ফুটার -->
   <ros-footer></ros-footer>
 
-  <!-- ইন্টারঅ্যাক্টিভ স্ক্রিপ্টস -->
+  <!-- অ্যাকর্ডিয়ন ও ফিল্টারিং জাভাস্ক্রিপ্ট -->
   <script>
-    // --- স্পটলাইট মাউস ট্র্যাকিং লজিক ---
-    window.addEventListener('mousemove', e => {
-      document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
-      document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
-    });
-
     // --- অ্যাকর্ডিয়ন লজিক ---
     document.querySelectorAll('.faq-question-btn').forEach(button => {
       button.addEventListener('click', () => {
