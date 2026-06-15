@@ -14,7 +14,8 @@
       --secondary: #00b4d8; /* নীল কালার */
       --accent: #ffd700;    /* হলুদ কালার */
       --dark-bg: #020c1b;
-      --card-bg: #0a192f;
+      --card-bg: #07162c;    /* প্রশ্নের জন্য কিছুটা উঁচু ডার্ক শেড */
+      --panel-inner: #030d1e; /* উত্তরের গভীরতার জন্য আরও অন্ধকার ডার্ক শেড */
       --text-light: #f1f5f9;
       --text-muted: #94a3b8;
     }
@@ -30,7 +31,7 @@
       min-height: 100vh;
     }
 
-    /* --- হেডার ফিক্সড --- */
+    /* --- হেডার ফিক্সড রাখা হলো --- */
     ros-header {
       display: block;
       width: 100%;
@@ -59,13 +60,39 @@
       margin-top: auto;
     }
 
+    /* --- তীর চিহ্ন স্ক্রিনের নিচে ডান কর্নারে ফিক্সড করার স্টাইল --- */
+    .scroll-to-top-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 999; /* যেন ফুটার বা কন্টেন্টের ওপরে থাকে */
+      width: 45px;
+      height: 45px;
+      background-color: var(--secondary);
+      color: var(--dark-bg);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.4);
+      transition: all 0.3s ease;
+    }
+
+    .scroll-to-top-btn:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5);
+    }
+
     /* --- পেজ হেডার এরিয়া --- */
     .page-header-container {
       text-align: center;
       margin-bottom: 50px;
     }
 
-    /* সাধারণ জিজ্ঞাসা নীল */
     .page-title {
       font-size: 2.6rem;
       margin: 0 0 15px 0;
@@ -73,17 +100,14 @@
       font-weight: 700;
     }
 
-    /* নিচের টানটি হলুদ */
     .title-divider {
       width: 100px;
       height: 4px;
       background-color: var(--accent);
       margin: 0 auto 20px;
       border-radius: 2px;
-      box-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
     }
 
-    /* নির্দিষ্ট সাবটাইটেল */
     .page-subtitle {
       color: var(--text-light);
       font-size: 1.15rem;
@@ -92,24 +116,32 @@
       line-height: 1.6;
     }
 
-    /* --- ঘূর্ণায়মান বর্ডার গ্রেডিয়েন্ট FAQ বক্স --- */
+    /* --- ইউনিক ৩ডি ও চিকন ঘূর্ণায়মান আলোর FAQ বক্স --- */
     .faq-container {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 25px;
       margin-top: 40px;
     }
 
     .faq-item {
       position: relative;
-      border-radius: 16px;
-      background: var(--card-bg);
+      border-radius: 14px;
+      background: var(--dark-bg);
       overflow: hidden;
-      padding: 1.5px; /* এই প্যাডিংটিই বর্ডারের আলো হিসেবে কাজ করবে */
+      padding: 1.5px; /* একদম চিকন বর্ডারের জন্য ১.৫ পিক্সেল করা হলো */
       z-index: 1;
+      /* বক্সটি স্ক্রিন থেকে স্বাভাবিক অবস্থায় একটু উঁচু দেখাবে */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    /* অনবরত ঘুরতে থাকা আলোর ব্যাকগ্রাউন্ড লেয়ার */
+    .faq-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.5), 0 0 10px rgba(0, 180, 216, 0.1);
+    }
+
+    /* বর্ডারের চারিদিকে ধীরে ধীরে আলো ঘোরার লজিক */
     .faq-item::before {
       content: '';
       position: absolute;
@@ -120,25 +152,24 @@
       background: conic-gradient(
         transparent, 
         var(--secondary), 
-        transparent 30%, 
+        transparent 25%, 
         var(--accent), 
         transparent 70%
       );
-      animation: rotateGlow 6s linear infinite;
+      animation: slowRotateGlow 10s linear infinite; /* গতি আরও ধীর (10s) করা হলো */
       z-index: -2;
     }
 
-    /* ভেতরের মূল ডার্ক কন্টেন্ট বক্স যা আলোকে বর্ডারের শেপ দেবে */
+    /* প্রশ্নের অংশ: উঁচু ও সলিড লুক */
     .faq-content-inner {
       background: var(--card-bg);
-      border-radius: 15px;
+      border-radius: 13px;
       width: 100%;
       height: 100%;
       z-index: -1;
     }
 
-    /* আলো ঘোরার অ্যানিমেশন এফেক্ট */
-    @keyframes rotateGlow {
+    @keyframes slowRotateGlow {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
@@ -161,24 +192,20 @@
       outline: none;
     }
 
-    .faq-question-btn span {
-      line-height: 1.4;
-    }
-
     .faq-icon-box {
-      width: 30px;
-      height: 30px;
+      width: 32px;
+      height: 32px;
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 6px;
+      border-radius: 8px;
       background: rgba(255, 255, 255, 0.05);
       transition: all 0.3s ease;
     }
 
     .faq-icon {
       color: var(--secondary);
-      font-size: 0.9rem;
+      font-size: 0.95rem;
       transition: transform 0.3s ease;
     }
 
@@ -191,84 +218,84 @@
       color: var(--dark-bg);
     }
 
+    /* উত্তরের অংশ: বক্সের গভীরে (Deep/Inset) থাকার ফিলিং */
     .faq-answer-panel {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+      background: var(--panel-inner); /* আরও ডার্ক ব্যাকগ্রাউন্ড */
+      /* ভেতরের দিকে শ্যাডো (Inset Shadow) যা গভীরতা তৈরি করে */
+      box-shadow: inset 0 10px 20px rgba(0, 0, 0, 0.6), inset 0 1px 3px rgba(0, 0, 0, 0.8);
     }
 
     .faq-answer-content {
-      padding: 0 25px 22px 25px;
+      padding: 20px 25px 25px 25px;
       font-size: 1.05rem;
-      line-height: 1.7;
+      line-height: 1.8;
       color: #cbd5e1;
-      border-top: 1px solid rgba(255, 255, 255, 0.03);
-      padding-top: 15px;
+      border-top: 1px solid rgba(0, 0, 0, 0.3);
     }
 
     /* অতিরিক্ত জিজ্ঞাসা সেকশন */
     .more-help-section {
       text-align: center;
       margin-top: 60px;
-      padding: 35px;
-      background: rgba(0, 180, 216, 0.02);
-      border-radius: 16px;
+      padding: 45px 35px;
+      background: rgba(0, 180, 216, 0.01);
+      border-radius: 20px;
       border: 1px dashed rgba(0, 180, 216, 0.15);
       margin-bottom: 40px;
     }
 
     .more-help-text {
-      font-size: 1.1rem;
+      font-size: 1.15rem;
       color: var(--text-muted);
-      margin-bottom: 18px;
+      margin-bottom: 22px;
     }
 
     .btn-contact-faq {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
       background: linear-gradient(135deg, #0077b6, #00b4d8);
       color: #fff;
-      padding: 12px 30px;
+      padding: 14px 35px;
       border-radius: 50px;
       text-decoration: none;
       font-weight: 600;
-      box-shadow: 0 4px 12px rgba(0, 180, 216, 0.15);
+      font-size: 1.05rem;
+      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.2);
       transition: 0.3s ease;
     }
 
     .btn-contact-faq:hover {
       transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(0, 180, 216, 0.35);
+      box-shadow: 0 6px 22px rgba(0, 180, 216, 0.4);
     }
 
     /* --- মোবাইল রেসপন্সিভ --- */
     @media (max-width: 600px) {
       main { padding-top: 130px; }
       .page-title { font-size: 2.1rem; }
-      .page-subtitle { font-size: 1rem; }
-      .faq-question-btn { padding: 18px 20px; font-size: 1.05rem; }
-      .faq-answer-content { padding: 0 20px 18px 20px; font-size: 0.95rem; }
+      .faq-question-btn { padding: 20px 18px; font-size: 1.1rem; }
+      .faq-answer-content { padding: 15px 18px 20px 18px; font-size: 0.98rem; }
+      .scroll-to-top-btn { bottom: 20px; right: 20px; width: 40px; height: 40px; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ফিক্সড গ্লোবাল নেভিগেশন হেডার -->
   <ros-header></ros-header>
 
   <main>
-    <!-- পেজ হেডার এরিয়া -->
     <div class="page-header-container">
       <h1 class="page-title">সাধারণ জিজ্ঞাসা</h1>
       <div class="title-divider"></div>
-      <p class="page-subtitle">রাজশাহী অলিম্পিয়াড独立 সোসাইটি সম্পর্কে আপনার মনে থাকা সাধারণ কিছু প্রশ্নের উত্তর</p>
+      <p class="page-subtitle">রাজশাহী অলিম্পিয়াড সোসাইটি সম্পর্কে আপনার মনে থাকা সাধারণ কিছু প্রশ্নের উত্তর</p>
     </div>
 
-    <!-- FAQ কন্টেইনার -->
     <div class="faq-container">
       
-      <!-- প্রশ্ন ১ -->
       <div class="faq-item">
         <div class="faq-content-inner">
           <button class="faq-question-btn">
@@ -285,7 +312,6 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ২ -->
       <div class="faq-item">
         <div class="faq-content-inner">
           <button class="faq-question-btn">
@@ -296,13 +322,12 @@
           </button>
           <div class="faq-answer-panel">
             <div class="faq-answer-content">
-              সাধারণত স্কুল, college এবং বিশ্ববিদ্যালয়ের যেকোনো শিক্ষার্থী আমাদের ইভেন্ট ও অলিম্পিয়াডগুলোতে অংশগ্রহণ করতে পারে। প্রতিটি নির্দিষ্ট প্রতিযোগিতার বা সেমিনারের নিয়মাবলীতে কোন ক্যাটাগরির শিক্ষার্থীরা অংশ নিতে পারবে, তা স্পষ্টভাবে উল্লেখ করা থাকে।
+              সাধারণত স্কুল, কলেজ এবং বিশ্ববিদ্যালয়ের যেকোনো শিক্ষার্থী আমাদের ইভেন্ট ও অলিম্পিয়াডগুলোতে অংশগ্রহণ করতে পারে। প্রতিটি নির্দিষ্ট প্রতিযোগিতার বা সেমিনারের নিয়মাবলীতে কোন ক্যাটাগরির শিক্ষার্থীরা অংশ নিতে পারবে, তা স্পষ্টভাবে উল্লেখ করা থাকে।
             </div>
           </div>
         </div>
       </div>
 
-      <!-- প্রশ্ন ৩ -->
       <div class="faq-item">
         <div class="faq-content-inner">
           <button class="faq-question-btn">
@@ -319,7 +344,6 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৪ -->
       <div class="faq-item">
         <div class="faq-content-inner">
           <button class="faq-question-btn">
@@ -336,7 +360,6 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৫ -->
       <div class="faq-item">
         <div class="faq-content-inner">
           <button class="faq-question-btn">
@@ -347,7 +370,7 @@
           </button>
           <div class="faq-answer-panel">
             <div class="faq-answer-content">
-              আমাদের সাথে যোগাযোগ করার জন্য সরাসরি এই ওয়েবসাইটের 'যোগাযোগ' পাতায় চলে যান। সেখানে আমাদের ইমেইল এড্রেস, অফিশিয়াল ফোন নম্বর এবং আমাদের ঠিকানার বিবরণ পেয়ে যাবেন। এছাড়া সরাসরি মেসেজ পাঠানোর সুবিধাও রয়েছে।
+              আমাদের সাথে যোগাযোগ করার জন্য সরাসরি এই ওয়েবসাইটের 'যোগাযোগ' পাতায় চলে যান। সেখানে আমাদের ইমেইল এড্রেস, অফিশিয়াল ফোন নম্বর এবং আমাদের ঠিকানার বিবরণ পেয়ে যাবেন। trauma সরাসরি মেসেজ পাঠানোর সুবিধাও রয়েছে।
             </div>
           </div>
         </div>
@@ -355,7 +378,6 @@
 
     </div>
 
-    <!-- অতিরিক্ত জিজ্ঞাসা সেকশন -->
     <div class="more-help-section">
       <p class="more-help-text">আপনার প্রয়োজনীয় প্রশ্নের উত্তর এখানে খুঁজে পাননি?</p>
       <a href="contact.html" class="btn-contact-faq">
@@ -364,14 +386,15 @@
     </div>
   </main>
 
-  <!-- গ্লোবাল নেভিগেশন ফুটার -->
+  <button class="scroll-to-top-btn" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+    <i class="fa-solid fa-arrow-up"></i>
+  </button>
+
   <ros-footer></ros-footer>
 
-  <!-- জাভাস্ক্রিপ্ট অ্যাকর্ডিয়ন লজিক -->
   <script>
     document.querySelectorAll('.faq-question-btn').forEach(button => {
       button.addEventListener('click', () => {
-        // বাটন থেকে একদম উপরের মূল .faq-item খুঁজে নেওয়া হচ্ছে
         const faqItem = button.closest('.faq-item');
         const panel = button.nextElementSibling;
 
@@ -392,7 +415,6 @@
     });
   </script>
 
-  <!-- রুট নেভিগেশন স্ক্রিপ্ট ফাইল কানেকশন -->
   <script src="../navigation.js"></script>
 </body>
 </html>
