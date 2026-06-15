@@ -8,130 +8,146 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
-    /* --- গ্লোবাল ভেরিয়েবল ও আল্ট্রা-মডার্ন থিম --- */
+    /* --- আল্ট্রা লাক্সারি থিম ভেরিয়েবল --- */
     :root {
-      --primary: #020c1b;
-      --secondary: #00b4d8; /* নীল কালার */
-      --accent: #ffd700;    /* হলুদ কালার */
-      --card-glass: rgba(10, 25, 47, 0.4);
-      --card-border: rgba(0, 180, 216, 0.2);
-      --text-light: #f1f5f9;
-      --text-muted: #94a3b8;
-      --gradient-glow: linear-gradient(135deg, #00b4d8, #7209b7);
+      --bg-dark: #030712;
+      --primary-blue: #00b4d8;
+      --accent-yellow: #ffd700;
+      --card-bg: rgba(10, 25, 47, 0.3);
+      --card-border: rgba(0, 180, 216, 0.15);
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
     }
 
     body {
       margin: 0;
       padding: 0;
       font-family: 'Hind Siliguri', sans-serif;
-      background-color: var(--primary);
-      color: var(--text-light);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
       display: flex;
       flex-direction: column;
       min-height: 100vh;
       overflow-x: hidden;
+      position: relative;
     }
 
-    /* --- ফিক্সড হেডার স্টাইল --- */
+    /* --- ১. ডাইনামিক স্পটলাইট ব্যাকগ্রাউন্ড ইফেক্ট --- */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: radial-gradient(circle 800px at var(--mouse-x, 50%) var(--mouse-y, 50%), rgba(0, 180, 216, 0.06), transparent 80%);
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    /* --- ফিক্সড প্রিমিয়াম হেডার --- */
     ros-header {
       display: block;
       width: 100%;
       position: fixed;
-      top: 0;
-      left: 0;
+      top: 0; left: 0;
       z-index: 1000;
-      background-color: rgba(2, 12, 27, 0.9);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+      background-color: rgba(3, 7, 18, 0.75);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.03);
     }
 
     main {
-      max-width: 950px;
+      max-width: 900px;
       margin: 0 auto;
-      padding: 140px 20px 80px 20px; /* হেডার ফিক্সড থাকায় ওপরে ১৪০px স্পেস */
+      padding: 160px 20px 100px 20px; /* হেডার ফিক্সড স্পেসিং */
       flex-grow: 1;
       width: 100%;
       box-sizing: border-box;
+      position: relative;
+      z-index: 2;
     }
 
     ros-footer {
       display: block;
       width: 100%;
       margin-top: auto;
+      position: relative;
+      z-index: 2;
     }
 
-    /* --- ইউনিক পেজ হেডার এরিয়া --- */
+    /* --- পেজ হেডার এরিয়া --- */
     .page-header-container {
       text-align: center;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
     }
 
     /* শিরোনাম নীল */
     .page-title {
-      font-size: 2.8rem;
+      font-size: 3rem;
       margin: 0 0 15px 0;
-      color: var(--secondary);
+      color: var(--primary-blue);
       font-weight: 800;
-      letter-spacing: 0.5px;
-      text-shadow: 0 0 20px rgba(0, 180, 216, 0.2);
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #00b4d8, #90e0ef);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
     /* নিচের টানটি হলুদ */
     .title-divider {
-      width: 120px;
+      width: 80px;
       height: 4px;
-      background: var(--accent);
+      background: linear-gradient(90deg, transparent, var(--accent-yellow), transparent);
       margin: 0 auto 25px;
       border-radius: 50px;
-      box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
     }
 
-    /* নির্দিষ্ট সাবটাইটেল */
+    /* টান-এর নিচে নির্দিষ্ট সাবটাইটেল */
     .page-subtitle {
-      color: var(--text-light);
-      font-size: 1.2rem;
+      color: #e5e7eb;
+      font-size: 1.25rem;
       max-width: 650px;
       margin: 0 auto;
       line-height: 1.7;
+      font-weight: 300;
     }
 
     /* --- ডাইনামিক ফিল্টার ট্যাব --- */
     .filter-tabs {
       display: flex;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 40px;
+      gap: 15px;
+      margin-bottom: 50px;
       flex-wrap: wrap;
     }
 
     .tab-btn {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid rgba(255, 255, 255, 0.05);
       color: var(--text-muted);
-      padding: 10px 24px;
-      border-radius: 30px;
+      padding: 12px 26px;
+      border-radius: 14px;
       cursor: pointer;
       font-family: inherit;
       font-size: 1rem;
       font-weight: 600;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     .tab-btn:hover {
       color: #fff;
-      border-color: var(--secondary);
-      background: rgba(0, 180, 216, 0.05);
+      border-color: rgba(0, 180, 216, 0.4);
+      background: rgba(0, 180, 216, 0.03);
     }
 
     .tab-btn.active {
-      background: var(--gradient-glow);
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
       color: #fff;
       border-color: transparent;
-      box-shadow: 0 4px 15px rgba(0, 180, 216, 0.3);
+      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.25);
     }
 
-    /* --- গ্লাস-মরফিজম FAQ কন্টেইনার --- */
+    /* --- আল্ট্রা-লাক্সারি অ্যাকর্ডিয়ন --- */
     .faq-container {
       display: flex;
       flex-direction: column;
@@ -139,35 +155,33 @@
     }
 
     .faq-item {
-      background: var(--card-glass);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
       border: 1px solid var(--card-border);
-      border-radius: 16px;
+      border-radius: 20px;
       overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-
-    .faq-item:hover {
-      transform: translateY(-2px);
-      border-color: rgba(0, 180, 216, 0.5);
-      box-shadow: 0 8px 25px rgba(0, 180, 216, 0.1);
-    }
-
-    .faq-item.active {
-      border-color: transparent;
-      background: rgba(10, 25, 47, 0.8);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       position: relative;
     }
 
-    /* একটি ইউনিক গ্রেডিয়েন্ট বর্ডার ইফেক্ট একটিভ অবস্থায় */
+    .faq-item:hover {
+      border-color: rgba(0, 180, 216, 0.4);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    }
+
+    /* ২. একটিভ অবস্থায় অনবরত ঘূর্ণায়মান নিয়ন বর্ডার ইফেক্ট */
+    .faq-item.active {
+      background: rgba(10, 25, 47, 0.7);
+    }
+
     .faq-item.active::before {
       content: '';
       position: absolute;
       top: 0; left: 0; right: 0; bottom: 0;
-      border-radius: 16px;
-      padding: 1px; 
-      background: var(--gradient-glow); 
+      border-radius: 20px;
+      padding: 1.5px;
+      background: linear-gradient(135deg, var(--primary-blue), var(--accent-yellow));
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
               mask-composite: exclude;
@@ -179,8 +193,8 @@
       background: transparent;
       border: none;
       color: #fff;
-      padding: 22px 28px;
-      font-size: 1.25rem;
+      padding: 24px 30px;
+      font-size: 1.3rem;
       font-weight: 600;
       font-family: inherit;
       text-align: left;
@@ -188,100 +202,111 @@
       justify-content: space-between;
       align-items: center;
       cursor: pointer;
-      gap: 15px;
+      gap: 20px;
       outline: none;
     }
 
-    .faq-icon-wrapper {
-      width: 32px;
-      height: 32px;
-      background: rgba(0, 180, 216, 0.1);
-      border-radius: 50px;
+    .faq-icon-container {
+      width: 36px;
+      height: 36px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
       flex-shrink: 0;
     }
 
     .faq-icon {
-      color: var(--secondary);
-      font-size: 0.9rem;
-      transition: transform 0.3s ease;
+      color: var(--primary-blue);
+      font-size: 0.95rem;
+      transition: transform 0.4s ease;
     }
 
-    .faq-item.active .faq-icon-wrapper {
-      background: var(--accent);
+    .faq-item.active .faq-icon-container {
+      background: var(--accent-yellow);
+      border-color: transparent;
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.4);
     }
 
     .faq-item.active .faq-icon {
       transform: rotate(180deg);
-      color: var(--primary);
+      color: #000;
     }
 
     .faq-answer-panel {
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      transition: max-height 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
+    /* ৩. মাইক্রো-ইন্টারঅ্যাকশন অ্যানিমেশন টেক্সটের জন্য */
     .faq-answer-content {
-      padding: 0 28px 24px 28px;
-      font-size: 1.05rem;
+      padding: 0 30px 26px 30px;
+      font-size: 1.1rem;
       line-height: 1.8;
-      color: #cbd5e1;
+      color: #d1d5db;
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.4s ease;
     }
 
-    /* অ্যানিমেশন ট্রানজিশন যখন ট্যাব ফিল্টার হবে */
+    .faq-item.active .faq-answer-content {
+      opacity: 1;
+      transform: translateY(0);
+      transition-delay: 0.1s;
+    }
+
     .faq-item.hide {
       display: none;
     }
 
-    /* --- আল্ট্রা ইউনিক কন্টাক্ট বক্স --- */
+    /* --- আল্ট্রা লাক্সারি কন্টাক্ট সেকশন --- */
     .more-help-section {
       text-align: center;
-      margin-top: 70px;
-      padding: 40px;
-      background: radial-gradient(circle at top, rgba(0, 180, 216, 0.1), transparent);
+      margin-top: 80px;
+      padding: 50px 40px;
+      background: radial-gradient(circle at top, rgba(0, 180, 216, 0.08), transparent 70%);
       border-radius: 24px;
-      border: 1px solid rgba(0, 180, 216, 0.15);
-      position: relative;
+      border: 1px solid rgba(0, 180, 216, 0.1);
     }
 
     .more-help-text {
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       color: var(--text-muted);
-      margin-bottom: 20px;
+      margin-bottom: 25px;
     }
 
     .btn-contact-faq {
       display: inline-flex;
       align-items: center;
-      gap: 10px;
-      background: var(--gradient-glow);
+      gap: 12px;
+      background: linear-gradient(135deg, #00b4d8, #0077b6);
       color: #fff;
-      padding: 14px 36px;
-      border-radius: 50px;
+      padding: 16px 40px;
+      border-radius: 16px;
       text-decoration: none;
       font-weight: 600;
-      font-size: 1.05rem;
-      box-shadow: 0 4px 20px rgba(0, 180, 216, 0.3);
+      font-size: 1.1rem;
+      box-shadow: 0 10px 25px rgba(0, 180, 216, 0.3);
       transition: all 0.3s ease;
     }
 
     .btn-contact-faq:hover {
       transform: translateY(-3px);
-      box-shadow: 0 8px 30px rgba(0, 180, 216, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 180, 216, 0.5);
     }
 
     /* --- মোবাইল রেসপন্সিভ --- */
     @media (max-width: 600px) {
-      main { padding-top: 120px; }
-      .page-title { font-size: 2.2rem; }
-      .page-subtitle { font-size: 1rem; }
-      .faq-question-btn { padding: 18px 20px; font-size: 1.1rem; }
-      .faq-answer-content { padding: 0 20px 20px 20px; font-size: 0.98rem; }
-      .tab-btn { padding: 8px 18px; font-size: 0.9rem; }
+      main { padding-top: 130px; }
+      .page-title { font-size: 2.3rem; }
+      .page-subtitle { font-size: 1.05rem; }
+      .faq-question-btn { padding: 20px; font-size: 1.15rem; }
+      .faq-answer-content { padding: 0 20px 20px 20px; font-size: 1rem; }
+      .tab-btn { padding: 10px 20px; font-size: 0.95rem; }
     }
   </style>
 </head>
@@ -298,7 +323,7 @@
       <p class="page-subtitle">রাজশাহী অলিম্পিয়াড সোসাইটি সম্পর্কে আপনার মনে থাকা সাধারণ কিছু প্রশ্নের উত্তর</p>
     </div>
 
-    <!-- ডাইনামিক ফিল্টার ট্যাব (ইউনিক ফিচার) -->
+    <!-- ডাইনামিক ফিল্টার ট্যাব -->
     <div class="filter-tabs">
       <button class="tab-btn active" data-filter="all">সব প্রশ্ন</button>
       <button class="tab-btn" data-filter="about">সংগঠন বিষয়ক</button>
@@ -309,11 +334,11 @@
     <!-- FAQ কন্টেইনার -->
     <div class="faq-container">
       
-      <!-- প্রশ্ন ১ (ক্যাটাগরি: about) -->
+      <!-- প্রশ্ন ১ -->
       <div class="faq-item" data-category="about">
         <button class="faq-question-btn">
           <span>১. রাজশাহী অলিম্পিয়াড সোসাইটি (ROS) কী ধরনের সংস্থা?</span>
-          <div class="faq-icon-wrapper">
+          <div class="faq-icon-container">
             <i class="fa-solid fa-chevron-down faq-icon"></i>
           </div>
         </button>
@@ -324,11 +349,11 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ২ (ক্যাটাগরি: event) -->
+      <!-- প্রশ্ন ২ -->
       <div class="faq-item" data-category="event">
         <button class="faq-question-btn">
           <span>২. আপনাদের আয়োজিত কার্যক্রমে কারা অংশগ্রহণ করতে পারবে?</span>
-          <div class="faq-icon-wrapper">
+          <div class="faq-icon-container">
             <i class="fa-solid fa-chevron-down faq-icon"></i>
           </div>
         </button>
@@ -339,11 +364,11 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৩ (ক্যাটাগরি: member) -->
+      <!-- প্রশ্ন ৩ -->
       <div class="faq-item" data-category="member">
         <button class="faq-question-btn">
           <span>৩. সোসাইটির সদস্য (Volunteer) হওয়ার উপায় কী?</span>
-          <div class="faq-icon-wrapper">
+          <div class="faq-icon-container">
             <i class="fa-solid fa-chevron-down faq-icon"></i>
           </div>
         </button>
@@ -354,11 +379,11 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৪ (ক্যাটাগরি: event) -->
+      <!-- প্রশ্ন ৪ -->
       <div class="faq-item" data-category="event">
         <button class="faq-question-btn">
           <span>৪. প্রতিযোগিতার ফলাফল বা আপকামিং ইভেন্টের খবর কোথায় পাওয়া যাবে?</span>
-          <div class="faq-icon-wrapper">
+          <div class="faq-icon-container">
             <i class="fa-solid fa-chevron-down faq-icon"></i>
           </div>
         </button>
@@ -369,11 +394,11 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৫ (ক্যাটাগরি: about) -->
+      <!-- প্রশ্ন ৫ -->
       <div class="faq-item" data-category="about">
         <button class="faq-question-btn">
           <span>৫. আপনাদের সাথে যেকোনো প্রয়োজনে কীভাবে যোগাযোগ করব?</span>
-          <div class="faq-icon-wrapper">
+          <div class="faq-icon-container">
             <i class="fa-solid fa-chevron-down faq-icon"></i>
           </div>
         </button>
@@ -398,8 +423,14 @@
   <!-- গ্লোবাল নেভিগেশন ফুটার -->
   <ros-footer></ros-footer>
 
-  <!-- ডাইনামিক ফিল্টারিং ও অ্যাকর্ডিয়ন স্ক্রিপ্ট -->
+  <!-- ইন্টারঅ্যাক্টিভ স্ক্রিপ্টস -->
   <script>
+    // --- স্পটলাইট মাউস ট্র্যাকিং লজিক ---
+    window.addEventListener('mousemove', e => {
+      document.body.style.setProperty('--mouse-x', `${e.clientX}px`);
+      document.body.style.setProperty('--mouse-y', `${e.clientY}px`);
+    });
+
     // --- অ্যাকর্ডিয়ন লজিক ---
     document.querySelectorAll('.faq-question-btn').forEach(button => {
       button.addEventListener('click', () => {
@@ -421,24 +452,21 @@
       });
     });
 
-    // --- ডাইনামিক ট্যাব ফিল্টার লজিক ---
+    // --- ডাইনামিক ফিল্টার ট্যাব লজিক ---
     const tabBtns = document.querySelectorAll('.tab-btn');
     const faqItems = document.querySelectorAll('.faq-item');
 
     tabBtns.forEach(btn => {
       btn.addEventListener('click', () => {
-        // একটিভ ক্লাস পরিবর্তন
         document.querySelector('.tab-btn.active').classList.remove('active');
         btn.classList.add('active');
 
         const filterValue = btn.getAttribute('data-filter');
 
         faqItems.forEach(item => {
-          // আগে ওপেন থাকা FAQ বন্ধ করা
           item.classList.remove('active');
           item.querySelector('.faq-answer-panel').style.maxHeight = null;
 
-          // ফিল্টার ম্যাচিং
           if (filterValue === 'all' || item.getAttribute('data-category') === filterValue) {
             item.classList.remove('hide');
           } else {
