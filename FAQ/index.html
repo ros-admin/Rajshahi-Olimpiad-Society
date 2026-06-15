@@ -11,8 +11,8 @@
     /* --- গ্লোবাল ভেরিয়েবল ও থিম স্টাইল --- */
     :root {
       --primary: #0a1128;
-      --secondary: #00b4d8; 
-      --accent: #ffd700;    
+      --secondary: #00b4d8; /* নীল কালার */
+      --accent: #ffd700;    /* হলুদ কালার */
       --dark-bg: #020c1b;
       --card-bg: rgba(10, 25, 47, 0.65);
       --text-light: #f1f5f9;
@@ -28,10 +28,10 @@
     }
 
     main {
-      max-width: 900px; /* FAQ পড়ার সুবিধার জন্য রিডঅ্যাবিলিটি উইডথ */
+      max-width: 900px;
       margin: 0 auto;
-      padding: 40px 20px;
-      min-height: 75vh;
+      padding: 60px 20px;
+      min-height: 70vh;
     }
 
     /* --- পেজ হেডার এরিয়া --- */
@@ -41,24 +41,30 @@
       position: relative;
     }
 
+    /* সাধারণ জিজ্ঞাসা লেখাটি নীল */
     .page-title {
-      font-size: 2.5rem;
-      margin: 0 0 10px 0;
-      color: #fff;
+      font-size: 2.6rem;
+      margin: 0 0 15px 0;
+      color: var(--secondary);
+      font-weight: 700;
     }
 
-    .page-subtitle {
-      color: var(--text-muted);
-      font-size: 1.1rem;
-      margin: 0;
-    }
-
+    /* নিচের টানটি হলুদ */
     .title-divider {
-      width: 80px;
-      height: 3px;
-      background-color: var(--secondary);
-      margin: 15px auto 0;
+      width: 100px;
+      height: 4px;
+      background-color: var(--accent);
+      margin: 0 auto 20px;
       border-radius: 2px;
+    }
+
+    /* টান-এর নিচের সাবটাইটেল */
+    .page-subtitle {
+      color: var(--text-light);
+      font-size: 1.15rem;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
     }
 
     /* --- অ্যাকর্ডিয়ন (FAQ) স্টাইল --- */
@@ -66,6 +72,7 @@
       display: flex;
       flex-direction: column;
       gap: 16px;
+      margin-top: 40px;
     }
 
     .faq-item {
@@ -81,14 +88,12 @@
       box-shadow: 0 5px 15px rgba(0, 180, 216, 0.05);
     }
 
-    /* অ্যাক্টিভ অবস্থার স্টাইল */
     .faq-item.active {
       border-color: var(--secondary);
       background: rgba(10, 25, 47, 0.85);
       box-shadow: 0 10px 25px rgba(2, 12, 27, 0.5);
     }
 
-    /* প্রশ্ন বাটন */
     .faq-question-btn {
       width: 100%;
       background: transparent;
@@ -111,7 +116,6 @@
       line-height: 1.4;
     }
 
-    /* আইকন এবং তার রোটেশন অ্যানিমেশন */
     .faq-icon {
       color: var(--secondary);
       font-size: 1.1rem;
@@ -124,7 +128,6 @@
       color: var(--accent);
     }
 
-    /* উত্তর প্যানেল (স্মুথ স্লাইড অ্যানিমেশন) */
     .faq-answer-panel {
       max-height: 0;
       overflow: hidden;
@@ -149,6 +152,7 @@
       background: rgba(0, 180, 216, 0.03);
       border-radius: 16px;
       border: 1px dashed rgba(0, 180, 216, 0.2);
+      margin-bottom: 40px;
     }
 
     .more-help-text {
@@ -179,10 +183,10 @@
     /* --- মোবাইল রেসপন্সিভ স্টাইল --- */
     @media (max-width: 600px) {
       .page-title {
-        font-size: 2rem;
+        font-size: 2.1rem;
       }
       .page-subtitle {
-        font-size: 0.95rem;
+        font-size: 1rem;
       }
       .faq-question-btn {
         padding: 16px 20px;
@@ -197,17 +201,21 @@
 </head>
 <body>
 
+  <!-- গ্লোবাল নেভিগেশন হেডার (navigation.js থেকে ডেটা নেবে) -->
   <ros-header></ros-header>
 
   <main>
+    <!-- পেজ হেডার স্ট্রাকচার -->
     <div class="page-header-container">
       <h1 class="page-title">সাধারণ জিজ্ঞাসা</h1>
-      <p class="page-subtitle">রাজশাহী অলিম্পিয়াড সোসাইটি সম্পর্কে আপনার মনে থাকা সাধারণ কিছু প্রশ্নের উত্তর</p>
       <div class="title-divider"></div>
+      <p class="page-subtitle">রাজশাহী অলিম্পিয়াড সোসাইটি সম্পর্কে আপনার মনে থাকা সাধারণ কিছু প্রশ্নের উত্তর</p>
     </div>
 
+    <!-- FAQ কন্টেইনার -->
     <div class="faq-container">
       
+      <!-- প্রশ্ন ১ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>১. রাজশাহী অলিম্পিয়াড সোসাইটি (ROS) কী ধরনের সংস্থা?</span>
@@ -220,6 +228,7 @@
         </div>
       </div>
 
+      <!-- প্রশ্ন ২ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>২. আপনাদের আয়োজিত কার্যক্রমে কারা অংশগ্রহণ করতে পারবে?</span>
@@ -227,11 +236,12 @@
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
-            সাধারণত স্কুল, কলেজ এবং বিশ্ববিদ্যালয়ের যেকোনো শিক্ষার্থী আমাদের ইভেন্ট ও অলিম্পিয়াডগুলোতে অংশগ্রহণ করতে পারে। প্রতিটি নির্দিষ্ট প্রতিযোগিতার বা সেমিনারের নিয়মাবলীতে কোন ক্যাটাগরির শিক্ষার্থীরা অংশ নিতে পারবে, তা স্পষ্টভাবে উল্লেখ করা থাকে।
+            সাধারণত স্কুল, college এবং বিশ্ববিদ্যালয়ের যেকোনো শিক্ষার্থী আমাদের ইভেন্ট ও অলিম্পিয়াডগুলোতে অংশগ্রহণ করতে পারে। প্রতিটি নির্দিষ্ট প্রতিযোগিতার বা সেমিনারের নিয়মাবলীতে কোন ক্যাটাগরির শিক্ষার্থীরা অংশ নিতে পারবে, তা স্পষ্টভাবে উল্লেখ করা থাকে।
           </div>
         </div>
       </div>
 
+      <!-- প্রশ্ন ৩ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>৩. সোসাইটির সদস্য (Volunteer) হওয়ার উপায় কী?</span>
@@ -239,11 +249,12 @@
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
-            আমরা নির্দিষ্ট সময় পরপর নতুন সদস্য বা ভলান্টিয়ার নিয়োগের জন্য অনলাইন ফরম উন্মুক্ত করি। আমাদের অফিসিয়াল ফেসবুক পেজ এবং এই ওয়েবসাইটের 'কার্যক্রম' পাতায় চোখ রাখলে আপনি মেম্বারশিপ রিক্রুটমেন্টের নোটিশ দেখতে পাবেন এবং সেখান থেকে আবেদন করতে পারবেন।
+            আমরা নির্দিষ্ট সময় পরপর নতুন সদস্য বা ভলান্টিয়ার নিয়োগের জন্য অনলাইন ফরম ফরম উন্মুক্ত করি। আমাদের অফিসিয়াল ফেসবুক পেজ এবং এই ওয়েবসাইটের 'কার্যক্রম' পাতায় চোখ রাখলে আপনি মেম্বারশিপ রিক্রুটমেন্টের নোটিশ দেখতে পাবেন এবং সেখান থেকে আবেদন করতে পারবেন।
           </div>
         </div>
       </div>
 
+      <!-- প্রশ্ন ৪ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>৪. প্রতিযোগিতার ফলাফল বা আপকামিং ইভেন্টের খবর কোথায় পাওয়া যাবে?</span>
@@ -256,6 +267,7 @@
         </div>
       </div>
 
+      <!-- প্রশ্ন ৫ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>৫. আপনাদের সাথে যেকোনো প্রয়োজনে কীভাবে যোগাযোগ করব?</span>
@@ -270,6 +282,7 @@
 
     </div>
 
+    <!-- অতিরিক্ত জিজ্ঞাসা সেকশন -->
     <div class="more-help-section">
       <p class="more-help-text">আপনার প্রয়োজনীয় প্রশ্নের উত্তর এখানে খুঁজে পাননি?</p>
       <a href="contact.html" class="btn-contact-faq">
@@ -278,26 +291,25 @@
     </div>
   </main>
 
+  <!-- গ্লোবাল নেভিগেশন ফুটার (navigation.js থেকে ডেটা নেবে) -->
   <ros-footer></ros-footer>
 
+  <!-- স্লাইড অ্যানিমেশন ও ইন্টারেক্টিভ জাভাস্ক্রিপ্ট লজিক -->
   <script>
     document.querySelectorAll('.faq-question-btn').forEach(button => {
       button.addEventListener('click', () => {
         const faqItem = button.parentElement;
         const panel = button.nextElementSibling;
 
-        // যদি অলরেডি ওপেন থাকে তবে ক্লোজ করো
         if (faqItem.classList.contains('active')) {
           panel.style.maxHeight = null;
           faqItem.classList.remove('active');
         } else {
-          // বাকি ওপেন থাকা অন্য সব FAQ আগে বন্ধ করো (যাতে এক সাথে একটা খোলে)
           document.querySelectorAll('.faq-item').forEach(item => {
             item.classList.remove('active');
             item.querySelector('.faq-answer-panel').style.maxHeight = null;
           });
 
-          // বর্তমান FAQ-টি ওপেন করো ডাইনামিক স্ক্রলহাইট অনুযায়ী
           faqItem.classList.add('active');
           panel.style.maxHeight = panel.scrollHeight + "px";
         }
@@ -305,7 +317,7 @@
     });
   </script>
 
-  <script src="navigation.js"></script>
+  <!-- রুট নেভিগেশন স্ক্রিপ্ট ফাইল সংযোগ (হেডার ও ফুটার রেন্ডার করার জন্য) -->
+  <script src="./navigation.js"></script>
 </body>
 </html>
-
