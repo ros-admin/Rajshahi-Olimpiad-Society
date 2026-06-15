@@ -59,6 +59,22 @@
       margin-top: auto;
     }
 
+    /* 
+      --- জাভাস্ক্রিপ্ট বাটনের পজিশন ফিক্স ---
+      navigation.js থেকে আসা তীর চিহ্নের বাটনটিকে 
+      জোরপূর্বক নিচে ডান কর্নারে ফিক্সড পজিশনে পাঠানো হলো।
+    */
+    ros-footer button, 
+    .scroll-to-top, 
+    [id*="scroll"], 
+    [class*="scroll"] {
+      position: fixed !important;
+      bottom: 30px !important;
+      right: 30px !important;
+      top: auto !important; /* উপরে আটকে থাকা বন্ধ করবে */
+      z-index: 9999 !important;
+    }
+
     /* --- পেজ হেডার এরিয়া --- */
     .page-header-container {
       text-align: center;
@@ -88,7 +104,7 @@
       line-height: 1.6;
     }
 
-    /* --- মডার্ন ৩ডি FAQ অ্যাকর্ডিয়ন --- */
+    /* --- মডার্ন ৩ডি FAQ  --- */
     .faq-container {
       display: flex;
       flex-direction: column;
@@ -101,13 +117,12 @@
       border-radius: 12px;
       border: 1px solid rgba(0, 180, 216, 0.15);
       overflow: hidden;
-      /* ৩ডি ইফেক্ট: বক্সটি স্ক্রিন থেকে সামান্য উঁচুতে থাকবে */
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3), inset 0 1px 1px rgba(255, 255, 255, 0.05);
       transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
       position: relative;
     }
 
-    /* বর্ডারে সূক্ষ্ম আলো ঘোরার জন্য ছায়া অ্যানিমেশন */
+    /* অ্যাক্টিভ বর্ডারে সূক্ষ্ম পালস আলো */
     .faq-item.active {
       border-color: var(--secondary);
       box-shadow: 0 0 15px rgba(0, 180, 216, 0.25);
@@ -120,7 +135,7 @@
       100% { border-color: var(--secondary); }
     }
 
-    /* প্রশ্নের অংশ (উঁচু প্যানেল) */
+    /* প্রশ্নের অংশ (উঁ‌চু বক্স) */
     .faq-question-btn {
       width: 100%;
       background: transparent;
@@ -171,7 +186,6 @@
       overflow: hidden;
       transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
       background: var(--panel-inner);
-      /* ইনসেট শ্যাডো যা উত্তরটিকে বক্সের গভীরে খোদাই করা লুক দেয় */
       box-shadow: inset 0 6px 12px rgba(0, 0, 0, 0.5), inset 0 -6px 12px rgba(0, 0, 0, 0.5);
     }
 
@@ -225,6 +239,10 @@
       .page-title { font-size: 2.1rem; }
       .faq-question-btn { padding: 20px 18px; font-size: 1.1rem; }
       .faq-answer-content { padding: 15px 18px 20px 18px; font-size: 0.98rem; }
+      ros-footer button, .scroll-to-top, [id*="scroll"], [class*="scroll"] {
+        bottom: 20px !important;
+        right: 20px !important;
+      }
     }
   </style>
 </head>
@@ -330,7 +348,7 @@
     </div>
   </main>
 
-  <!-- গ্লোবাল নেভিগেশন ফুটার (আসল "Go to Top" বাটনটি এটার ভেতরেই থাকবে) -->
+  <!-- গ্লোবাল নেভিগেশন ফুটার -->
   <ros-footer></ros-footer>
 
   <!-- জাভাস্ক্রিপ্ট অ্যাকর্ডিয়ন লজিক -->
