@@ -67,7 +67,7 @@
       border-radius: 16px; padding: 25px; margin-bottom: 30px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
       position: relative;
-      z-index: 10;
+      z-index: 999; /* ড্রপডাউন প্যানেল যেন কোনোভাবেই ঢাকা না পড়ে */
     }
 
     .search-row {
@@ -110,7 +110,6 @@
       font-size: 0.85rem; color: var(--text-muted); font-weight: 600;
     }
 
-    /* ইউনিক থিম ফিল্টার ট্রিগার বাটন */
     .filter-select {
       background: rgba(2, 12, 27, 0.8); color: #fff;
       border: 1px solid rgba(0, 180, 216, 0.2);
@@ -121,17 +120,17 @@
     }
     .filter-select:hover { border-color: var(--secondary); }
 
-    /* কাস্টম ড্রপডাউন প্যানেল (সার্চ বক্সসহ ইউনিক থিম) */
+    /* কাস্টম ড্রপডাউন প্যানেল (সার্চ বক্সসহ ড্রপডাউনলুক) */
     .custom-dropdown-panel {
       display: none; position: absolute; top: 100%; left: 0; width: 100%;
       background: #040d1a; border: 1px solid var(--secondary);
-      border-radius: 8px; z-index: 999; max-height: 250px; overflow-y: auto;
-      box-shadow: 0 12px 28px rgba(0,0,0,0.6); margin-top: 4px; padding: 8px; box-sizing: border-box;
+      border-radius: 8px; z-index: 1000; max-height: 250px; overflow-y: auto;
+      box-shadow: 0 12px 24px rgba(0,0,0,0.6); margin-top: 4px; padding: 8px; box-sizing: border-box;
     }
 
     .dropdown-search-input {
       width: 100%; background: rgba(2, 12, 27, 0.8); color: #fff;
-      border: 1px solid rgba(0, 180, 216, 0.4); padding: 8px 10px;
+      border: 1px solid rgba(0, 180, 216, 0.4); padding: 6px 10px;
       border-radius: 6px; outline: none; font-family: inherit; margin-bottom: 8px;
       box-sizing: border-box; font-size: 0.85rem;
     }
@@ -149,29 +148,20 @@
       background: rgba(0, 180, 216, 0.2); color: #fff;
     }
 
-    /* কাস্টম ক্যালেন্ডার ইনপুট বক্স */
-    .manual-date-wrapper { display: none; padding: 4px; border-top: 1px dashed rgba(0, 180, 216, 0.3); }
+    /* ম্যানুয়াল ডেট ইনপুট স্টাইল */
+    .manual-date-wrapper { display: none; margin-top: 5px; }
     .manual-date-input {
-      width: 100%; background: rgba(2, 12, 27, 0.9); color: #fff; border: 1px solid var(--secondary);
-      padding: 6px 10px; border-radius: 6px; outline: none; font-family: inherit; box-sizing: border-box;
-      font-size: 0.85rem; margin-top: 4px;
+      width: 100%; background: #040d1a; color: #fff; border: 1px solid var(--secondary);
+      padding: 8px 12px; border-radius: 8px; outline: none; font-family: inherit; box-sizing: border-box;
     }
 
-    /* --- নিখুঁত ৩ডি টেবিল ডিজাইন (পূর্বের মূল রূপ) --- */
+    /* --- রেসপন্সিভ ৩ডি টেবিল ডিজাইন --- */
     .table-container {
       background: var(--card-bg); backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(0, 180, 216, 0.15);
-      border-radius: 16px; 
-      overflow: visible; 
+      border-radius: 16px; overflow: hidden;
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
-      position: relative;
-      z-index: 1;
-    }
-
-    .table-responsive-wrapper {
-      width: 100%;
-      overflow-x: auto; 
     }
 
     table {
@@ -344,7 +334,6 @@
           <label>রক্তের গ্রুপ</label>
           <div id="customBloodTrigger" class="filter-select">সব ব্লাড গ্রুপ</div>
           <div id="customBloodPanel" class="custom-dropdown-panel">
-            <input type="text" id="bloodSearchInside" class="dropdown-search-input" placeholder="গ্রুপ খুঁজুন...">
             <div id="bloodOptionsList" class="dropdown-options-list"></div>
           </div>
         </div>
@@ -353,11 +342,10 @@
           <label>নিবন্ধনের তারিখ</label>
           <div id="customDateTrigger" class="filter-select">সব তারিখ</div>
           <div id="customDatePanel" class="custom-dropdown-panel">
-            <input type="text" id="dateSearchInside" class="dropdown-search-input" placeholder="তারিখ খুঁজুন...">
             <div id="dateOptionsList" class="dropdown-options-list"></div>
-            <div class="manual-date-wrapper" id="manualDateContainer">
-              <input type="date" id="manualDateInput" class="manual-date-input">
-            </div>
+          </div>
+          <div class="manual-date-wrapper" id="manualDateContainer">
+            <input type="date" id="manualDateInput" class="manual-date-input">
           </div>
         </div>
 
@@ -382,23 +370,21 @@
     </div>
 
     <div class="table-container">
-      <div class="table-responsive-wrapper">
-        <table>
-          <thead>
-            <tr>
-              <th>সিরিয়াল</th>
-              <th>নিবন্ধন নং</th>
-              <th>নাম</th>
-              <th>লিঙ্গ</th>
-              <th>নিবন্ধনের তারিখ</th>
-              <th>পেশা</th>
-              <th>রক্তের গ্রুপ</th>
-              <th>ঠিকানা</th>
-            </tr>
-          </thead>
-          <tbody id="memberTableBody"></tbody>
-        </table>
-      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>সিরিয়াল</th>
+            <th>নিবন্ধন নং</th>
+            <th>নাম</th>
+            <th>লিঙ্গ</th>
+            <th>নিবন্ধনের তারিখ</th>
+            <th>পেশা</th>
+            <th>রক্তের গ্রুপ</th>
+            <th>ঠিকানা</th>
+          </tr>
+        </thead>
+        <tbody id="memberTableBody"></tbody>
+      </table>
     </div>
   </main>
 
@@ -414,23 +400,23 @@
 
       <div class="modal-details-list">
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ:</span>
+          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ চিহ্ন:</span>
           <span class="detail-value" id="modalDate"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ:</span>
+          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ চিহ্ন:</span>
           <span class="detail-value" id="modalGenderTextWrapper"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা:</span>
+          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা চিহ্ন:</span>
           <span class="detail-value" id="modalPesa"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ:</span>
+          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ চিহ্ন:</span>
           <span class="detail-value" id="modalBlood"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা:</span>
+          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা চিহ্ন:</span>
           <span class="detail-value" id="modalAddress"></span>
         </div>
       </div>
@@ -442,7 +428,7 @@
   <script>
     let rawMembersData = [];
     
-    // ফিল্টার স্টেটসমূহ
+    // গ্লোবাল ফিল্টার স্টেট ভ্যারিয়েবলসমূহ
     let selectedSortValue = 'name-asc';
     let selectedGenderValue = 'all';
     let selectedBloodValue = 'all';
@@ -460,13 +446,11 @@
         rawMembersData = await response.json();
         
         sortData(selectedSortValue);
+        populateStandardFilters(rawMembersData);
         
-        // সব কাস্টম থিম ড্রপডাউন ইনিশিয়ালাইজ করা
-        renderStandardDropdowns();
+        // কাস্টম ড্রপডাউন ইনিশিয়ালাইজেশন
         renderCustomDropdown('pesa', '');
         renderCustomDropdown('address', '');
-        renderCustomDropdown('blood', '');
-        renderCustomDropdown('date', '');
         
         applyFiltersAndSearch();
       } catch (error) {
@@ -477,91 +461,103 @@
       }
     }
 
-    // লিঙ্গ ড্রপডাউন জেনারেটর
-    function renderStandardDropdowns() {
-      const genderList = document.getElementById('genderOptionsList');
-      genderList.innerHTML = '';
-      
+    function populateStandardFilters(data) {
       const genders = new Set();
-      rawMembersData.forEach(m => { if(m.gender) genders.add(m.gender.trim()); });
+      const bloodGroups = new Set();
+      const dates = new Set();
 
-      const allItem = document.createElement('div');
-      allItem.className = `dropdown-opt-item ${selectedGenderValue === 'all' ? 'selected' : ''}`;
-      allItem.innerText = 'সব লিঙ্গ';
-      allItem.addEventListener('click', () => {
-        selectedGenderValue = 'all';
-        document.getElementById('customGenderTrigger').innerText = 'সব লিঙ্গ';
-        document.getElementById('customGenderPanel').style.display = 'none';
-        applyFiltersAndSearch();
-        renderStandardDropdowns();
+      data.forEach(m => {
+        if (m.gender) genders.add(m.gender.trim());
+        if (m.bloodGroup) bloodGroups.add(m.bloodGroup.trim());
+        if (m.regDate) dates.add(m.regDate.trim());
       });
-      genderList.appendChild(allItem);
 
+      // ১. কাস্টম লিঙ্গ তালিকা তৈরি
+      const genderList = document.getElementById('genderOptionsList');
+      genderList.innerHTML = `<div class="dropdown-opt-item selected" data-value="all">সব লিঙ্গ</div>`;
       genders.forEach(g => {
-        const item = document.createElement('div');
-        item.className = `dropdown-opt-item ${selectedGenderValue === g ? 'selected' : ''}`;
-        item.innerText = g;
-        item.addEventListener('click', () => {
-          selectedGenderValue = g;
-          document.getElementById('customGenderTrigger').innerText = g;
-          document.getElementById('customGenderPanel').style.display = 'none';
+        genderList.innerHTML += `<div class="dropdown-opt-item" data-value="${g}">${g}</div>`;
+      });
+      bindDropdownItems('Gender');
+
+      // ২. কাস্টম রক্তের গ্রুপ তালিকা তৈরি (সার্চ বক্স ছাড়া)
+      const bloodList = document.getElementById('bloodOptionsList');
+      bloodList.innerHTML = `<div class="dropdown-opt-item selected" data-value="all">সব ব্লাড গ্রুপ</div>`;
+      bloodGroups.forEach(b => {
+        bloodList.innerHTML += `<div class="dropdown-opt-item" data-value="${b}">${b}</div>`;
+      });
+      bindDropdownItems('Blood');
+
+      // ৩. কাস্টম নিবন্ধনের তারিখ তালিকা তৈরি (সার্চ বক্স ছাড়া)
+      const dateList = document.getElementById('dateOptionsList');
+      dateList.innerHTML = `
+        <div class="dropdown-opt-item selected" data-value="all">সব তারিখ</div>
+        <div class="dropdown-opt-item" data-value="manual">Manual Entry</div>
+      `;
+      dates.forEach(d => {
+        dateList.innerHTML += `<div class="dropdown-opt-item" data-value="${d}">${d}</div>`;
+      });
+      bindDropdownItems('Date');
+    }
+
+    // ড্রপডাউন অপশনে ক্লিক করার ইভেন্ট বাইন্ডিং লজিক
+    function bindDropdownItems(type) {
+      const items = document.querySelectorAll(`#custom${type}Panel .dropdown-opt-item`);
+      items.forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          document.querySelectorAll(`#custom${type}Panel .dropdown-opt-item`).forEach(i => i.classList.remove('selected'));
+          item.classList.add('selected');
+          
+          const val = item.getAttribute('data-value');
+          const text = item.innerText;
+          
+          document.getElementById(`custom${type}Trigger`).innerText = text;
+          document.getElementById(`custom${type}Panel`).style.display = 'none';
+
+          if (type === 'Sort') { selectedSortValue = val; sortData(val); }
+          else if (type === 'Gender') { selectedGenderValue = val; }
+          else if (type === 'Blood') { selectedBloodValue = val; }
+          else if (type === 'Date') {
+            selectedDateValue = val;
+            if (val === 'manual') {
+              document.getElementById('manualDateContainer').style.display = 'block';
+              // ম্যানুয়ালি ইনপুটে চাপ দিলে
+            setTimeout(() => { document.getElementById('manualDateInput').showPicker(); }, 50);
+            } else {
+              document.getElementById('manualDateContainer').style.display = 'none';
+              document.getElementById('manualDateInput').value = '';
+            }
+          }
+
           applyFiltersAndSearch();
-          renderStandardDropdowns();
         });
-        genderList.appendChild(item);
       });
     }
 
-    // কাস্টম থিম ড্রপডাউন আর্কিটেকচার (সার্চিং মেকানিজমসহ)
+    // ক্রমানুসারে সাজান প্যানেলে ক্লিক বাইন্ডিং
+    bindDropdownItems('Sort');
+
+    // পেশা ও ঠিকানা ফিল্টারের ড্রপডাউন জেনারেটর (সার্চ বক্স সহ)
     function renderCustomDropdown(type, searchKey = '') {
       const listContainer = document.getElementById(`${type}OptionsList`);
-      let currentSelected = '';
-      if(type === 'pesa') currentSelected = selectedPesaValue;
-      if(type === 'address') currentSelected = selectedAddressValue;
-      if(type === 'blood') currentSelected = selectedBloodValue;
-      if(type === 'date') currentSelected = selectedDateValue;
-      
+      const currentSelected = type === 'pesa' ? selectedPesaValue : selectedAddressValue;
       listContainer.innerHTML = '';
-      const uniqueItems = new Set();
       
+      const uniqueItems = new Set();
       rawMembersData.forEach(m => {
-        let val = '';
-        if(type === 'pesa') val = m.pesa;
-        if(type === 'address') val = m.address;
-        if(type === 'blood') val = m.bloodGroup;
-        if(type === 'date') val = m.regDate;
+        let val = type === 'pesa' ? m.pesa : m.address;
         if (val) uniqueItems.add(val.trim());
       });
 
-      // 'সব' অপশন সেটআপ
       const allItem = document.createElement('div');
       allItem.className = `dropdown-opt-item ${currentSelected === 'all' ? 'selected' : ''}`;
-      if(type === 'pesa') allItem.innerText = 'সব পেশা';
-      if(type === 'address') allItem.innerText = 'সব ঠিকানা';
-      if(type === 'blood') allItem.innerText = 'সব ব্লাড গ্রুপ';
-      if(type === 'date') allItem.innerText = 'সব তারিখ';
-      
+      allItem.innerText = type === 'pesa' ? 'সব পেশা' : 'সব ঠিকানা';
       allItem.addEventListener('click', () => {
         selectCustomValue(type, 'all', allItem.innerText);
-        if(type === 'date') document.getElementById('manualDateContainer').style.display = 'none';
       });
       listContainer.appendChild(allItem);
 
-      // তারিখের জন্য Manual Entry অপশন কাঠামো
-      if(type === 'date' && searchKey === '') {
-        const manualItem = document.createElement('div');
-        manualItem.className = `dropdown-opt-item ${currentSelected === 'manual' ? 'selected' : ''}`;
-        manualItem.innerText = 'Manual Entry';
-        manualItem.addEventListener('click', () => {
-          selectedDateValue = 'manual';
-          document.getElementById('customDateTrigger').innerText = 'Manual Entry';
-          document.getElementById('manualDateContainer').style.display = 'block';
-          renderCustomDropdown('date', '');
-        });
-        listContainer.appendChild(manualItem);
-      }
-
-      // লিস্ট আইটেম ফিল্টারিং ও অ্যাপেন্ডিং
       Array.from(uniqueItems).forEach(item => {
         if (searchKey === '' || item.toLowerCase().includes(searchKey.toLowerCase())) {
           const itemEl = document.createElement('div');
@@ -569,7 +565,6 @@
           itemEl.innerText = item;
           itemEl.addEventListener('click', () => {
             selectCustomValue(type, item, item);
-            if(type === 'date') document.getElementById('manualDateContainer').style.display = 'none';
           });
           listContainer.appendChild(itemEl);
         }
@@ -578,72 +573,49 @@
 
     function selectCustomValue(type, value, label) {
       if (type === 'pesa') selectedPesaValue = value;
-      if (type === 'address') selectedAddressValue = value;
-      if (type === 'blood') selectedBloodValue = value;
-      if (type === 'date') selectedDateValue = value;
+      else selectedAddressValue = value;
 
       document.getElementById(`custom${type.charAt(0).toUpperCase() + type.slice(1)}Trigger`).innerText = label;
       document.getElementById(`custom${type.charAt(0).toUpperCase() + type.slice(1)}Panel`).style.display = 'none';
       
       applyFiltersAndSearch();
-      renderCustomDropdown(type, '');
     }
 
-    // প্যানেল ট্রিগার ইভেন্ট কন্ট্রোলার
-    const triggers = ['Sort', 'Gender', 'Blood', 'Date', 'Pesa', 'Address'];
-    triggers.forEach(t => {
+    // ফিল্টার প্যানেল ট্রিগার কন্ট্রোলার (অন/অফ মেকানিজম)
+    const filterTypes = ['Sort', 'Gender', 'Blood', 'Date', 'Pesa', 'Address'];
+    filterTypes.forEach(t => {
       document.getElementById(`custom${t}Trigger`).addEventListener('click', (e) => {
         e.stopPropagation();
         const currentPanel = document.getElementById(`custom${t}Panel`);
         const isVisible = currentPanel.style.display === 'block';
         
-        // অন্য সব প্যানেল বন্ধ করা
-        triggers.forEach(o => document.getElementById(`custom${o}Panel`).style.display = 'none');
+        // সব প্যানেল বন্ধ করা
+        filterTypes.forEach(o => document.getElementById(`custom${o}Panel`).style.display = 'none');
         
         currentPanel.style.display = isVisible ? 'none' : 'block';
         
-        // সার্চ বক্সে অটো ফোকাস মেকানিজম
-        if (!isVisible) {
+        if (!isVisible && (t === 'Pesa' || t === 'Address')) {
           const searchIn = currentPanel.querySelector('.dropdown-search-input');
-          if(searchIn) {
-            searchIn.value = '';
-            renderCustomDropdown(t.toLowerCase(), '');
-            setTimeout(() => searchIn.focus(), 50);
-          }
+          searchIn.value = '';
+          renderCustomDropdown(t.toLowerCase(), '');
+          setTimeout(() => searchIn.focus(), 50);
         }
       });
     });
 
-    // সর্টিং প্যানেল কন্ট্রোল লজিক
-    document.querySelectorAll('#customSortPanel .dropdown-opt-item').forEach(item => {
-      item.addEventListener('click', (e) => {
-        e.stopPropagation();
-        document.querySelectorAll('#customSortPanel .dropdown-opt-item').forEach(i => i.classList.remove('selected'));
-        item.classList.add('selected');
-        
-        selectedSortValue = item.getAttribute('data-value');
-        document.getElementById('customSortTrigger').innerText = item.innerText;
-        document.getElementById('customSortPanel').style.display = 'none';
-        
-        sortData(selectedSortValue);
-        applyFiltersAndSearch();
-      });
+    // পেশা ও ঠিকানা লাইভ কাস্টম সার্চ ইভেন্ট
+    document.getElementById('pesaSearchInside').addEventListener('input', (e) => {
+      renderCustomDropdown('pesa', e.target.value.trim());
+    });
+    document.getElementById('addressSearchInside').addEventListener('input', (e) => {
+      renderCustomDropdown('address', e.target.value.trim());
     });
 
-    // ইন-ড্রপডাউন লাইভ সার্চ লিসেনারস
-    document.getElementById('bloodSearchInside').addEventListener('input', (e) => renderCustomDropdown('blood', e.target.value.trim()));
-    document.getElementById('dateSearchInside').addEventListener('input', (e) => renderCustomDropdown('date', e.target.value.trim()));
-    document.getElementById('pesaSearchInside').addEventListener('input', (e) => renderCustomDropdown('pesa', e.target.value.trim()));
-    document.getElementById('addressSearchInside').addEventListener('input', (e) => renderCustomDropdown('address', e.target.value.trim()));
-
-    // উইন্ডো ক্লিকে প্যানেল বন্ধ করা
+    // বাইরে কোনো ফাঁকা জায়গায় ক্লিক করলে প্যানেল বন্ধ হবে
     window.addEventListener('click', () => {
-      triggers.forEach(t => document.getElementById(`custom${t}Panel`).style.display = 'none');
+      filterTypes.forEach(t => document.getElementById(`custom${t}Panel`).style.display = 'none');
     });
-    triggers.forEach(t => document.getElementById(`custom${t}Panel`).addEventListener('click', (e) => e.stopPropagation()));
-
-    // ম্যানুয়াল ডেট ইনপুট চেঞ্জ ইভেন্ট
-    document.getElementById('manualDateInput').addEventListener('input', applyFiltersAndSearch);
+    filterTypes.forEach(t => document.getElementById(`custom${t}Panel`).addEventListener('click', (e) => e.stopPropagation()));
 
     function sortData(criteria) {
       if (criteria === 'name-asc') {
@@ -681,7 +653,7 @@
       renderTable(filteredList);
     }
 
-    // নিখুঁত ৩ডি টেবিল মেম্বার রো রেন্ডারিং (মূল ডিজাইন অপরিবর্তিত)
+    // আপনার আসল নিখুঁত টেবিল সারি ডিজাইন (হুবহু অপরিবর্তিত)
     function renderTable(dataList) {
       const tbody = document.getElementById('memberTableBody');
       tbody.innerHTML = '';
@@ -745,6 +717,8 @@
     });
 
     document.getElementById('memberSearch').addEventListener('input', applyFiltersAndSearch);
+    document.getElementById('manualDateInput').addEventListener('input', applyFiltersAndSearch);
+    
     window.addEventListener('DOMContentLoaded', loadMembersData);
   </script>
 
