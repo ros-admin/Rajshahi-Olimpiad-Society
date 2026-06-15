@@ -192,15 +192,15 @@
       text-align: center; margin-bottom: 25px;
     }
 
-    .gender-avatar-icon {
-      width: 70px; height: 70px; border-radius: 50%;
-      background: rgba(0, 180, 216, 0.1); display: inline-flex;
-      align-items: center; justify-content: center;
-      font-size: 2.2rem; margin-bottom: 15px;
-      border: 2px dashed var(--secondary);
+    /* থিমভিত্তিক মডার্ন এভাটার ফ্রেম */
+    .theme-avatar-container {
+      width: 75px; height: 75px; margin: 0 auto 15px auto;
+      display: flex; align-items: center; justify-content: center;
     }
-    .gender-avatar-icon.male { color: #00b4d8; }
-    .gender-avatar-icon.female { color: #f43f5e; border-color: #f43f5e; background: rgba(244, 63, 94, 0.1); }
+    
+    .theme-avatar-container svg {
+      width: 100%; height: 100%; filter: drop-shadow(0 0 8px rgba(0, 180, 216, 0.5));
+    }
 
     .modal-reg-no {
       font-family: 'Poppins', sans-serif; color: var(--accent);
@@ -227,17 +227,25 @@
       color: var(--text-muted); font-weight: 600; display: flex; align-items: center; gap: 10px;
     }
     .detail-label i { color: var(--secondary); width: 16px; }
-    .detail-value { color: var(--text-light); font-weight: 600; }
+    
+    .detail-value { 
+      color: var(--text-light); font-weight: 600; 
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+
+    /* পপআপ লিঙ্গ চিহ্নের কালার ট্যাগ */
+    .gender-inline-icon { font-size: 1rem; }
+    .gender-inline-icon.male { color: #00b4d8; }
+    .gender-inline-icon.female { color: #f43f5e; }
 
     /* --- মোবাইল ও ট্যাবলেট রেসপন্সিভ মিডিয়া কুয়েরি --- */
     @media (max-width: 768px) {
       .search-row { flex-direction: column; }
       
-      /* মোবাইলে শুধু সিরিয়াল, রেজিস্ট্রেশন ও নাম দেখাবে, বাকি কলাম হাইড হবে */
-      th:nth-child(4), td:nth-child(4), /* লিঙ্গ */
-      th:nth-child(5), td:nth-child(5), /* নিবন্ধনের তারিখ */
-      th:nth-child(6), td:nth-child(6), /* ব্লাড গ্রুপ */
-      th:nth-child(7), td:nth-child(7)  /* ঠিকানা */ {
+      th:nth-child(4), td:nth-child(4),
+      th:nth-child(5), td:nth-child(5),
+      th:nth-child(6), td:nth-child(6),
+      th:nth-child(7), td:nth-child(7) {
         display: none;
       }
       
@@ -319,8 +327,7 @@
             <th>ঠিকানা</th>
           </tr>
         </thead>
-        <tbody id="memberTableBody">
-          </tbody>
+        <tbody id="memberTableBody"></tbody>
       </table>
     </div>
   </main>
@@ -330,7 +337,7 @@
       <button class="modal-close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
       
       <div class="modal-header-profile">
-        <div class="gender-avatar-icon" id="modalGenderIcon"></div>
+        <div class="theme-avatar-container" id="modalAvatarBox"></div>
         <p class="modal-reg-no" id="modalRegNo"></p>
         <h2 class="modal-member-name" id="modalName"></h2>
       </div>
@@ -342,7 +349,7 @@
         </div>
         <div class="detail-item">
           <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ চিহ্ন:</span>
-          <span class="detail-value" id="modalGenderText"></span>
+          <span class="detail-value" id="modalGenderTextWrapper"></span>
         </div>
         <div class="detail-item">
           <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ চিহ্ন:</span>
@@ -359,22 +366,20 @@
   <ros-footer></ros-footer>
 
   <script>
-    let rawMembersData = []; // মূল মেম্বার লিস্ট স্টোর করার গ্লোবাল ভ্যারিয়েবল
+    let rawMembersData = [];
 
-    // ১. JSON ফাইল থেকে ডেটা ফেচ করা
+    // এসভিজি (SVG) থিমড এভাটার কোড জেনারেটর
+    const maleAvatarSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="rgba(0,180,216,0.1)" stroke="#00b4d8" stroke-width="2" stroke-dasharray="4 3"/><circle cx="50" cy="40" r="16" fill="#00b4d8"/><path d="M22 78 C22 60, 34 56, 50 56 C66 56, 78 60, 78 78" fill="#00b4d8"/></svg>`;
+    const femaleAvatarSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="rgba(244,63,94,0.1)" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4 3"/><circle cx="50" cy="40" r="15" fill="#f43f5e"/><path d="M25 78 C25 61, 35 57, 50 57 C65 57, 75 61, 75 78" fill="#f43f5e"/><path d="M38 32 C35 38, 35 45, 38 48 M62 32 C65 38, 65 45, 62 48" stroke="#f43f5e" stroke-width="2" fill="none"/></svg>`;
+
     async function loadMembersData() {
       try {
         const response = await fetch('../Member-List/Member List.json');
         if (!response.ok) throw new Error('Network error or file not found');
-        rawMembersData = await response.onchange ? response.json() : await response.json();
+        rawMembersData = await response.json();
         
-        // ডিফল্ট সর্টিং: নামের ক্রমানুসারে (ক-ৎ) সাজানো
         sortData('name-asc');
-        
-        // ডায়নামিক ফিল্টার ড্রপডাউন জেনারেট করা
         populateDropdownFilters(rawMembersData);
-        
-        // টেবিল রেন্ডার করা
         applyFiltersAndSearch();
       } catch (error) {
         console.error('Error fetching member data:', error);
@@ -384,7 +389,6 @@
       }
     }
 
-    // ২. JSON এর ডেটা অনুযায়ী অটোমেটিক ফিল্টার অপশন তৈরি
     function populateDropdownFilters(data) {
       const genders = new Set();
       const bloodGroups = new Set();
@@ -413,7 +417,6 @@
       });
     }
 
-    // ৩. সর্টিং অ্যালগরিদম (নামের ক-ৎ, ৎ-অ, রেজিস্ট্রেশন শুরু/শেষ)
     function sortData(criteria) {
       if (criteria === 'name-asc') {
         rawMembersData.sort((a, b) => a.name.localeCompare(b.name, 'bn'));
@@ -426,7 +429,6 @@
       }
     }
 
-    // ৪. মাল্টি-ফিল্টারিং এবং রিয়েল-টাইম সার্চ প্রসেসর
     function applyFiltersAndSearch() {
       const searchQuery = document.getElementById('memberSearch').value.toLowerCase().trim();
       const genderFilter = document.getElementById('filterGender').value;
@@ -435,9 +437,7 @@
       const addressFilter = document.getElementById('filterAddress').value;
 
       const filteredList = rawMembersData.filter(m => {
-        // সার্চ কন্ডিশন (নাম অথবা নিবন্ধন নং)
         const matchSearch = m.name.toLowerCase().includes(searchQuery) || String(m.regNo).toLowerCase().includes(searchQuery);
-        // ফিল্টার কন্ডিশন
         const matchGender = genderFilter === 'all' || m.gender === genderFilter;
         const matchBlood = bloodFilter === 'all' || m.bloodGroup === bloodFilter;
         const matchDate = dateFilter === 'all' || m.regDate === dateFilter;
@@ -449,7 +449,6 @@
       renderTable(filteredList);
     }
 
-    // ৫. টেবিল ডম (DOM) জেনারেশন এবং অটো-সিরিয়াল নাম্বার জেনারেটর
     function renderTable(dataList) {
       const tbody = document.getElementById('memberTableBody');
       tbody.innerHTML = '';
@@ -461,8 +460,6 @@
 
       dataList.forEach((member, index) => {
         const tr = document.createElement('tr');
-        
-        // রো-তে ক্লিক করলে পপআপ ওপেন হবে
         tr.addEventListener('click', () => openMemberModal(member));
 
         tr.innerHTML = `
@@ -478,44 +475,48 @@
       });
     }
 
-    // ৬. ইউনিক মডার্ন পপআপ কন্ট্রোলার
+    // পপআপ ওপেন ও কাস্টম লজিক প্রসেসর
     function openMemberModal(member) {
       const modal = document.getElementById('memberModal');
-      const avatar = document.getElementById('modalGenderIcon');
+      const avatarBox = document.getElementById('modalAvatarBox');
+      const genderWrapper = document.getElementById('modalGenderTextWrapper');
+      
+      const isFemale = member.gender.trim() === 'মেয়ে' || member.gender.toLowerCase().includes('female') || member.gender.trim() === 'নারী';
 
-      // লিঙ্গ অনুযায়ী মডার্ন থিম আইকন নির্ধারণ
-      if (member.gender.trim() === 'মেয়ে' || member.gender.toLowerCase().includes('female') || member.gender.trim() === 'নারী') {
-        avatar.className = "gender-avatar-icon female";
-        avatar.innerHTML = `<i class="fa-solid fa-venus"></i>`;
+      // ১. পপআপের ওপরে থিমভিত্তিক এসভিজি (SVG) এভাটার সেট করা
+      if (isFemale) {
+        avatarBox.innerHTML = femaleAvatarSVG;
       } else {
-        avatar.className = "gender-avatar-icon male";
-        avatar.innerHTML = `<i class="fa-solid fa-mars"></i>`;
+        avatarBox.innerHTML = maleAvatarSVG;
       }
 
-      // পপআপের ফিল্ডে তথ্য সেট করা
+      // ২. নিচে শব্দের বামে কালারড আইকন সেট করা (নীল/লাল)
+      if (isFemale) {
+        genderWrapper.innerHTML = `<i class="fa-solid fa-venus gender-inline-icon female"></i> <span>${member.gender}</span>`;
+      } else {
+        genderWrapper.innerHTML = `<i class="fa-solid fa-mars gender-inline-icon male"></i> <span>${member.gender}</span>`;
+      }
+
+      // বাকি তথ্য ইনজেক্ট করা
       document.getElementById('modalRegNo').innerText = `REG: ${member.regNo}`;
       document.getElementById('modalName').innerText = member.name;
       document.getElementById('modalDate').innerText = member.regDate;
-      document.getElementById('modalGenderText').innerText = member.gender;
       document.getElementById('modalBlood').innerText = member.bloodGroup;
       document.getElementById('modalAddress').innerText = member.address;
 
       modal.classList.add('active');
     }
 
-    // পপআপ বন্ধ করার লজিক
     document.getElementById('closeModalBtn').addEventListener('click', () => {
       document.getElementById('memberModal').classList.remove('active');
     });
 
-    // পপআপের বাইরে ক্লিক করলে বন্ধ হওয়ার ব্যাকড্রপ কন্ট্রোল
     document.getElementById('memberModal').addEventListener('click', (e) => {
       if (e.target === document.getElementById('memberModal')) {
         document.getElementById('memberModal').classList.remove('active');
       }
     });
 
-    // ৭. ইভেন্ট লিসেনার সেটআপ (রিয়েল-টাইম সার্চ, ফিল্টার এবং সর্টিং)
     document.getElementById('memberSearch').addEventListener('input', applyFiltersAndSearch);
     document.getElementById('filterGender').addEventListener('change', applyFiltersAndSearch);
     document.getElementById('filterBlood').addEventListener('change', applyFiltersAndSearch);
@@ -527,11 +528,9 @@
       applyFiltersAndSearch();
     });
 
-    // পেজ লোড হবার সাথে সাথে লাইভ ডেটা ফেচিং শুরু করা
     window.addEventListener('DOMContentLoaded', loadMembersData);
   </script>
 
   <script src="../navigation.js"></script>
 </body>
 </html>
-
