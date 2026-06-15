@@ -59,19 +59,20 @@
       margin-top: auto;
     }
 
-    /* 
-      --- জাভাস্ক্রিপ্ট বাটনের পজিশন ফিক্স ---
-      navigation.js থেকে আসা তীর চিহ্নের বাটনটিকে 
-      জোরপূর্বক নিচে ডান কর্নারে ফিক্সড পজিশনে পাঠানো হলো।
+    /* --- গ্লোবাল জাভাস্ক্রিপ্ট বাটনের পজিশন ফিক্স ---
+      navigation.js থেকে জেনারেট হওয়া 'Go to Top' বাটনটি যেন 
+      হেডারে আটকে না থেকে স্ক্রল করার পর নিচে ডান কর্নারে ফিক্সড থাকে।
     */
-    ros-footer button, 
-    .scroll-to-top, 
-    [id*="scroll"], 
-    [class*="scroll"] {
+    body button[class*="scroll"],
+    body button[id*="scroll"],
+    body .scroll-to-top,
+    body #scroll-to-top,
+    ros-footer button {
       position: fixed !important;
       bottom: 30px !important;
       right: 30px !important;
-      top: auto !important; /* উপরে আটকে থাকা বন্ধ করবে */
+      top: auto !important; 
+      left: auto !important;
       z-index: 9999 !important;
     }
 
@@ -239,7 +240,12 @@
       .page-title { font-size: 2.1rem; }
       .faq-question-btn { padding: 20px 18px; font-size: 1.1rem; }
       .faq-answer-content { padding: 15px 18px 20px 18px; font-size: 0.98rem; }
-      ros-footer button, .scroll-to-top, [id*="scroll"], [class*="scroll"] {
+      
+      body button[class*="scroll"],
+      body button[id*="scroll"],
+      body .scroll-to-top,
+      body #scroll-to-top,
+      ros-footer button {
         bottom: 20px !important;
         right: 20px !important;
       }
@@ -248,21 +254,17 @@
 </head>
 <body>
 
-  <!-- ফিক্সড গ্লোবাল নেভিগেশন হেডার -->
   <ros-header></ros-header>
 
   <main>
-    <!-- পেজ হেডার এরিয়া -->
     <div class="page-header-container">
       <h1 class="page-title">সাধারণ জিজ্ঞাসা</h1>
       <div class="title-divider"></div>
       <p class="page-subtitle">রাজশাহী অলিম্পিয়াড সোসাইটি সম্পর্কে আপনার মনে থাকা সাধারণ কিছু প্রশ্নের উত্তর</p>
     </div>
 
-    <!-- FAQ কন্টেইনার -->
     <div class="faq-container">
       
-      <!-- প্রশ্ন ১ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>১. রাজশাহী অলিম্পিয়াড সোসাইটি (ROS) কী ধরনের সংস্থা?</span>
@@ -277,7 +279,6 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ২ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>২. আপনাদের আয়োজিত কার্যক্রমে কারা অংশগ্রহণ করতে পারবে?</span>
@@ -292,7 +293,6 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৩ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>৩. সোসাইটির সদস্য (Volunteer) হওয়ার উপায় কী?</span>
@@ -307,7 +307,6 @@
         </div>
       </div>
 
-      <!-- প্রশ্ন ৪ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>৪. প্রতিযোগিতার ফলাফল বা আপকামিং ইভেন্টের খবর কোথায় পাওয়া যাবে?</span>
@@ -317,12 +316,11 @@
         </button>
         <div class="faq-answer-panel">
           <div class="faq-answer-content">
-            যেকোনো চলমান বা পূর্ববর্তী ইভেন্টের সমস্ত আপডেট ও ফলাফল আমাদের ওয়েবসাইটের 'আমাদের কার্যক্রম' পাতায় এবং আমাদের সামাজিক যোগাযোগ মাধ্যমগুলোতে নিয়মিত প্রকাশ করা হয়। ফিল্টার বক্স ব্যবহার করে আপনি সহজেই আপনার কাঙ্ক্ষিত ইভেন্টের তথ্য খুঁজে নিতে পারবেন।
+            যেকোনো চলমান বা পূর্ববর্তী ইভেন্টের সমস্ত আপডেট ও ফলাফল আমাদের ওয়েবসাইটের 'আমাদের কার্যক্রম' পাতায় এবং আমাদের সামাজিক যোগাযোগ মাধ্যমগুলোতে নিয়মিত প্রকাশ করা হয়। ফিল্টার বক্স ব্যবহার করে আপনি সহজেই আপনার কাঙ্ণ্ডিত ইভেন্টের তথ্য খুঁজে নিতে পারবেন।
           </div>
         </div>
       </div>
 
-      <!-- প্রশ্ন ৫ -->
       <div class="faq-item">
         <button class="faq-question-btn">
           <span>৫. আপনাদের সাথে যেকোনো প্রয়োজনে কীভাবে যোগাযোগ করব?</span>
@@ -339,19 +337,16 @@
 
     </div>
 
-    <!-- অতিরিক্ত জিজ্ঞাসা সেকশন -->
     <div class="more-help-section">
       <p class="more-help-text">আপনার প্রয়োজনীয় প্রশ্নের উত্তর এখানে খুঁজে পাননি?</p>
-      <a href="contact.html" class="btn-contact-faq">
+      <a href="../contact.html" class="btn-contact-faq">
         <i class="fa-regular fa-envelope"></i> সরাসরি আমাদের প্রশ্ন করুন
       </a>
     </div>
   </main>
 
-  <!-- গ্লোবাল নেভিগেশন ফুটার -->
   <ros-footer></ros-footer>
 
-  <!-- জাভাস্ক্রিপ্ট অ্যাকর্ডিয়ন লজিক -->
   <script>
     document.querySelectorAll('.faq-question-btn').forEach(button => {
       button.addEventListener('click', () => {
@@ -375,7 +370,6 @@
     });
   </script>
 
-  <!-- রুট নেভিগেশন স্ক্রিপ্ট ফাইল কানেকশন -->
   <script src="../navigation.js"></script>
 </body>
 </html>
