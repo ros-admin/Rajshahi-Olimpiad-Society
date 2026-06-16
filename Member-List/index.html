@@ -67,11 +67,12 @@
       border-radius: 16px; padding: 25px; margin-bottom: 30px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
       position: relative;
-      z-index: 999; /* ড্রপডাউন প্যানেল যেন কোনোভাবেই ঢাকা না পড়ে */
+      z-index: 999;
     }
 
+    /* প্রধান সার্চ বক্স ও রিসেট বাটনের রো লেআউট */
     .search-row {
-      display: flex; gap: 15px; margin-bottom: 20px;
+      display: flex; gap: 12px; margin-bottom: 20px; align-items: center;
     }
 
     .search-box-wrapper {
@@ -93,6 +94,20 @@
 
     .search-input:focus {
       border-color: var(--secondary); box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
+    }
+
+    /* ছোট রিসেট বাটন স্টাইল (সার্চ বক্সের পাশে) */
+    .btn-clear-filters {
+      background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171; height: 45px; padding: 0 16px; border-radius: 30px; cursor: pointer;
+      font-family: inherit; font-size: 0.9rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 6px; transition: 0.3s;
+      white-space: nowrap; box-sizing: border-box;
+    }
+
+    .btn-clear-filters:hover {
+      background: #ef4444; color: #fff; border-color: #ef4444;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
     }
 
     /* ফিল্টার গ্রিড এরিয়া */
@@ -120,7 +135,7 @@
     }
     .filter-select:hover { border-color: var(--secondary); }
 
-    /* কাস্টম ড্রপডাউন প্যানেল (সার্চ বক্সসহ ড্রপডাউনলুক) */
+    /* কাস্টম ড্রপডাউন প্যানেল */
     .custom-dropdown-panel {
       display: none; position: absolute; top: 100%; left: 0; width: 100%;
       background: #040d1a; border: 1px solid var(--secondary);
@@ -148,15 +163,7 @@
       background: rgba(0, 180, 216, 0.2); color: #fff;
     }
 
-    /* ম্যানুয়াল ডেট ইনপুট স্টাইল */
-    .manual-date-wrapper { display: none; margin-top: 5px; }
-    .manual-date-input {
-      width: 100%; background: #040d1a; color: #fff; border: 1px solid var(--secondary);
-      padding: 8px 12px; border-radius: 8px; outline: none; font-family: inherit; box-sizing: border-box;
-    }
-
-
-      /* --- রেসপন্সিভ ৩ডি টেবিল ডিজাইন --- */
+    /* --- রেসপন্সিভ ৩ডি টেবিল ডিজাইন --- */
     .table-container {
       background: var(--card-bg); backdrop-filter: blur(15px);
       -webkit-backdrop-filter: blur(15px);
@@ -275,7 +282,8 @@
 
     /* --- মোবাইল ও ট্যাবলেট রেসপন্সিভ মিডিয়া কুয়েরি --- */
     @media (max-width: 768px) {
-      .search-row { flex-direction: column; }
+      .search-row { flex-direction: column; align-items: stretch; }
+      .btn-clear-filters { justify-content: center; }
       
       th:nth-child(4), td:nth-child(4),
       th:nth-child(5), td:nth-child(5),
@@ -302,14 +310,19 @@
     </div>
 
     <div class="control-panel">
+      <!-- সার্চ রো: মেইন সার্চ বক্স এবং পাশে রিসেট ফিল্টার বাটন -->
       <div class="search-row">
         <div class="search-box-wrapper">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <input type="text" id="memberSearch" class="search-input" placeholder="নিবন্ধন নং অথবা নাম লিখে সার্চ করুন...">
+          <input type="text" id="memberSearch" class="search-input" placeholder="নিবন্ধন নং (ইংরেজি) অথবা নাম (বাংলা) লিখে সার্চ করুন...">
         </div>
+        <button type="button" id="btnClearAll" class="btn-clear-filters">
+          <i class="fa-solid fa-filter-circle-xmark"></i> রিসেট
+        </button>
       </div>
 
       <div class="filters-grid">
+        <!-- কাস্টম ক্রমানুসারে সাজান ফিল্টার -->
         <div class="filter-group">
           <label>ক্রমানুসারে সাজান</label>
           <div id="customSortTrigger" class="filter-select">নামের ক্রমানুসারে (ক-ৎ)</div>
@@ -323,33 +336,49 @@
           </div>
         </div>
 
+        <!-- ফিক্সড লিঙ্গ ফিল্টার (ছেলে, মেয়ে) -->
         <div class="filter-group">
           <label>লিঙ্গ</label>
           <div id="customGenderTrigger" class="filter-select">সব লিঙ্গ</div>
           <div id="customGenderPanel" class="custom-dropdown-panel">
-            <div id="genderOptionsList" class="dropdown-options-list"></div>
+            <div class="dropdown-options-list">
+              <div class="dropdown-opt-item selected" data-value="all">সব লিঙ্গ</div>
+              <div class="dropdown-opt-item" data-value="ছেলে">ছেলে</div>
+              <div class="dropdown-opt-item" data-value="মেয়ে">মেয়ে</div>
+            </div>
           </div>
         </div>
 
+        <!-- ফিক্সড রক্তের গ্রুপ ফিল্টার (নির্দিষ্ট সিকোয়েন্সে) -->
         <div class="filter-group">
           <label>রক্তের গ্রুপ</label>
           <div id="customBloodTrigger" class="filter-select">সব ব্লাড গ্রুপ</div>
           <div id="customBloodPanel" class="custom-dropdown-panel">
-            <div id="bloodOptionsList" class="dropdown-options-list"></div>
+            <div class="dropdown-options-list">
+              <div class="dropdown-opt-item selected" data-value="all">সব ব্লাড গ্রুপ</div>
+              <div class="dropdown-opt-item" data-value="O+">O+</div>
+              <div class="dropdown-opt-item" data-value="O-">O-</div>
+              <div class="dropdown-opt-item" data-value="A+">A+</div>
+              <div class="dropdown-opt-item" data-value="A-">A-</div>
+              <div class="dropdown-opt-item" data-value="B+">B+</div>
+              <div class="dropdown-opt-item" data-value="B-">B-</div>
+              <div class="dropdown-opt-item" data-value="AB+">AB+</div>
+              <div class="dropdown-opt-item" data-value="AB-">AB-</div>
+            </div>
           </div>
         </div>
 
+        <!-- কাস্টম নিবন্ধনের তারিখ ফিল্টার (সার্চ বক্সসহ) -->
         <div class="filter-group">
           <label>নিবন্ধনের তারিখ</label>
           <div id="customDateTrigger" class="filter-select">সব তারিখ</div>
           <div id="customDatePanel" class="custom-dropdown-panel">
+            <input type="text" id="dateSearchInside" class="dropdown-search-input" placeholder="তারিখ খুঁজুন...">
             <div id="dateOptionsList" class="dropdown-options-list"></div>
-          </div>
-          <div class="manual-date-wrapper" id="manualDateContainer">
-            <input type="date" id="manualDateInput" class="manual-date-input">
           </div>
         </div>
 
+        <!-- কাস্টম পেশা ফিল্টার (সার্চ বক্সসহ) -->
         <div class="filter-group">
           <label>পেশা</label>
           <div id="customPesaTrigger" class="filter-select">সব পেশা</div>
@@ -359,6 +388,7 @@
           </div>
         </div>
 
+        <!-- কাস্টম ঠিকানা ফিল্টার (সার্চ বক্সসহ) -->
         <div class="filter-group">
           <label>ঠিকানা</label>
           <div id="customAddressTrigger" class="filter-select">সব ঠিকানা</div>
@@ -440,6 +470,22 @@
     const maleAvatarSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="rgba(0,180,216,0.1)" stroke="#00b4d8" stroke-width="2" stroke-dasharray="4 3"/><circle cx="50" cy="40" r="16" fill="#00b4d8"/><path d="M22 78 C22 60, 34 56, 50 56 C66 56, 78 60, 78 78" fill="#00b4d8"/></svg>`;
     const femaleAvatarSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="rgba(244,63,94,0.1)" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4 3"/><circle cx="50" cy="40" r="15" fill="#f43f5e"/><path d="M25 78 C25 61, 35 57, 50 57 C65 57, 75 61, 75 78" fill="#f43f5e"/><path d="M38 32 C35 38, 35 45, 38 48 M62 32 C65 38, 65 45, 62 48" stroke="#f43f5e" stroke-width="2" fill="none"/></svg>`;
 
+    // শুধুমাত্র ফিল্টারের ভেতরের ইনপুটে বাংলা ও বাংলা সংখ্যা ভ্যালিডেশন লজিক
+    function restrictToBengali(inputElement) {
+      inputElement.addEventListener('input', function(e) {
+        // বাংলা অক্ষর, বাংলা সংখ্যা এবং নির্দিষ্ট কিছু চিহ্ন (\s \- ( ) , . /) ছাড়া বাকি সব ক্যারেক্টার ব্লক করবে
+        const cleanValue = this.value.replace(/[^\u0980-\u09FF\s\-(),./]/g, '');
+        if (this.value !== cleanValue) {
+          this.value = cleanValue;
+        }
+      });
+    }
+
+    // ফিল্টারের ভেতরের সার্চ বক্সগুলোতে ভ্যালিডেশন বাইন্ড করা (মেইন সার্চ বক্সে ইংরেজি এলাউড)
+    restrictToBengali(document.getElementById('dateSearchInside'));
+    restrictToBengali(document.getElementById('pesaSearchInside'));
+    restrictToBengali(document.getElementById('addressSearchInside'));
+
     async function loadMembersData() {
       try {
         const response = await fetch('../Member-List/Member List.json');
@@ -447,9 +493,9 @@
         rawMembersData = await response.json();
         
         sortData(selectedSortValue);
-        populateStandardFilters(rawMembersData);
         
-        // কাস্টম ড্রপডাউন ইনিশিয়ালাইজেশন
+        // ড্রপডাউনগুলো ইনিশিয়ালাইজ করা
+        renderCustomDropdown('date', '');
         renderCustomDropdown('pesa', '');
         renderCustomDropdown('address', '');
         
@@ -462,46 +508,7 @@
       }
     }
 
-    function populateStandardFilters(data) {
-      const genders = new Set();
-      const bloodGroups = new Set();
-      const dates = new Set();
-
-      data.forEach(m => {
-        if (m.gender) genders.add(m.gender.trim());
-        if (m.bloodGroup) bloodGroups.add(m.bloodGroup.trim());
-        if (m.regDate) dates.add(m.regDate.trim());
-      });
-
-      // ১. কাস্টম লিঙ্গ তালিকা তৈরি
-      const genderList = document.getElementById('genderOptionsList');
-      genderList.innerHTML = `<div class="dropdown-opt-item selected" data-value="all">সব লিঙ্গ</div>`;
-      genders.forEach(g => {
-        genderList.innerHTML += `<div class="dropdown-opt-item" data-value="${g}">${g}</div>`;
-      });
-      bindDropdownItems('Gender');
-
-      // ২. কাস্টম রক্তের গ্রুপ তালিকা তৈরি (সার্চ বক্স ছাড়া)
-      const bloodList = document.getElementById('bloodOptionsList');
-      bloodList.innerHTML = `<div class="dropdown-opt-item selected" data-value="all">সব ব্লাড গ্রুপ</div>`;
-      bloodGroups.forEach(b => {
-        bloodList.innerHTML += `<div class="dropdown-opt-item" data-value="${b}">${b}</div>`;
-      });
-      bindDropdownItems('Blood');
-
-      // ৩. কাস্টম নিবন্ধনের তারিখ তালিকা তৈরি (সার্চ বক্স ছাড়া)
-      const dateList = document.getElementById('dateOptionsList');
-      dateList.innerHTML = `
-        <div class="dropdown-opt-item selected" data-value="all">সব তারিখ</div>
-        <div class="dropdown-opt-item" data-value="manual">Manual Entry</div>
-      `;
-      dates.forEach(d => {
-        dateList.innerHTML += `<div class="dropdown-opt-item" data-value="${d}">${d}</div>`;
-      });
-      bindDropdownItems('Date');
-    }
-
-    // ড্রপডাউন অপশনে ক্লিক করার ইভেন্ট বাইন্ডিং লজিক
+    // ফিক্সড ড্রপডাউন আইটেম ইভেন্ট লজিক (Sort, Gender, Blood)
     function bindDropdownItems(type) {
       const items = document.querySelectorAll(`#custom${type}Panel .dropdown-opt-item`);
       items.forEach(item => {
@@ -519,46 +526,49 @@
           if (type === 'Sort') { selectedSortValue = val; sortData(val); }
           else if (type === 'Gender') { selectedGenderValue = val; }
           else if (type === 'Blood') { selectedBloodValue = val; }
-          else if (type === 'Date') {
-            selectedDateValue = val;
-            if (val === 'manual') {
-              document.getElementById('manualDateContainer').style.display = 'block';
-              // ম্যানুয়ালি ইনপুটে চাপ দিলে
-            setTimeout(() => { document.getElementById('manualDateInput').showPicker(); }, 50);
-            } else {
-              document.getElementById('manualDateContainer').style.display = 'none';
-              document.getElementById('manualDateInput').value = '';
-            }
-          }
 
           applyFiltersAndSearch();
         });
       });
     }
 
-    // ক্রমানুসারে সাজান প্যানেলে ক্লিক বাইন্ডিং
     bindDropdownItems('Sort');
+    bindDropdownItems('Gender');
+    bindDropdownItems('Blood');
 
-    // পেশা ও ঠিকানা ফিল্টারের ড্রপডাউন জেনারেটর (সার্চ বক্স সহ)
+    // সার্চেবল কাস্টম ড্রপডাউন জেনারেটর (তারিখ, পেশা, ঠিকানা)
     function renderCustomDropdown(type, searchKey = '') {
       const listContainer = document.getElementById(`${type}OptionsList`);
-      const currentSelected = type === 'pesa' ? selectedPesaValue : selectedAddressValue;
+      let currentSelected = 'all';
+      if(type === 'date') currentSelected = selectedDateValue;
+      else if(type === 'pesa') currentSelected = selectedPesaValue;
+      else if(type === 'address') currentSelected = selectedAddressValue;
+
       listContainer.innerHTML = '';
       
       const uniqueItems = new Set();
       rawMembersData.forEach(m => {
-        let val = type === 'pesa' ? m.pesa : m.address;
+        let val = '';
+        if(type === 'date') val = m.regDate;
+        else if(type === 'pesa') val = m.pesa;
+        else if(type === 'address') val = m.address;
+
         if (val) uniqueItems.add(val.trim());
       });
 
+      // ডিফল্ট "সব" অপশন
       const allItem = document.createElement('div');
       allItem.className = `dropdown-opt-item ${currentSelected === 'all' ? 'selected' : ''}`;
-      allItem.innerText = type === 'pesa' ? 'সব পেশা' : 'সব ঠিকানা';
+      if(type === 'date') allItem.innerText = 'সব তারিখ';
+      else if(type === 'pesa') allItem.innerText = 'সব পেশা';
+      else if(type === 'address') allItem.innerText = 'সব ঠিকানা';
+      
       allItem.addEventListener('click', () => {
         selectCustomValue(type, 'all', allItem.innerText);
       });
       listContainer.appendChild(allItem);
 
+      // ইউনিক ডাটা রেন্ডার ও সার্চ ফিল্টারিং
       Array.from(uniqueItems).forEach(item => {
         if (searchKey === '' || item.toLowerCase().includes(searchKey.toLowerCase())) {
           const itemEl = document.createElement('div');
@@ -573,8 +583,9 @@
     }
 
     function selectCustomValue(type, value, label) {
-      if (type === 'pesa') selectedPesaValue = value;
-      else selectedAddressValue = value;
+      if (type === 'date') selectedDateValue = value;
+      else if (type === 'pesa') selectedPesaValue = value;
+      else if (type === 'address') selectedAddressValue = value;
 
       document.getElementById(`custom${type.charAt(0).toUpperCase() + type.slice(1)}Trigger`).innerText = label;
       document.getElementById(`custom${type.charAt(0).toUpperCase() + type.slice(1)}Panel`).style.display = 'none';
@@ -582,7 +593,7 @@
       applyFiltersAndSearch();
     }
 
-    // ফিল্টার প্যানেল ট্রিগার কন্ট্রোলার (অন/অফ মেকানিজম)
+    // ফিল্টার প্যানেল ওপেন/ক্লোজ মেকানিজম
     const filterTypes = ['Sort', 'Gender', 'Blood', 'Date', 'Pesa', 'Address'];
     filterTypes.forEach(t => {
       document.getElementById(`custom${t}Trigger`).addEventListener('click', (e) => {
@@ -590,12 +601,10 @@
         const currentPanel = document.getElementById(`custom${t}Panel`);
         const isVisible = currentPanel.style.display === 'block';
         
-        // সব প্যানেল বন্ধ করা
         filterTypes.forEach(o => document.getElementById(`custom${o}Panel`).style.display = 'none');
-        
         currentPanel.style.display = isVisible ? 'none' : 'block';
         
-        if (!isVisible && (t === 'Pesa' || t === 'Address')) {
+        if (!isVisible && (t === 'Date' || t === 'Pesa' || t === 'Address')) {
           const searchIn = currentPanel.querySelector('.dropdown-search-input');
           searchIn.value = '';
           renderCustomDropdown(t.toLowerCase(), '');
@@ -604,7 +613,10 @@
       });
     });
 
-    // পেশা ও ঠিকানা লাইভ কাস্টম সার্চ ইভেন্ট
+    // ইনপুট ইভেন্ট হ্যান্ডলার
+    document.getElementById('dateSearchInside').addEventListener('input', (e) => {
+      renderCustomDropdown('date', e.target.value.trim());
+    });
     document.getElementById('pesaSearchInside').addEventListener('input', (e) => {
       renderCustomDropdown('pesa', e.target.value.trim());
     });
@@ -612,11 +624,41 @@
       renderCustomDropdown('address', e.target.value.trim());
     });
 
-    // বাইরে কোনো ফাঁকা জায়গায় ক্লিক করলে প্যানেল বন্ধ হবে
+    // গ্লোবাল ক্লিক করলে প্যানেল হাইড হবে
     window.addEventListener('click', () => {
       filterTypes.forEach(t => document.getElementById(`custom${t}Panel`).style.display = 'none');
     });
     filterTypes.forEach(t => document.getElementById(`custom${t}Panel`).addEventListener('click', (e) => e.stopPropagation()));
+
+    // ক্লিয়ার অল ফিল্টার অ্যাকশন (বাটন এখন সার্চ বক্সের ডান পাশে)
+    document.getElementById('btnClearAll').addEventListener('click', () => {
+      selectedSortValue = 'name-asc';
+      selectedGenderValue = 'all';
+      selectedBloodValue = 'all';
+      selectedDateValue = 'all';
+      selectedPesaValue = 'all';
+      selectedAddressValue = 'all';
+
+      document.getElementById('memberSearch').value = '';
+      document.getElementById('customSortTrigger').innerText = 'নামের ক্রমানুসারে (ক-ৎ)';
+      document.getElementById('customGenderTrigger').innerText = 'সব লিঙ্গ';
+      document.getElementById('customBloodTrigger').innerText = 'সব ব্লাড গ্রুপ';
+      document.getElementById('customDateTrigger').innerText = 'সব তারিখ';
+      document.getElementById('customPesaTrigger').innerText = 'সব পেশা';
+      document.getElementById('customAddressTrigger').innerText = 'সব ঠিকানা';
+
+      filterTypes.forEach(t => {
+        document.querySelectorAll(`#custom${t}Panel .dropdown-opt-item`).forEach(i => i.classList.remove('selected'));
+        const firstItem = document.querySelector(`#custom${t}Panel .dropdown-opt-item`);
+        if(firstItem) firstItem.classList.add('selected');
+      });
+
+      sortData(selectedSortValue);
+      renderCustomDropdown('date', '');
+      renderCustomDropdown('pesa', '');
+      renderCustomDropdown('address', '');
+      applyFiltersAndSearch();
+    });
 
     function sortData(criteria) {
       if (criteria === 'name-asc') {
@@ -626,27 +668,26 @@
       } else if (criteria === 'reg-asc') {
         rawMembersData.sort((a, b) => String(a.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
       } else if (criteria === 'reg-desc') {
-        rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(a.regNo), undefined, {numeric: true}));
+        rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
       }
     }
 
     function applyFiltersAndSearch() {
       const searchQuery = document.getElementById('memberSearch').value.toLowerCase().trim();
-      const manualDateValue = document.getElementById('manualDateInput').value;
 
       const filteredList = rawMembersData.filter(m => {
+        // প্রধান সার্চ বক্সে নাম (বাংলা) অথবা নিবন্ধন নং (ইংরেজি) যেকোনোটি ম্যাচ করতে পারবে
         const matchSearch = m.name.toLowerCase().includes(searchQuery) || String(m.regNo).toLowerCase().includes(searchQuery);
-        const matchGender = selectedGenderValue === 'all' || m.gender === selectedGenderValue;
-        const matchBlood = selectedBloodValue === 'all' || m.bloodGroup === selectedBloodValue;
+        
+        let matchGender = true;
+        if (selectedGenderValue !== 'all') {
+          matchGender = m.gender.trim() === selectedGenderValue;
+        }
+
+        const matchBlood = selectedBloodValue === 'all' || m.bloodGroup.trim() === selectedBloodValue;
+        const matchDate = selectedDateValue === 'all' || (m.regDate && m.regDate.trim() === selectedDateValue);
         const matchPesa = selectedPesaValue === 'all' || (m.pesa && m.pesa.trim() === selectedPesaValue);
         const matchAddress = selectedAddressValue === 'all' || (m.address && m.address.trim() === selectedAddressValue);
-
-        let matchDate = true;
-        if (selectedDateValue === 'manual') {
-          matchDate = manualDateValue ? (m.regDate === manualDateValue) : true;
-        } else if (selectedDateValue !== 'all') {
-          matchDate = m.regDate === selectedDateValue;
-        }
 
         return matchSearch && matchGender && matchBlood && matchDate && matchPesa && matchAddress;
       });
@@ -654,7 +695,7 @@
       renderTable(filteredList);
     }
 
-    // আপনার আসল নিখুঁত টেবিল সারি ডিজাইন (হুবহু অপরিবর্তিত)
+    // টেবিল জেনারেটর (সম্পূর্ণ অপরিবর্তিত)
     function renderTable(dataList) {
       const tbody = document.getElementById('memberTableBody');
       tbody.innerHTML = '';
@@ -718,7 +759,6 @@
     });
 
     document.getElementById('memberSearch').addEventListener('input', applyFiltersAndSearch);
-    document.getElementById('manualDateInput').addEventListener('input', applyFiltersAndSearch);
     
     window.addEventListener('DOMContentLoaded', loadMembersData);
   </script>
