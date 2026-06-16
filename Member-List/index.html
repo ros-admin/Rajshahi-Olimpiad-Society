@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>সদস্য তালিকা - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  <title>সদস্য তালিকা - রাজশাহী অলিম্পিয়াড सोसाइटी</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -69,7 +69,7 @@
     }
 
     .search-row {
-      display: flex; gap: 15px; margin-bottom: 20px;
+      display: flex; gap: 15px; margin-bottom: 20px; align-items: center;
     }
 
     .search-box-wrapper {
@@ -93,9 +93,23 @@
       border-color: var(--secondary); box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
     }
 
-    /* ফিল্টার গ্রিড এরিয়া */
+    /* রিসেট বাটন স্টাইল */
+    .btn-clear-filters {
+      background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4);
+      color: #f87171; height: 45px; padding: 0 20px; border-radius: 30px; cursor: pointer;
+      font-family: inherit; font-size: 0.95rem; font-weight: 600;
+      display: inline-flex; align-items: center; gap: 8px; transition: 0.3s;
+      white-space: nowrap; box-sizing: border-box;
+    }
+
+    .btn-clear-filters:hover {
+      background: #ef4444; color: #fff; border-color: #ef4444;
+      box-shadow: 0 0 12px rgba(239, 68, 68, 0.4);
+    }
+
+    /* ফিল্টার গ্রিড এরিয়া - ড্রপডাউন বক্সগুলোর width আরেকটু ছোট করা হয়েছে */
     .filters-grid {
-      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       gap: 15px;
     }
 
@@ -110,8 +124,9 @@
     .filter-select {
       background: rgba(2, 12, 27, 0.8); color: #fff;
       border: 1px solid rgba(0, 180, 216, 0.2);
-      padding: 10px 15px; border-radius: 8px; outline: none;
+      padding: 10px 12px; border-radius: 8px; outline: none;
       font-family: inherit; cursor: pointer; transition: 0.3s;
+      font-size: 0.9rem;
     }
 
     .filter-select:focus { border-color: var(--secondary); }
@@ -240,9 +255,10 @@
 
     /* --- মোবাইল ও ট্যাবলেট রেসপন্সিভ মিডিয়া কুয়েরি --- */
     @media (max-width: 768px) {
-      .search-row { flex-direction: column; }
+      .search-row { flex-direction: column; align-items: stretch; }
+      .btn-clear-filters { justify-content: center; }
       
-      /* ফোনে সার্চ, রিসেট এবং ক্রমানুসারে সাজানো বাদে বাকি ফিল্টার গ্রুপগুলো হাইড করার জন্য */
+      /* ফোনে প্রথম ফিল্টার (ক্রমানুসারে সাজান) বাদে বাকি সব ফিল্টার গ্রুপ হাইড থাকবে */
       .filters-grid {
         grid-template-columns: 1fr;
       }
@@ -254,7 +270,8 @@
       th:nth-child(4), td:nth-child(4),
       th:nth-child(5), td:nth-child(5),
       th:nth-child(6), td:nth-child(6),
-      th:nth-child(7), td:nth-child(7) {
+      th:nth-child(7), td:nth-child(7),
+      th:nth-child(8), td:nth-child(8) {
         display: none;
       }
       
@@ -280,6 +297,9 @@
           <i class="fa-solid fa-magnifying-glass"></i>
           <input type="text" id="memberSearch" class="search-input" placeholder="নিবন্ধন নং অথবা নাম লিখে সার্চ করুন...">
         </div>
+        <button type="button" id="btnClearAll" class="btn-clear-filters">
+          <i class="fa-solid fa-filter-circle-xmark"></i> রিসেট
+        </button>
       </div>
 
       <div class="filters-grid">
@@ -315,6 +335,13 @@
         </div>
 
         <div class="filter-group">
+          <label>পেশা</label>
+          <select id="filterPesa" class="filter-select">
+            <option value="all">সব পেশা</option>
+          </select>
+        </div>
+
+        <div class="filter-group">
           <label>ঠিকানা</label>
           <select id="filterAddress" class="filter-select">
             <option value="all">সব ঠিকানা</option>
@@ -332,6 +359,7 @@
             <th>নাম</th>
             <th>লিঙ্গ</th>
             <th>নিবন্ধনের তারিখ</th>
+            <th>পেশা</th>
             <th>রক্তের গ্রুপ</th>
             <th>ঠিকানা</th>
           </tr>
@@ -353,19 +381,23 @@
 
       <div class="modal-details-list">
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ:</span>
           <span class="detail-value" id="modalDate"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ:</span>
           <span class="detail-value" id="modalGenderTextWrapper"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা:</span>
+          <span class="detail-value" id="modalPesa"></span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ:</span>
           <span class="detail-value" id="modalBlood"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা:</span>
           <span class="detail-value" id="modalAddress"></span>
         </div>
       </div>
@@ -393,7 +425,7 @@
       } catch (error) {
         console.error('Error fetching member data:', error);
         document.getElementById('memberTableBody').innerHTML = `
-          <tr><td colspan="7" style="text-align:center; color:#f87171; padding: 30px;">মেম্বার তালিকা লোড করা যায়নি! '../Member-List/Member List.json' ফাইলটি নিশ্চিত করুন।</td></tr>
+          <tr><td colspan="8" style="text-align:center; color:#f87171; padding: 30px;">মেম্বার তালিকা লোড করা যায়নি! '../Member-List/Member List.json' ফাইলটি নিশ্চিত করুন।</td></tr>
         `;
       }
     }
@@ -402,23 +434,32 @@
       const genders = new Set();
       const bloodGroups = new Set();
       const dates = new Set();
+      const pesas = new Set();
       const addresses = new Set();
 
       data.forEach(m => {
         if (m.gender) genders.add(m.gender.trim());
         if (m.bloodGroup) bloodGroups.add(m.bloodGroup.trim());
         if (m.regDate) dates.add(m.regDate.trim());
+        if (m.pesa) pesas.add(m.pesa.trim());
         if (m.address) addresses.add(m.address.trim());
       });
 
       appendOptions('filterGender', genders);
       appendOptions('filterBlood', bloodGroups);
       appendOptions('filterDate', dates);
+      appendOptions('filterPesa', pesas);
       appendOptions('filterAddress', addresses);
     }
 
     function appendOptions(selectId, setValues) {
       const selectEl = document.getElementById(selectId);
+      
+      // পূর্বের কাস্টম অপশনগুলো পরিষ্কার করে শুধু প্রথমটি রাখা (রিসেটের জন্য সুবিধাজনক)
+      while (selectEl.options.length > 1) {
+        selectEl.remove(1);
+      }
+
       setValues.forEach(val => {
         const opt = document.createElement('option');
         opt.value = val; opt.innerText = val;
@@ -434,7 +475,6 @@
       } else if (criteria === 'reg-asc') {
         rawMembersData.sort((a, b) => String(a.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
       } else if (criteria === 'reg-desc') {
-        // ফিক্স করা হয়েছে: টাইপো সংশোধন করে সঠিকভাবে b এবং a এর তুলনা করা হয়েছে
         rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(a.regNo), undefined, {numeric: true}));
       }
     }
@@ -444,6 +484,7 @@
       const genderFilter = document.getElementById('filterGender').value;
       const bloodFilter = document.getElementById('filterBlood').value;
       const dateFilter = document.getElementById('filterDate').value;
+      const pesaFilter = document.getElementById('filterPesa').value;
       const addressFilter = document.getElementById('filterAddress').value;
 
       const filteredList = rawMembersData.filter(m => {
@@ -451,9 +492,10 @@
         const matchGender = genderFilter === 'all' || m.gender === genderFilter;
         const matchBlood = bloodFilter === 'all' || m.bloodGroup === bloodFilter;
         const matchDate = dateFilter === 'all' || m.regDate === dateFilter;
+        const matchPesa = pesaFilter === 'all' || (m.pesa && m.pesa === pesaFilter);
         const matchAddress = addressFilter === 'all' || m.address === addressFilter;
 
-        return matchSearch && matchGender && matchBlood && matchDate && matchAddress;
+        return matchSearch && matchGender && matchBlood && matchDate && matchPesa && matchAddress;
       });
 
       renderTable(filteredList);
@@ -464,7 +506,7 @@
       tbody.innerHTML = '';
 
       if (dataList.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; color:var(--text-muted); padding:30px;">কোনো সদস্যের তথ্য খুঁজে পাওয়া যায়নি।</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; color:var(--text-muted); padding:30px;">কোনো সদস্যের তথ্য খুঁজে পাওয়া যায়নি।</td></tr>`;
         return;
       }
 
@@ -478,6 +520,7 @@
           <td><span class="clickable-name">${member.name}</span></td>
           <td>${member.gender}</td>
           <td>${member.regDate}</td>
+          <td>${member.pesa || 'N/A'}</td>
           <td><span class="blood-badge">${member.bloodGroup}</span></td>
           <td>${member.address}</td>
         `;
@@ -485,15 +528,15 @@
       });
     }
 
-    // পপআপ ওপেন ও কাস্টম লজিক প্রসেсор
+    // পপআপ ওপেন ও কাস্টম লজিক প্রসেসর
     function openMemberModal(member) {
       const modal = document.getElementById('memberModal');
       const avatarBox = document.getElementById('modalAvatarBox');
       const genderWrapper = document.getElementById('modalGenderTextWrapper');
       
-      const isFemale = member.gender.trim() === 'মেয়ে' || member.gender.toLowerCase().includes('female') || member.gender.trim() === 'নারী';
+      const isFemale = member.gender.trim() === 'মেয়ে' || member.gender.trim() === 'মেয়ে' || member.gender.toLowerCase().includes('female') || member.gender.trim() === 'নারী';
 
-      // ১. পপআপের ওপরে থিমভিত্তিক এসভিজি (SVG) এভাটার সেট করা
+        // ১. পপআপের ওপরে থিমভিত্তিক এসভিজি (SVG) এভাটার সেট করা
       if (isFemale) {
         avatarBox.innerHTML = femaleAvatarSVG;
       } else {
@@ -511,11 +554,26 @@
       document.getElementById('modalRegNo').innerText = `REG: ${member.regNo}`;
       document.getElementById('modalName').innerText = member.name;
       document.getElementById('modalDate').innerText = member.regDate;
+      document.getElementById('modalPesa').innerText = member.pesa || 'N/A';
       document.getElementById('modalBlood').innerText = member.bloodGroup;
       document.getElementById('modalAddress').innerText = member.address;
 
       modal.classList.add('active');
     }
+
+    // রিসেট বাটনের লজিক
+    document.getElementById('btnClearAll').addEventListener('click', () => {
+      document.getElementById('memberSearch').value = '';
+      document.getElementById('sortControl').value = 'name-asc';
+      document.getElementById('filterGender').value = 'all';
+      document.getElementById('filterBlood').value = 'all';
+      document.getElementById('filterDate').value = 'all';
+      document.getElementById('filterPesa').value = 'all';
+      document.getElementById('filterAddress').value = 'all';
+      
+      sortData('name-asc');
+      applyFiltersAndSearch();
+    });
 
     document.getElementById('closeModalBtn').addEventListener('click', () => {
       document.getElementById('memberModal').classList.remove('active');
@@ -531,7 +589,9 @@
     document.getElementById('filterGender').addEventListener('change', applyFiltersAndSearch);
     document.getElementById('filterBlood').addEventListener('change', applyFiltersAndSearch);
     document.getElementById('filterDate').addEventListener('change', applyFiltersAndSearch);
+    document.getElementById('filterPesa').addEventListener('change', applyFiltersAndSearch);
     document.getElementById('filterAddress').addEventListener('change', applyFiltersAndSearch);
+    
     document.getElementById('sortControl').addEventListener('change', (e) => {
       sortData(e.target.value);
       applyFiltersAndSearch();
