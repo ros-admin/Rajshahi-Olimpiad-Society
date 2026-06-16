@@ -48,6 +48,7 @@
       background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
       border: 1px solid rgba(0, 180, 216, 0.2); border-radius: 16px; padding: 25px; margin-bottom: 30px;
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+      position: relative; z-index: 20; /* টেবিলের ওপরে রাখার জন্য জেনুইন ইনডেক্স */
     }
 
     .search-row { display: flex; gap: 15px; margin-bottom: 20px; align-items: center; }
@@ -77,33 +78,35 @@
     .filter-group { display: flex; flex-direction: column; gap: 5px; position: relative; }
     .filter-group label { font-size: 0.85rem; color: var(--text-muted); font-weight: 600; }
 
-    /* স্ট্যান্ডার্ড এবং কাস্টম ড্রপডাউন থিম স্টাইল */
-    .filter-select, .custom-select-trigger {
+    /* কাস্টম ড্রপডাউন ট্রিগার (থিমড বক্স ডিজাইন) */
+    .custom-select-wrapper { position: relative; width: 100%; }
+    .custom-select-trigger {
       background: rgba(2, 12, 27, 0.8); color: #fff; border: 1px solid rgba(0, 180, 216, 0.2);
       padding: 10px 12px; border-radius: 8px; outline: none; font-family: inherit; cursor: pointer;
       transition: 0.3s; font-size: 0.9rem; box-sizing: border-box; width: 100%; text-align: left;
+      display: flex; justify-content: space-between; align-items: center;
     }
-    .filter-select:focus { border-color: var(--secondary); }
-
-    /* সার্চেবল কাস্টম ড্রপডাউন প্যানেল থিম ডিজাইন */
-    .custom-select-wrapper { position: relative; width: 100%; }
-    .custom-select-trigger { display: flex; justify-content: space-between; align-items: center; }
-    .custom-select-trigger::after { content: '\f107'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--text-muted); }
+    .custom-select-trigger:hover, .custom-select-wrapper.active .custom-select-trigger {
+      border-color: var(--secondary); box-shadow: 0 0 8px rgba(0, 180, 216, 0.2);
+    }
+    .custom-select-trigger::after { content: '\f107'; font-family: 'Font Awesome 6 Free'; font-weight: 900; color: var(--text-muted); transition: transform 0.3s; }
+    .custom-select-wrapper.active .custom-select-trigger::after { transform: rotate(180deg); color: var(--secondary); }
     
+    /* কাস্টম প্যানেল যা টেবিল বা কোনো কিছুর পেছনে যাবে না (Z-INDEX FIX) */
     .custom-options-panel {
       position: absolute; top: 100%; left: 0; right: 0; background: #040d1a;
       border: 1px solid var(--secondary); border-radius: 8px; margin-top: 5px;
-      max-height: 250px; overflow-y: auto; z-index: 100; display: none;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5); box-sizing: border-box;
+      max-height: 250px; overflow-y: auto; z-index: 999; display: none;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.7); box-sizing: border-box;
     }
     .custom-options-panel.show { display: block; }
 
-    .dropdown-search-wrapper { padding: 8px; position: sticky; top: 0; background: #040d1a; z-index: 2; }
+    .dropdown-search-wrapper { padding: 8px; position: sticky; top: 0; background: #040d1a; z-index: 2; border-bottom: 1px solid rgba(0, 180, 216, 0.1); }
     .dropdown-search-input {
       width: 100%; background: rgba(2, 12, 27, 0.9); border: 1px solid rgba(0, 180, 216, 0.3);
-      color: #fff; padding: 6px 10px; border-radius: 4px; font-family: inherit; font-size: 0.85rem; outline: none; box-sizing: border-box;
+      color: #fff; padding: 7px 10px; border-radius: 4px; font-family: inherit; font-size: 0.85rem; outline: none; box-sizing: border-box;
     }
-    .dropdown-search-input:focus { border-color: var(--accent); }
+    .dropdown-search-input:focus { border-color: var(--accent); box-shadow: 0 0 5px rgba(255, 215, 0, 0.2); }
 
     .custom-option {
       padding: 10px 12px; color: #cbd5e1; cursor: pointer; font-size: 0.9rem; transition: 0.2s;
@@ -114,13 +117,21 @@
     /* --- রেসপন্সিভ ৩ডি টেবিল ডিজাইন --- */
     .table-container {
       background: var(--card-bg); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-      border: 1px solid rgba(0, 180, 216, 0.15); border-radius: 16px; overflow: hidden;
+      border: 1px solid rgba(0, 180, 216, 0.15); border-radius: 16px; 
+      /* overflow: hidden; তুলে দেওয়া হয়েছে যাতে ড্রপডাউন কেটে না যায় বা পেছনে না যায় */
       box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+      position: relative; z-index: 10;
     }
-
+    
+    /* বর্ডার রেডিয়াস ঠিক রাখতে টেবিল হেডার এবং লাস্ট রো কাস্টমাইজেশন */
     table { width: 100%; border-collapse: collapse; text-align: left; }
-    th { background: rgba(4, 13, 26, 0.8); color: var(--secondary); padding: 16px 20px; font-weight: 700; font-size: 1.05rem; border-bottom: 2px solid rgba(0, 180, 216, 0.3); }
-    td { padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 1rem; color: #cbd5e1; transition: all 0.2s; }
+    thead tr:first-child th:first-child { border-top-left-radius: 16px; }
+    thead tr:first-child th:last-child { border-top-right-radius: 16px; }
+    tbody tr:last-child td:first-child { border-bottom-left-radius: 16px; }
+    tbody tr:last-child td:last-child { border-bottom-right-radius: 16px; }
+
+    th { background: rgba(4, 13, 26, 0.9); color: var(--secondary); padding: 16px 20px; font-weight: 700; font-size: 1.05rem; border-bottom: 2px solid rgba(0, 180, 216, 0.3); }
+    td { padding: 16px 20px; border-bottom: 1px solid rgba(255, 255, 255, 0.05); font-size: 1rem; color: #cbd5e1; transition: all 0.2s; background: rgba(10, 25, 47, 0.4); }
     tr:last-child td { border-bottom: none; }
 
     tbody tr { cursor: pointer; transition: 0.2s; }
@@ -205,34 +216,54 @@
       </div>
 
       <div class="filters-grid">
-        <!-- ক্রমানুসারে সাজান (স্ট্যান্ডার্ড থিম ড্রপডাউন) -->
         <div class="filter-group">
           <label>ক্রমানুসারে সাজান</label>
-          <select id="sortControl" class="filter-select">
-            <option value="name-asc">নামের ক্রমানুসারে (ক-ৎ)</option>
-            <option value="name-desc">নামের ক্রমানুসারে (ৎ-অ)</option>
-            <option value="reg-asc">নিবন্ধন নং (প্রথম থেকে শেষ)</option>
-            <option value="reg-desc">নিবন্ধন নং (শেষ থেকে শুরু)</option>
-          </select>
+          <div class="custom-select-wrapper" id="wrapperSort">
+            <div class="custom-select-trigger" id="triggerSort" data-value="name-asc">নামের ক্রমানুসারে (ক-ৎ)</div>
+            <div class="custom-options-panel" id="panelSort">
+              <div class="dropdown-search-wrapper" style="display: none;">
+                <input type="text" class="dropdown-search-input" placeholder="সার্চ...">
+              </div>
+              <div class="options-container">
+                <div class="custom-option selected" data-value="name-asc">নামের ক্রমানুসারে (ক-ৎ)</div>
+                <div class="custom-option" data-value="name-desc">নামের ক্রমানুসারে (ৎ-অ)</div>
+                <div class="custom-option" data-value="reg-asc">নিবন্ধন নং (প্রথম থেকে শেষ)</div>
+                <div class="custom-option" data-value="reg-desc">নিবন্ধন নং (শেষ থেকে শুরু)</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- লিঙ্গ (স্ট্যান্ডার্ড থিম ড্রপডাউন) -->
         <div class="filter-group">
           <label>লিঙ্গ</label>
-          <select id="filterGender" class="filter-select">
-            <option value="all">সব লিঙ্গ</option>
-          </select>
+          <div class="custom-select-wrapper" id="wrapperGender">
+            <div class="custom-select-trigger" id="triggerGender" data-value="all">সব লিঙ্গ</div>
+            <div class="custom-options-panel" id="panelGender">
+              <div class="dropdown-search-wrapper" style="display: none;">
+                <input type="text" class="dropdown-search-input" placeholder="সার্চ...">
+              </div>
+              <div class="options-container">
+                <div class="custom-option selected" data-value="all">সব লিঙ্গ</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- রক্তের গ্রুপ (স্ট্যান্ডার্ড থিম ড্রপডাউন) -->
         <div class="filter-group">
           <label>রক্তের গ্রুপ</label>
-          <select id="filterBlood" class="filter-select">
-            <option value="all">সব ব্লাড গ্রুপ</option>
-          </select>
+          <div class="custom-select-wrapper" id="wrapperBlood">
+            <div class="custom-select-trigger" id="triggerBlood" data-value="all">সব ব্লাড গ্রুপ</div>
+            <div class="custom-options-panel" id="panelBlood">
+              <div class="dropdown-search-wrapper" style="display: none;">
+                <input type="text" class="dropdown-search-input" placeholder="সার্চ...">
+              </div>
+              <div class="options-container">
+                <div class="custom-option selected" data-value="all">সব ব্লাড গ্রুপ</div>
+              </div>
+            </div>
+          </div>
         </div>
 
-        <!-- নিবন্ধনের তারিখ (সার্চেবল কাস্টম থিম ড্রপডাউন) -->
         <div class="filter-group">
           <label>নিবন্ধনের তারিখ</label>
           <div class="custom-select-wrapper" id="wrapperDate">
@@ -248,7 +279,6 @@
           </div>
         </div>
 
-        <!-- পেশা (সার্চেবল কাস্টম থিম ড্রপডাউন) -->
         <div class="filter-group">
           <label>পেশা</label>
           <div class="custom-select-wrapper" id="wrapperPesa">
@@ -264,7 +294,6 @@
           </div>
         </div>
 
-        <!-- ঠিকানা (সার্চেবল কাস্টম থিম ড্রপডাউন) -->
         <div class="filter-group">
           <label>ঠিকানা</label>
           <div class="custom-select-wrapper" id="wrapperAddress">
@@ -302,7 +331,6 @@
     </div>
   </main>
 
-  <!-- পপআপ মডাল -->
   <div class="modal-overlay" id="memberModal">
     <div class="modal-card">
       <button class="modal-close-btn" id="closeModalBtn"><i class="fa-solid fa-xmark"></i></button>
@@ -319,11 +347,11 @@
           <span class="detail-value" id="modalDate"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> :লিঙ্গ</span>
+          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ:</span>
           <span class="detail-value" id="modalGenderTextWrapper"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> :পেশা</span>
+          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা:</span>
           <span class="detail-value" id="modalPesa"></span>
         </div>
         <div class="detail-item">
@@ -378,71 +406,67 @@
         if (m.address) addresses.add(m.address.trim());
       });
 
-      // স্ট্যান্ডার্ড ড্রপডাউন লোড
-      appendStandardOptions('filterGender', genders);
-      appendStandardOptions('filterBlood', bloodGroups);
-
-      // কাস্টম সার্চেবল ড্রপডাউন লোড
-      buildCustomDropdown('wrapperDate', dates, 'সব তারিখ');
-      buildCustomDropdown('wrapperPesa', pesas, 'সব পেশা');
-      buildCustomDropdown('wrapperAddress', addresses, 'সব ঠিকানা');
+      // সবগুলোকে নিখুঁত থিম কাস্টম ড্রপডাউনে রূপান্তর
+      buildCustomDropdown('wrapperSort', null, 'নামের ক্রমানুসারে (ক-ৎ)', false);
+      buildCustomDropdown('wrapperGender', genders, 'সব লিঙ্গ', false);
+      buildCustomDropdown('wrapperBlood', bloodGroups, 'সব ব্লাড গ্রুপ', false);
+      buildCustomDropdown('wrapperDate', dates, 'সব তারিখ', true);
+      buildCustomDropdown('wrapperPesa', pesas, 'সব পেশা', true);
+      buildCustomDropdown('wrapperAddress', addresses, 'সব ঠিকানা', true);
     }
 
-    function appendStandardOptions(selectId, setValues) {
-      const selectEl = document.getElementById(selectId);
-      while (selectEl.options.length > 1) selectEl.remove(1);
-      setValues.forEach(val => {
-        const opt = document.createElement('option');
-        opt.value = val; opt.innerText = val;
-        selectEl.appendChild(opt);
-      });
-    }
-
-    // সার্চেবল কাস্টম ড্রপডাউন তৈরীর কোর মেকানিজম
-    function buildCustomDropdown(wrapperId, setValues, defaultText) {
+    // অল-ইন-ওয়ান কাস্টম ড্রপডাউন বিল্ডার মেকানিজম
+    function buildCustomDropdown(wrapperId, setValues, defaultText, hasSearch = true) {
       const wrapper = document.getElementById(wrapperId);
       const trigger = wrapper.querySelector('.custom-select-trigger');
       const panel = wrapper.querySelector('.custom-options-panel');
       const searchInput = wrapper.querySelector('.dropdown-search-input');
       const optionsContainer = wrapper.querySelector('.options-container');
 
-      // পূর্বের ডেটা রিসেট
-      optionsContainer.innerHTML = `<div class="custom-option selected" data-value="all">${defaultText}</div>`;
-      searchInput.value = '';
+      if (setValues) {
+        optionsContainer.innerHTML = `<div class="custom-option selected" data-value="all">${defaultText}</div>`;
+        setValues.forEach(val => {
+          const opt = document.createElement('div');
+          opt.className = 'custom-option';
+          opt.setAttribute('data-value', val);
+          opt.innerText = val;
+          optionsContainer.appendChild(opt);
+        });
+      }
 
-      // অপশন যুক্ত করা
-      setValues.forEach(val => {
-        const opt = document.createElement('div');
-        opt.className = 'custom-option';
-        opt.setAttribute('data-value', val);
-        opt.innerText = val;
-        optionsContainer.appendChild(opt);
-      });
-
-      // ড্রপডাউন ওপেন/ক্লোজ টগল
+      // টগল ওপেন/ক্লোজ
       trigger.onclick = function(e) {
         e.stopPropagation();
-        closeAllCustomDropdowns(wrapperId);
-        panel.classList.toggle('show');
-        if(panel.classList.contains('show')) searchInput.focus();
-      };
-
-      // সার্চ অপশন লজিক ফিক্স
-      searchInput.oninput = function() {
-        const filterText = searchInput.value.toLowerCase().trim();
-        const options = optionsContainer.querySelectorAll('.custom-option');
-        options.forEach(opt => {
-          if (opt.getAttribute('data-value') === 'all') return;
-          const text = opt.innerText.toLowerCase();
-          if (text.includes(filterText)) {
-            opt.style.display = 'block';
-          } else {
-            opt.style.display = 'none';
+        const wasOpen = panel.classList.contains('show');
+        closeAllCustomDropdowns();
+        if (!wasOpen) {
+          panel.classList.add('show');
+          wrapper.classList.add('active');
+          if (hasSearch) {
+            searchInput.value = '';
+            searchInput.focus();
+            // সব অপশন শো করা রিসেটের পর
+            optionsContainer.querySelectorAll('.custom-option').forEach(o => o.style.display = 'block');
           }
-        });
+        }
       };
 
-      // অপশন সিলেক্ট করার সুবিধা
+      // সার্চ ইনপুট ফিল্টারিং লজিক
+      if (hasSearch) {
+        searchInput.oninput = function() {
+          const filterText = searchInput.value.toLowerCase().trim();
+          const options = optionsContainer.querySelectorAll('.custom-option');
+          options.forEach(opt => {
+            if (opt.getAttribute('data-value') === 'all') return;
+            const text = opt.innerText.toLowerCase();
+            opt.style.display = text.includes(filterText) ? 'block' : 'none';
+          });
+        };
+        // ইনপুট বক্সে ক্লিক করলে প্যানেল যেন বন্ধ না হয়
+        searchInput.onclick = function(e) { e.stopPropagation(); };
+      }
+
+      // আইটেম সিলেকশন
       optionsContainer.onclick = function(e) {
         const target = e.target.closest('.custom-option');
         if (!target) return;
@@ -452,21 +476,30 @@
 
         trigger.innerText = target.innerText;
         trigger.setAttribute('data-value', target.getAttribute('data-value'));
+        
         panel.classList.remove('show');
+        wrapper.classList.remove('active');
 
+        // যদি শর্ট করা হয় তবে ডেটা সর্ট হবে অন্যথায় নরমাল ফিল্টার হবে
+        if (wrapperId === 'wrapperSort') {
+          sortData(target.getAttribute('data-value'));
+        }
         applyFiltersAndSearch();
       };
     }
 
-    function closeAllCustomDropdowns(exceptId = null) {
-      ['wrapperDate', 'wrapperPesa', 'wrapperAddress'].forEach(id => {
-        if (id === exceptId) return;
-        const panel = document.getElementById(id).querySelector('.custom-options-panel');
-        panel.classList.remove('show');
+    function closeAllCustomDropdowns() {
+      const wrappers = ['wrapperSort', 'wrapperGender', 'wrapperBlood', 'wrapperDate', 'wrapperPesa', 'wrapperAddress'];
+      wrappers.forEach(id => {
+        const w = document.getElementById(id);
+        if(w) {
+          w.classList.remove('active');
+          w.querySelector('.custom-options-panel').classList.remove('show');
+        }
       });
     }
 
-    // স্ক্রিনের যেকোনো জায়গায় ক্লিক করলে সার্চ ড্রপডাউন অফ হবে
+    // বাইরে কোথাও ক্লিক করলে ড্রপডাউন বন্ধ করার হ্যান্ডলার
     document.addEventListener('click', () => closeAllCustomDropdowns());
 
     function sortData(criteria) {
@@ -483,10 +516,11 @@
 
     function applyFiltersAndSearch() {
       const searchQuery = document.getElementById('memberSearch').value.toLowerCase().trim();
-      const genderFilter = document.getElementById('filterGender').value;
-      const bloodFilter = document.getElementById('filterBlood').value;
       
-      // কাস্টম ফিল্টারের ভ্যালু রিড করা
+      // নতুন কাস্টম থিমভিত্তিক ড্রপডাউন থেকে ভ্যালু সংগ্রহ
+      const sortCriteria = document.getElementById('triggerSort').getAttribute('data-value');
+      const genderFilter = document.getElementById('triggerGender').getAttribute('data-value');
+      const bloodFilter = document.getElementById('triggerBlood').getAttribute('data-value');
       const dateFilter = document.getElementById('triggerDate').getAttribute('data-value');
       const pesaFilter = document.getElementById('triggerPesa').getAttribute('data-value');
       const addressFilter = document.getElementById('triggerAddress').getAttribute('data-value');
@@ -557,38 +591,39 @@
       modal.classList.add('active');
     }
 
-    // রিসেট বাটনের লজিক (কাস্টম ড্রপডাউন সহ রিসেট হবে)
+    // রিসেট বাটনের লজিক (সব কাস্টম ড্রপডাউনকে পূর্বের থিমে রিসেট করবে)
     document.getElementById('btnClearAll').addEventListener('click', () => {
       document.getElementById('memberSearch').value = '';
-      document.getElementById('sortControl').value = 'name-asc';
-      document.getElementById('filterGender').value = 'all';
-      document.getElementById('filterBlood').value = 'all';
       
-      // কাস্টম ট্রিগার ও প্যানেল অপশনগুলোর স্টেট রিসেট
-      resetCustomDropdownState('wrapperDate', 'সব তারিখ');
-      resetCustomDropdownState('wrapperPesa', 'সব পেশা');
-      resetCustomDropdownState('wrapperAddress', 'সব ঠিকানা');
+      resetCustomDropdownState('wrapperSort', 'নামের ক্রমানুসারে (ক-ৎ)', 'name-asc');
+      resetCustomDropdownState('wrapperGender', 'সব লিঙ্গ', 'all');
+      resetCustomDropdownState('wrapperBlood', 'সব ব্লাড গ্রুপ', 'all');
+      resetCustomDropdownState('wrapperDate', 'সব তারিখ', 'all');
+      resetCustomDropdownState('wrapperPesa', 'সব পেশা', 'all');
+      resetCustomDropdownState('wrapperAddress', 'সব ঠিকানা', 'all');
       
       sortData('name-asc');
       applyFiltersAndSearch();
     });
 
-    function resetCustomDropdownState(wrapperId, defaultText) {
+    function resetCustomDropdownState(wrapperId, defaultText, defaultValue) {
       const wrapper = document.getElementById(wrapperId);
       const trigger = wrapper.querySelector('.custom-select-trigger');
       const container = wrapper.querySelector('.options-container');
       const searchInput = wrapper.querySelector('.dropdown-search-input');
       
       trigger.innerText = defaultText;
-      trigger.setAttribute('data-value', 'all');
-      searchInput.value = '';
+      trigger.setAttribute('data-value', defaultValue);
+      if(searchInput) searchInput.value = '';
       
       const options = container.querySelectorAll('.custom-option');
       options.forEach(o => {
         o.classList.remove('selected');
-        o.style.display = 'block'; // লুকানো আইটেম আনহাইড করা
+        o.style.display = 'block';
       });
-      container.querySelector('.custom-option[data-value="all"]').classList.add('selected');
+      
+      const defaultOpt = container.querySelector(`.custom-option[data-value="${defaultValue}"]`);
+      if(defaultOpt) defaultOpt.classList.add('selected');
     }
 
     document.getElementById('closeModalBtn').addEventListener('click', () => {
@@ -602,13 +637,6 @@
     });
 
     document.getElementById('memberSearch').addEventListener('input', applyFiltersAndSearch);
-    document.getElementById('filterGender').addEventListener('change', applyFiltersAndSearch);
-    document.getElementById('filterBlood').addEventListener('change', applyFiltersAndSearch);
-    
-    document.getElementById('sortControl').addEventListener('change', (e) => {
-      sortData(e.target.value);
-      applyFiltersAndSearch();
-    });
 
     window.addEventListener('DOMContentLoaded', loadMembersData);
   </script>
