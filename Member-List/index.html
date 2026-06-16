@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>সদস্য তালিকা - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  <title>سদস্য তালিকা - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -96,7 +96,7 @@
       border-color: var(--secondary); box-shadow: 0 0 10px rgba(0, 180, 216, 0.3);
     }
 
-    /* ছোট রিসেট বাটন স্টাইল (সার্চ বক্সের পাশে) */
+    /* ছোট রিসেট বাটন স্টাইল */
     .btn-clear-filters {
       background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.4);
       color: #f87171; height: 45px; padding: 0 16px; border-radius: 30px; cursor: pointer;
@@ -310,7 +310,6 @@
     </div>
 
     <div class="control-panel">
-      <!-- সার্চ রো: মেইন সার্চ বক্স এবং পাশে রিসেট ফিল্টার বাটন -->
       <div class="search-row">
         <div class="search-box-wrapper">
           <i class="fa-solid fa-magnifying-glass"></i>
@@ -322,7 +321,7 @@
       </div>
 
       <div class="filters-grid">
-        <!-- কাস্টম ক্রমানুসারে সাজান ফিল্টার -->
+        <!-- ক্রমানুসারে সাজান ফিল্টার -->
         <div class="filter-group">
           <label>ক্রমানুসারে সাজান</label>
           <div id="customSortTrigger" class="filter-select">নামের ক্রমানুসারে (ক-ৎ)</div>
@@ -336,7 +335,7 @@
           </div>
         </div>
 
-        <!-- ফিক্সড লিঙ্গ ফিল্টার (ছেলে, মেয়ে) -->
+        <!-- লিঙ্গ ফিল্টার -->
         <div class="filter-group">
           <label>লিঙ্গ</label>
           <div id="customGenderTrigger" class="filter-select">সব লিঙ্গ</div>
@@ -349,7 +348,7 @@
           </div>
         </div>
 
-        <!-- ফিক্সড রক্তের গ্রুপ ফিল্টার (নির্দিষ্ট সিকোয়েন্সে) -->
+        <!-- রক্তের গ্রুপ ফিল্টার -->
         <div class="filter-group">
           <label>রক্তের গ্রুপ</label>
           <div id="customBloodTrigger" class="filter-select">সব ব্লাড গ্রুপ</div>
@@ -368,7 +367,7 @@
           </div>
         </div>
 
-        <!-- কাস্টম নিবন্ধনের তারিখ ফিল্টার (সার্চ বক্সসহ) -->
+        <!-- নিবন্ধনের তারিখ ফিল্টার -->
         <div class="filter-group">
           <label>নিবন্ধনের তারিখ</label>
           <div id="customDateTrigger" class="filter-select">সব তারিখ</div>
@@ -378,7 +377,7 @@
           </div>
         </div>
 
-        <!-- কাস্টম পেশা ফিল্টার (সার্চ বক্সসহ) -->
+        <!-- পেশা ফিল্টার -->
         <div class="filter-group">
           <label>পেশা</label>
           <div id="customPesaTrigger" class="filter-select">সব পেশা</div>
@@ -388,7 +387,7 @@
           </div>
         </div>
 
-        <!-- কাস্টম ঠিকানা ফিল্টার (সার্চ বক্সসহ) -->
+        <!-- ঠিকানা ফিল্টার -->
         <div class="filter-group">
           <label>ঠিকানা</label>
           <div id="customAddressTrigger" class="filter-select">সব ঠিকানা</div>
@@ -431,23 +430,23 @@
 
       <div class="modal-details-list">
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-calendar-days"></i> নিবন্ধনের তারিখ:</span>
           <span class="detail-value" id="modalDate"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-venus-mars"></i> লিঙ্গ:</span>
           <span class="detail-value" id="modalGenderTextWrapper"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-briefcase"></i> পেশা:</span>
           <span class="detail-value" id="modalPesa"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-droplet"></i> রক্তের গ্রুপ:</span>
           <span class="detail-value" id="modalBlood"></span>
         </div>
         <div class="detail-item">
-          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা চিহ্ন:</span>
+          <span class="detail-label"><i class="fa-solid fa-location-dot"></i> ঠিকানা:</span>
           <span class="detail-value" id="modalAddress"></span>
         </div>
       </div>
@@ -459,7 +458,6 @@
   <script>
     let rawMembersData = [];
     
-    // গ্লোবাল ফিল্টার স্টেট ভ্যারিয়েবলসমূহ
     let selectedSortValue = 'name-asc';
     let selectedGenderValue = 'all';
     let selectedBloodValue = 'all';
@@ -470,10 +468,8 @@
     const maleAvatarSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="rgba(0,180,216,0.1)" stroke="#00b4d8" stroke-width="2" stroke-dasharray="4 3"/><circle cx="50" cy="40" r="16" fill="#00b4d8"/><path d="M22 78 C22 60, 34 56, 50 56 C66 56, 78 60, 78 78" fill="#00b4d8"/></svg>`;
     const femaleAvatarSVG = `<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="46" fill="rgba(244,63,94,0.1)" stroke="#f43f5e" stroke-width="2" stroke-dasharray="4 3"/><circle cx="50" cy="40" r="15" fill="#f43f5e"/><path d="M25 78 C25 61, 35 57, 50 57 C65 57, 75 61, 75 78" fill="#f43f5e"/><path d="M38 32 C35 38, 35 45, 38 48 M62 32 C65 38, 65 45, 62 48" stroke="#f43f5e" stroke-width="2" fill="none"/></svg>`;
 
-    // শুধুমাত্র ফিল্টারের ভেতরের ইনপুটে বাংলা ও বাংলা সংখ্যা ভ্যালিডেশন লজিক
     function restrictToBengali(inputElement) {
       inputElement.addEventListener('input', function(e) {
-        // বাংলা অক্ষর, বাংলা সংখ্যা এবং নির্দিষ্ট কিছু চিহ্ন (\s \- ( ) , . /) ছাড়া বাকি সব ক্যারেক্টার ব্লক করবে
         const cleanValue = this.value.replace(/[^\u0980-\u09FF\s\-(),./]/g, '');
         if (this.value !== cleanValue) {
           this.value = cleanValue;
@@ -481,7 +477,6 @@
       });
     }
 
-    // ফিল্টারের ভেতরের সার্চ বক্সগুলোতে ভ্যালিডেশন বাইন্ড করা (মেইন সার্চ বক্সে ইংরেজি এলাউড)
     restrictToBengali(document.getElementById('dateSearchInside'));
     restrictToBengali(document.getElementById('pesaSearchInside'));
     restrictToBengali(document.getElementById('addressSearchInside'));
@@ -494,7 +489,6 @@
         
         sortData(selectedSortValue);
         
-        // ড্রপডাউনগুলো ইনিশিয়ালাইজ করা
         renderCustomDropdown('date', '');
         renderCustomDropdown('pesa', '');
         renderCustomDropdown('address', '');
@@ -508,7 +502,6 @@
       }
     }
 
-    // ফিক্সড ড্রপডাউন আইটেম ইভেন্ট লজিক (Sort, Gender, Blood)
     function bindDropdownItems(type) {
       const items = document.querySelectorAll(`#custom${type}Panel .dropdown-opt-item`);
       items.forEach(item => {
@@ -536,7 +529,6 @@
     bindDropdownItems('Gender');
     bindDropdownItems('Blood');
 
-    // সার্চেবল কাস্টম ড্রপডাউন জেনারেটর (তারিখ, পেশা, ঠিকানা)
     function renderCustomDropdown(type, searchKey = '') {
       const listContainer = document.getElementById(`${type}OptionsList`);
       let currentSelected = 'all';
@@ -556,7 +548,6 @@
         if (val) uniqueItems.add(val.trim());
       });
 
-      // ডিফল্ট "সব" অপশন
       const allItem = document.createElement('div');
       allItem.className = `dropdown-opt-item ${currentSelected === 'all' ? 'selected' : ''}`;
       if(type === 'date') allItem.innerText = 'সব তারিখ';
@@ -568,7 +559,6 @@
       });
       listContainer.appendChild(allItem);
 
-      // ইউনিক ডাটা রেন্ডার ও সার্চ ফিল্টারিং
       Array.from(uniqueItems).forEach(item => {
         if (searchKey === '' || item.toLowerCase().includes(searchKey.toLowerCase())) {
           const itemEl = document.createElement('div');
@@ -593,7 +583,6 @@
       applyFiltersAndSearch();
     }
 
-    // ফিল্টার প্যানেল ওপেন/ক্লোজ মেকানিজম
     const filterTypes = ['Sort', 'Gender', 'Blood', 'Date', 'Pesa', 'Address'];
     filterTypes.forEach(t => {
       document.getElementById(`custom${t}Trigger`).addEventListener('click', (e) => {
@@ -613,7 +602,6 @@
       });
     });
 
-    // ইনপুট ইভেন্ট হ্যান্ডলার
     document.getElementById('dateSearchInside').addEventListener('input', (e) => {
       renderCustomDropdown('date', e.target.value.trim());
     });
@@ -624,13 +612,11 @@
       renderCustomDropdown('address', e.target.value.trim());
     });
 
-    // গ্লোবাল ক্লিক করলে প্যানেল হাইড হবে
     window.addEventListener('click', () => {
       filterTypes.forEach(t => document.getElementById(`custom${t}Panel`).style.display = 'none');
     });
     filterTypes.forEach(t => document.getElementById(`custom${t}Panel`).addEventListener('click', (e) => e.stopPropagation()));
 
-    // ক্লিয়ার অল ফিল্টার অ্যাকশন (বাটন এখন সার্চ বক্সের ডান পাশে)
     document.getElementById('btnClearAll').addEventListener('click', () => {
       selectedSortValue = 'name-asc';
       selectedGenderValue = 'all';
@@ -660,6 +646,7 @@
       applyFiltersAndSearch();
     });
 
+    // শর্টিং মেকানিজম (ফিক্সড)
     function sortData(criteria) {
       if (criteria === 'name-asc') {
         rawMembersData.sort((a, b) => a.name.localeCompare(b.name, 'bn'));
@@ -668,7 +655,8 @@
       } else if (criteria === 'reg-asc') {
         rawMembersData.sort((a, b) => String(a.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
       } else if (criteria === 'reg-desc') {
-        rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(b.regNo), undefined, {numeric: true}));
+        // এখানে b এবং a এর সঠিক তুলনা ফিক্স করা হয়েছে
+        rawMembersData.sort((a, b) => String(b.regNo).localeCompare(String(a.regNo), undefined, {numeric: true}));
       }
     }
 
@@ -676,11 +664,11 @@
       const searchQuery = document.getElementById('memberSearch').value.toLowerCase().trim();
 
       const filteredList = rawMembersData.filter(m => {
-        // প্রধান সার্চ বক্সে নাম (বাংলা) অথবা নিবন্ধন নং (ইংরেজি) যেকোনোটি ম্যাচ করতে পারবে
         const matchSearch = m.name.toLowerCase().includes(searchQuery) || String(m.regNo).toLowerCase().includes(searchQuery);
         
         let matchGender = true;
         if (selectedGenderValue !== 'all') {
+          // 'মেয়ে' বানান জটিলতা দূর করতে trim() করা হয়েছে
           matchGender = m.gender.trim() === selectedGenderValue;
         }
 
@@ -695,7 +683,6 @@
       renderTable(filteredList);
     }
 
-    // টেবিল জেনারেটর (সম্পূর্ণ অপরিবর্তিত)
     function renderTable(dataList) {
       const tbody = document.getElementById('memberTableBody');
       tbody.innerHTML = '';
@@ -728,7 +715,8 @@
       const avatarBox = document.getElementById('modalAvatarBox');
       const genderWrapper = document.getElementById('modalGenderTextWrapper');
       
-      const isFemale = member.gender.trim() === 'মেয়ে' || member.gender.toLowerCase().includes('female') || member.gender.trim() === 'নারী';
+      // মডালেও 'মেয়ে' চেক লজিক নির্ভুল করা হয়েছে
+      const isFemale = member.gender.trim() === 'মেয়ে' || member.gender.toLowerCase().includes('female') || member.gender.trim() === 'নারী';
 
       if (isFemale) {
         avatarBox.innerHTML = femaleAvatarSVG;
