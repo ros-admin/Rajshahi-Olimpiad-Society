@@ -390,8 +390,8 @@ class RosHeader extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
       <header class="ros-header">
-        <a href="../Home/" class="header-left">
-          <img src="../ros logo.png" alt="ROS Logo" class="header-logo">
+        <a href="../../Home/" class="header-left">
+          <img src="../../ros logo.png" alt="ROS Logo" class="header-logo">
           <div class="header-title-box">
             <h1>রাজশাহী অলিম্পিয়াড সোসাইটি</h1>
           </div>
@@ -407,24 +407,24 @@ class RosHeader extends HTMLElement {
 
           <nav>
             <ul class="nav-menu" id="navMenu">
-              <li class="nav-item"><a href="../About-Us/" class="nav-link">আমাদের সম্পর্কে</a></li>
-              <li class="nav-item"><a href="../Notice/" class="nav-link">বিজ্ঞপ্তি</a></li>
-              <li class="nav-item"><a href="../Our-Activities/" class="nav-link">আমাদের কার্যক্রম</a></li>
+              <li class="nav-item"><a href="../../About-Us/" class="nav-link">আমাদের সম্পর্কে</a></li>
+              <li class="nav-item"><a href="../../Notice/" class="nav-link">বিজ্ঞপ্তি</a></li>
+              <li class="nav-item"><a href="../../Our-Activities/" class="nav-link">আমাদের কার্যক্রম</a></li>
               
               <li class="nav-item">
                 <span class="nav-link">কমিটি <i class="fa-solid fa-chevron-down" style="font-size:0.7rem"></i></span>
                 <ul class="dropdown-menu">
-                  <li class="dropdown-item"><a href="../Committee/">আহবায়ক কমিটি</a></li>
-                  <li class="dropdown-item"><a href="../Committee/Executive-Committee-2026">কার্যনির্বাহী কমিটি-২০২৬</a></li>
+                  <li class="dropdown-item"><a href="../../Committee/">আহবায়ক কমিটি</a></li>
+                  <li class="dropdown-item"><a href="../../Committee/Executive-Committee-2026">কার্যনির্বাহী কমিটি-২০২৬</a></li>
                 </ul>
               </li>
               
-              <li class="nav-item"><a href="../Member-List/" class="nav-link">সদস্য তালিকা</a></li>
+              <li class="nav-item"><a href="../../Member-List/" class="nav-link">সদস্য তালিকা</a></li>
               <li class="nav-item"><a href="gallery.html" class="nav-link">ছবি</a></li>
               <li class="nav-item"><a href="contact.html" class="nav-link">যোগাযোগ</a></li>
               
               <li class="nav-item">
-                <a href="registration.html" class="btn-join">সদস্য হতে চাই</a>
+                <a href="../../registration.html" class="btn-join">সদস্য হতে চাই</a>
               </li>
             </ul>
           </nav>
@@ -501,7 +501,7 @@ class RosFooter extends HTMLElement {
           
           <div class="footer-col">
             <div class="footer-brand-container">
-              <img src="../ros logo.png" alt="ROS Logo" class="footer-logo">
+              <img src="../../ros logo.png" alt="ROS Logo" class="footer-logo">
               <div class="footer-text-group">
                 <h2>রাজশাহী অলিম্পিয়াড সোসাইটি</h2>
                 <p class="footer-slogan">"মেধার লালন, দক্ষতার গঠন"</p>
@@ -512,9 +512,9 @@ class RosFooter extends HTMLElement {
           <div class="footer-col">
             <h3>তথ্য কনিকা</h3>
             <ul class="footer-links">
-              <li><a href="../About-Us/">আমাদের সম্পর্কে</a></li>
-              <li><a href="../About-Logo/">লোগো সম্পর্কে</a></li>
-              <li><a href="../FAQ/">সাধারণ জিজ্ঞাসা</a></li>
+              <li><a href="../../About-Us/">আমাদের সম্পর্কে</a></li>
+              <li><a href="../../About-Logo/">লোগো সম্পর্কে</a></li>
+              <li><a href="../../FAQ/">সাধারণ জিজ্ঞাসা</a></li>
               <li><a href="gallery.html">ছবি</a></li>
             </ul>
           </div>
@@ -543,7 +543,7 @@ class RosFooter extends HTMLElement {
 
         <div class="footer-bottom">
           <p>Copyright © 2026 All rights reserved <a href="index.html">Rajshahi Olympiad Society</a>.</p>
-          <p class="developer-credit">Developed by, <a href="https://www.facebook.com/share/18nJSiYvtY/" target="_blank">Utsab Sarker</a></p>
+          <p class="developer-credit">Developed by, <a href="https://www.facebook.com/utsabsarker.arup/" target="_blank">Utsab Sarker</a></p>
         </div>
       </footer>
     `;
