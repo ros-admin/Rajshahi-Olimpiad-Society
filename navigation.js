@@ -415,7 +415,7 @@ class RosHeader extends HTMLElement {
                 <span class="nav-link">কমিটি <i class="fa-solid fa-chevron-down" style="font-size:0.7rem"></i></span>
                 <ul class="dropdown-menu">
                   <li class="dropdown-item"><a href="../../Committee/">আহবায়ক কমিটি</a></li>
-                  <li class="dropdown-item"><a href="../../Committee/Executive-Committee-2026">কার্যনির্বাহী কমিটি-২০২৬</a></li>
+                  <li class="dropdown-item"><a href="../../Committee/Executive-Commiitee-2026/">কার্যনির্বাহী কমিটি-২০২৬</a></li>
                 </ul>
               </li>
               
