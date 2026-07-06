@@ -424,7 +424,7 @@ class RosHeader extends HTMLElement {
               <li class="nav-item"><a href="contact.html" class="nav-link">যোগাযোগ</a></li>
               
               <li class="nav-item">
-                <a href="../../registration.html" class="btn-join">সদস্য হতে চাই</a>
+                <a href="../../Registration/" class="btn-join">সদস্য হতে চাই</a>
               </li>
             </ul>
           </nav>
