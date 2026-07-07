@@ -133,14 +133,12 @@ registrationForm.addEventListener('submit', async (e) => {
   try {
     const email = document.getElementById('email').value.trim();
     
-    // Apps script-এ OTP পাঠানোর এবং ডুপ্লিকেট ইমেইল চেক করার রিকোয়েস্ট
     const response = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       body: JSON.stringify({ action: "sendOtp", email: email })
     });
     const resData = await response.json();
 
-    // যদি ইমেইল আগে থেকেই থাকে বা অন্য কোনো ত্রুটি হয়
     if (!resData.success) {
       throw new Error(resData.error || "OTP পাঠাতে ব্যর্থ হয়েছে।");
     }
@@ -171,8 +169,7 @@ registrationForm.addEventListener('submit', async (e) => {
       photoUrl: uploadedPhotoUrl
     };
 
-    // মোবাইল রেসপনসিভনেস ও পপআপ স্ক্রোল ফিক্স
-    const modalContent = document.querySelector('#otpModal .modal-content') || document.querySelector('#otpModal');
+    const modalContent = document.querySelector('#otpModal .modal-content') || document.getElementById('modalContentBox');
     if(modalContent) {
       modalContent.style.maxHeight = "90vh";
       modalContent.style.overflowY = "auto";
@@ -220,30 +217,33 @@ document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
       const regNumber = finalRes.memberId || "ROS-2026-0001";
       const userEnglishName = savedFormPayload.englishName || "Member";
 
-      // ডাইনামিক সাকসেস সেকশন রেন্ডারিং (প্রফেশনাল অ্যাকাউন্ট স্ট্যাটাসসহ)
+      // ডাইনামিক সাকসেস সেকশন রেন্ডারিং (আপনার HTML ক্লাসের সাথে মিল রেখে ডিজাইন ফিক্সড)
       document.getElementById('successSection').innerHTML = `
-        <div style="text-align: center; padding: 10px;">
-          <div style="font-size: 45px; color: #2a9d8f; margin-bottom: 10px;"><i class="fas fa-check-circle"></i></div>
+        <div style="text-align: center; padding: 10px; font-family: 'Poppins', sans-serif;">
+          <div style="font-size: 45px; color: #4cc9f0; margin-bottom: 10px;"><i class="fas fa-check-circle"></i></div>
           <h2 style="color: #fff; font-size: 20px; margin-bottom: 5px;">Registration Successful!</h2>
-          <p style="color: #00f5ff; font-weight: bold; font-size: 16px; margin-bottom: 15px;">Your registration number: <span id="displayRegNumber">${regNumber}</span></p>
+          <p style="color: #ffd700; font-weight: bold; font-size: 16px; margin-bottom: 15px;">Your registration number: <span id="displayRegNumber">${regNumber}</span></p>
           
-          <!-- Professional Account Status Badge -->
           <div style="display: inline-block; background: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; color: #f39c12; padding: 6px 16px; border-radius: 20px; font-weight: bold; font-size: 13px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px;">
             <i class="fas fa-clock"></i> Account Status: Pending
           </div>
 
-          <div style="color: #a4b3c6; font-size: 14px; text-align: left; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
-            Dear <strong style="color: #fff;" id="displayUserName">${userEnglishName}</strong>,<br><br>
+          <div style="color: #a4b3c6; font-size: 14px; text-align: left; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05); margin-bottom: 15px;">
+            Dear <strong style="color: #00a4cc;" id="displayUserName">${userEnglishName}</strong>,<br><br>
             Your registration with the Rajshahi Olympiad Society has been successfully completed. Thank you sincerely for joining us.<br><br>
             A PDF copy of your registration has been generated. Click the button below to download it directly.
           </div>
-          <button class="cyber-btn" id="downloadPdfBtn" style="margin-top: 20px; width: 100%; background: #00f5ff; color: #030a16; font-weight: bold; padding: 12px; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+          
+          <button class="btn-success-download" id="downloadPdfBtn">
             <i class="fa-solid fa-file-pdf"></i> Download PDF
           </button>
+          
+          <a href="../Home/" class="btn-go-home">
+            <i class="fa-solid fa-house"></i> Go to Home
+          </a>
         </div>
       `;
 
-      // মডালের ভেতর ভিউ সোয়াপ
       document.getElementById('otpSection').style.display = "none";
       document.getElementById('closeModalBtn').style.display = "none"; 
       document.getElementById('successSection').style.display = "block";
@@ -251,7 +251,6 @@ document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
       // ডাউনলোড লজিক লোড করা
       setupPdfDownloadTrigger(regNumber, savedFormPayload);
 
-      // ফর্ম সম্পূর্ণ রিসেট
       registrationForm.reset();
       if (trigger) trigger.querySelector('span').innerText = "Select Blood Group";
       if (hiddenInput) hiddenInput.value = "";
@@ -296,7 +295,6 @@ function setupPdfDownloadTrigger(memberId, memberData) {
     downloadPdfBtn.disabled = true;
     downloadPdfBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Downloading...`;
 
-    // ব্ল্যাঙ্ক পেজ এড়াতে ডাইনামিক অফ-স্ক্রিন কন্টেইনার তৈরি (যা হিডেন না, স্ক্রিনের বাইরে থাকবে)
     let pdfTempContainer = document.createElement('div');
     pdfTempContainer.style.position = 'absolute';
     pdfTempContainer.style.left = '-9999px';
@@ -347,7 +345,7 @@ function setupPdfDownloadTrigger(memberId, memberData) {
             <tr><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">জন্মতারিখ:</td><td style="padding: 5px; border: 1px solid #cccccc; font-family:'Arial';">${dob}</td><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">রক্তের গ্রুপ:</td><td style="padding: 5px; border: 1px solid #cccccc; font-weight: bold; color: #d90429;">${blood}</td></tr>
             <tr><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">লিঙ্গ:</td><td style="padding: 5px; border: 1px solid #cccccc; width: 32%;">${gender}</td><td style="padding: 5px; border: 1px solid #cccccc; width: 16%; background: #fcfcfc; font-weight: bold;">পেশা:</td><td style="padding: 5px; border: 1px solid #cccccc; width: 34%;">${prof}</td></tr>
             <tr><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">প্রতিষ্ঠান/কর্মস্থল:</td><td style="padding: 5px; border: 1px solid #cccccc;" colspan="3">${inst}</td></tr>
-            <tr><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">শিক্ষাগত যোগ্যতা:</td><td style="padding: 5px; border: 1px solid #cccccc;">${edu}</td><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">শিক্ষাবর্ষ:</td><td style="padding: 5px; border: 1px solid #cccccc; font-family:'Arial';">${session}</td></tr>
+            <tr><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">शिक्षাগত योग्यता:</td><td style="padding: 5px; border: 1px solid #cccccc;">${edu}</td><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">শিক্ষাবর্ষ:</td><td style="padding: 5px; border: 1px solid #cccccc; font-family:'Arial';">${session}</td></tr>
             <tr><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">বর্তমান ঠিকানা:</td><td style="padding: 5px; border: 1px solid #cccccc;" colspan="3">${memberData.presentAddress}</td></tr>
             <tr><td style="padding: 5px; border: 1px solid #cccccc; background: #fcfcfc; font-weight: bold;">স্থায়ী ঠিকানা:</td><td style="padding: 5px; border: 1px solid #cccccc;" colspan="3">${memberData.permanentAddress}</td></tr>
           </table>
@@ -380,14 +378,12 @@ function setupPdfDownloadTrigger(memberId, memberData) {
         jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
       };
 
-      // সরাসরি ডাউনলোড রান
       await html2pdf().set(optionsConfig).from(targetPaperNode).save();
 
     } catch (err) {
       console.error("PDF Export Error:", err);
       alert("পিডিএফ ফাইল তৈরি করা যায়নি।");
     } finally {
-      // কাজ শেষে বাফার এলিমেন্ট রিমুভ (পরের বার ডাউনলোডেও ব্ল্যাঙ্ক আসবে না)
       if (pdfTempContainer.parentNode) {
         pdfTempContainer.parentNode.removeChild(pdfTempContainer);
       }
