@@ -105,7 +105,7 @@ otpFields.forEach((field, index) => {
   });
 });
 
-let savedFormPayload = {}; // ডাটা সাময়িকভাবে ধরে রাখার অবজেক্ট
+let savedFormPayload = {}; 
 
 // ৪. প্রথম ধাপ: ফর্ম সাবমিশন ও ওটিপি জেনারেশন
 registrationForm.addEventListener('submit', async (e) => {
@@ -120,32 +120,32 @@ registrationForm.addEventListener('submit', async (e) => {
   }
 
   const photoFile = document.getElementById('profilePhoto').files[0];
-  if (photoFile && photoFile.size > 1024 * 1024) { // ১ মেগাবাইট লিমিট হ্যান্ডলার
+  if (photoFile && photoFile.size > 1024 * 1024) { 
     alert("ত্রুটি: প্রোফাইল ছবির সাইজ ১ এমবির বেশি হতে পারবে না!");
     return;
   }
 
   const submitBtn = document.getElementById('submitBtn');
   const originalBtnText = submitBtn.innerHTML;
-  submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> ওটিপি পাঠানো হচ্ছে...`;
+  submitBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> প্রসেসিং হচ্ছে...`;
   submitBtn.disabled = true;
 
   try {
     const email = document.getElementById('email').value.trim();
     
-    // Apps script-এ OTP পাঠানোর রিকোয়েস্ট
+    // Apps script-এ OTP পাঠানোর এবং ডুপ্লিকেট ইমেইল চেক করার রিকোয়েস্ট
     const response = await fetch(APPS_SCRIPT_URL, {
       method: 'POST',
       body: JSON.stringify({ action: "sendOtp", email: email })
     });
     const resData = await response.json();
 
-    if (!resData.success) throw new Error(resData.error || "OTP পাঠাতে ব্যর্থ হয়েছে।");
+    // যদি ইমেইল আগে থেকেই থাকে বা অন্য কোনো ত্রুটি হয়
+    if (!resData.success) {
+      throw new Error(resData.error || "OTP পাঠাতে ব্যর্থ হয়েছে।");
+    }
 
-    // ক্লাউডিনারি ইমেজ আপলোড রান
     const uploadedPhotoUrl = photoFile ? await uploadToCloudinary(photoFile) : "";
-    
-    // রক্তের গ্রুপ নিখুঁতভাবে রিড করার মেকানিজম
     const bloodGroupValue = document.getElementById('bloodGroup').value || "";
 
     savedFormPayload = {
@@ -171,7 +171,13 @@ registrationForm.addEventListener('submit', async (e) => {
       photoUrl: uploadedPhotoUrl
     };
 
-    // ওটিপি মডাল উইন্ডো প্রদর্শন
+    // মোবাইল রেসপনসিভনেস ও পপআপ স্ক্রোল ফিক্স
+    const modalContent = document.querySelector('#otpModal .modal-content') || document.querySelector('#otpModal');
+    if(modalContent) {
+      modalContent.style.maxHeight = "90vh";
+      modalContent.style.overflowY = "auto";
+    }
+
     document.getElementById('otpSection').style.display = "block";
     document.getElementById('successSection').style.display = "none";
     document.getElementById('closeModalBtn').style.display = "block";
@@ -214,19 +220,38 @@ document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
       const regNumber = finalRes.memberId || "ROS-2026-0001";
       const userEnglishName = savedFormPayload.englishName || "Member";
 
-      // আপনার চাওয়া টেক্সট ডাইনামিকালি মডালে পুশ করা হচ্ছে
-      document.getElementById('displayRegNumber').innerText = regNumber;
-      document.getElementById('displayUserName').innerText = userEnglishName;
+      // ডাইনামিক সাকসেস সেকশন রেন্ডারিং (প্রফেশনাল অ্যাকাউন্ট স্ট্যাটাসসহ)
+      document.getElementById('successSection').innerHTML = `
+        <div style="text-align: center; padding: 10px;">
+          <div style="font-size: 45px; color: #2a9d8f; margin-bottom: 10px;"><i class="fas fa-check-circle"></i></div>
+          <h2 style="color: #fff; font-size: 20px; margin-bottom: 5px;">Registration Successful!</h2>
+          <p style="color: #00f5ff; font-weight: bold; font-size: 16px; margin-bottom: 15px;">Your registration number: <span id="displayRegNumber">${regNumber}</span></p>
+          
+          <!-- Professional Account Status Badge -->
+          <div style="display: inline-block; background: rgba(243, 156, 18, 0.15); border: 1px solid #f39c12; color: #f39c12; padding: 6px 16px; border-radius: 20px; font-weight: bold; font-size: 13px; margin-bottom: 20px; text-transform: uppercase; letter-spacing: 0.5px;">
+            <i class="fas fa-clock"></i> Account Status: Pending
+          </div>
 
-      // মডালের ভেতর ভিউ সোয়াপ (এতে পপআপ কাটবে না)
+          <div style="color: #a4b3c6; font-size: 14px; text-align: left; line-height: 1.5; background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);">
+            Dear <strong style="color: #fff;" id="displayUserName">${userEnglishName}</strong>,<br><br>
+            Your registration with the Rajshahi Olympiad Society has been successfully completed. Thank you sincerely for joining us.<br><br>
+            A PDF copy of your registration has been generated. Click the button below to download it directly.
+          </div>
+          <button class="cyber-btn" id="downloadPdfBtn" style="margin-top: 20px; width: 100%; background: #00f5ff; color: #030a16; font-weight: bold; padding: 12px; border: none; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;">
+            <i class="fa-solid fa-file-pdf"></i> Download PDF
+          </button>
+        </div>
+      `;
+
+      // মডালের ভেতর ভিউ সোয়াপ
       document.getElementById('otpSection').style.display = "none";
-      document.getElementById('closeModalBtn').style.display = "none"; // বাধ্যতামুলক স্টপ
+      document.getElementById('closeModalBtn').style.display = "none"; 
       document.getElementById('successSection').style.display = "block";
       
-      // পিডিএফ ডাউনলোড লজিক বাইন্ড
+      // ডাউনলোড লজিক লোড করা
       setupPdfDownloadTrigger(regNumber, savedFormPayload);
 
-      // ফর্ম রিসেট
+      // ফর্ম সম্পূর্ণ রিসেট
       registrationForm.reset();
       if (trigger) trigger.querySelector('span').innerText = "Select Blood Group";
       if (hiddenInput) hiddenInput.value = "";
@@ -241,18 +266,10 @@ document.getElementById('verifyOtpBtn').addEventListener('click', async () => {
   }
 });
 
-// 🖨️ ৬. পিডিএফ জেনারেশন ইঞ্জিন
+// 🖨️ ৬. ব্ল্যাঙ্ক পেজ এবং নো-লুপ ইনস্ট্যান্ট ডাউনলোড ইঞ্জিন
 function setupPdfDownloadTrigger(memberId, memberData) {
   const downloadPdfBtn = document.getElementById('downloadPdfBtn'); 
   if (!downloadPdfBtn) return;
-
-  let pdfBuffer = document.getElementById('pdfRenderBufferContainer');
-  if (!pdfBuffer) {
-    pdfBuffer = document.createElement('div');
-    pdfBuffer.id = 'pdfRenderBufferContainer';
-    pdfBuffer.style.display = 'none';
-    document.body.appendChild(pdfBuffer);
-  }
 
   const regNo = memberId || '—'; 
   const regDate = new Date().toLocaleDateString('bn-BD');
@@ -277,7 +294,14 @@ function setupPdfDownloadTrigger(memberId, memberData) {
   downloadPdfBtn.addEventListener('click', async (e) => {
     e.preventDefault();
     downloadPdfBtn.disabled = true;
-    downloadPdfBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Generating PDF...`;
+    downloadPdfBtn.innerHTML = `<i class="fas fa-spinner fa-spin"></i> Downloading...`;
+
+    // ব্ল্যাঙ্ক পেজ এড়াতে ডাইনামিক অফ-স্ক্রিন কন্টেইনার তৈরি (যা হিডেন না, স্ক্রিনের বাইরে থাকবে)
+    let pdfTempContainer = document.createElement('div');
+    pdfTempContainer.style.position = 'absolute';
+    pdfTempContainer.style.left = '-9999px';
+    pdfTempContainer.style.top = '0';
+    document.body.appendChild(pdfTempContainer);
 
     try {
       if (typeof html2pdf === 'undefined') {
@@ -293,7 +317,7 @@ function setupPdfDownloadTrigger(memberId, memberData) {
       const now = new Date();
       const formattedTimeStr = `ডাউনলোড সময়: ${now.toLocaleDateString('bn-BD')} | সময়: ${now.toLocaleTimeString('bn-BD')}`;
 
-      pdfBuffer.innerHTML = `
+      pdfTempContainer.innerHTML = `
         <div id="actualTargetPaper" style="width: 535pt; height: 760pt; background: #ffffff; color: #000000; font-family: 'Hind Siliguri', 'Arial', sans-serif; position: relative; box-sizing: border-box; padding: 25pt; border: 2.5pt double #0077b6; overflow: hidden; display: flex; flex-direction: column;">
           <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg); opacity: 0.03; font-size: 38px; font-weight: bold; color: #000; text-align: center; width: 100%; pointer-events: none; white-space: nowrap; z-index: 1;">
             RAJSHAHI OLIMPIAD SOCIETY
@@ -356,13 +380,17 @@ function setupPdfDownloadTrigger(memberId, memberData) {
         jsPDF:        { unit: 'pt', format: 'a4', orientation: 'portrait' }
       };
 
+      // সরাসরি ডাউনলোড রান
       await html2pdf().set(optionsConfig).from(targetPaperNode).save();
 
     } catch (err) {
       console.error("PDF Export Error:", err);
       alert("পিডিএফ ফাইল তৈরি করা যায়নি।");
     } finally {
-      pdfBuffer.innerHTML = "";
+      // কাজ শেষে বাফার এলিমেন্ট রিমুভ (পরের বার ডাউনলোডেও ব্ল্যাঙ্ক আসবে না)
+      if (pdfTempContainer.parentNode) {
+        pdfTempContainer.parentNode.removeChild(pdfTempContainer);
+      }
       downloadPdfBtn.disabled = false;
       downloadPdfBtn.innerHTML = `<i class="fa-solid fa-file-pdf"></i> Download PDF`;
     }
