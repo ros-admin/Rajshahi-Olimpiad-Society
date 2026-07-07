@@ -9,7 +9,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
-    /* অফিশিয়াল কালার প্যালেট */
     :root {
       --dark-bg: #030a16;          
       --panel-bg: #051226;         
@@ -21,286 +20,438 @@
       --success: #4cc9f0;
       --danger: #ff4d6d;           
       --input-border: #003049;     
-      --alert-border: #4a1525;     
-      --alert-bg: #140d1a;         
-      --alert-icon: #f43f5e;       
     }
 
-    ::-webkit-scrollbar { width: 6px; }
-    ::-webkit-scrollbar-thumb { background: rgba(0, 164, 204, 0.3); border-radius: 10px; }
-
-    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-    body { background-color: var(--dark-bg); color: var(--text-light); font-family: 'Hind Siliguri', 'Poppins', sans-serif; overflow-x: hidden; padding: 20px 15px; }
-    main { max-width: 480px; margin: 0 auto; position: relative; }
-
-    .back-home-link {
-      position: absolute; top: -10px; left: 10px; color: #94a3b8; text-decoration: none;
-      font-family: 'Poppins', sans-serif; font-size: 14px; font-weight: 500;
-      transition: color 0.3s ease, transform 0.3s ease; display: inline-flex; align-items: center; gap: 8px; z-index: 10;
+    body {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      margin: 0;
+      padding: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
     }
-    .back-home-link:hover { color: var(--secondary); transform: translateX(-3px); }
 
-    .branding-container { display: flex; flex-direction: column; align-items: center; text-align: center; margin-bottom: 20px; margin-top: 30px; }
-    .org-logo { width: 90px; height: auto; margin-bottom: 10px; }
-    .org-title { font-family: 'Poppins', sans-serif; font-size: 26px; font-weight: 600; color: var(--text-light); letter-spacing: 1px; margin-bottom: 5px; }
-    .form-subtitle { font-size: 15px; font-weight: 500; color: var(--secondary); }
-    .yellow-divider { width: 80px; height: 3px; background-color: var(--accent); margin: 12px auto 5px auto; border-radius: 2px; box-shadow: 0 0 8px var(--accent); }
-
-    .attention-box { background: var(--alert-bg); border: 1.5px solid var(--alert-border); padding: 16px; border-radius: 14px; margin: 15px 0 25px 0; display: flex; align-items: center; gap: 14px; text-align: left; }
-    .attention-box i { color: var(--alert-icon); font-size: 28px; flex-shrink: 0; }
-    .attention-text { font-size: 14px; line-height: 1.5; color: #e2e8f0; }
-    .attention-english { display: block; margin-top: 4px; font-size: 12px; color: #94a3b8; font-family: 'Poppins', sans-serif; }
-    .attention-text a { color: var(--accent); text-decoration: none; font-weight: 600; border-bottom: 1.5px dashed var(--accent); }
-
-    .registration-card { background: var(--card-bg); border: 1px solid rgba(0, 164, 204, 0.1); padding: 25px 20px; border-radius: 12px; box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-    .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-    .form-group { display: flex; flex-direction: column; position: relative; margin-bottom: 16px; }
-    .section-header { font-size: 16px; font-weight: 600; color: var(--secondary); margin-top: 15px; margin-bottom: 15px; border-bottom: 1px solid rgba(0, 164, 204, 0.2); padding-bottom: 8px; }
-    label { margin-bottom: 6px; color: var(--secondary); font-size: 14px; font-weight: 600; }
-    
-    input, select, textarea { background: var(--panel-bg); border: 1px solid var(--input-border); padding: 12px 14px; border-radius: 8px; color: var(--text-light); font-family: inherit; font-size: 14px; outline: none; transition: all 0.2s ease; width: 100%; }
-    input::placeholder, textarea::placeholder { color: var(--text-muted); }
-    input:focus, select:focus, textarea:focus { border-color: var(--secondary); box-shadow: 0 0 5px rgba(0, 164, 204, 0.2); }
-
-    /* Custom Dropdown */
-    .custom-select-wrapper { position: relative; user-select: none; }
-    .custom-select-trigger { background: var(--panel-bg); border: 1px solid var(--input-border); padding: 12px 14px; border-radius: 8px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; color: var(--text-light); font-size: 14px; }
-    .custom-options { position: absolute; top: 105%; left: 0; right: 0; background: var(--panel-bg); border: 1px solid var(--secondary); border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.6); opacity: 0; visibility: hidden; pointer-events: none; transform: translateY(-10px); transition: all 0.3s ease; z-index: 999; max-height: 180px; overflow-y: auto; }
-    .custom-select-wrapper.open .custom-options { opacity: 1; visibility: visible; pointer-events: all; transform: translateY(0); }
-    .search-box { width: 100%; padding: 10px; background: var(--dark-bg); border: none; border-bottom: 1px solid var(--input-border); color: #fff; position: sticky; top: 0; }
-    .custom-option { padding: 10px 12px; cursor: pointer; font-size: 14px; transition: background 0.2s; }
-    .custom-option:hover { background: rgba(0, 164, 204, 0.15); color: var(--accent); }
-
-    .checkbox-group { flex-direction: row; align-items: center; gap: 10px; margin: 5px 0 16px 0; }
-    .checkbox-group input { width: 16px; height: 16px; cursor: pointer; accent-color: var(--secondary); width: auto; }
-    .checkbox-group label { margin-bottom: 0; color: var(--secondary); }
-
-    .btn-submit { background: linear-gradient(135deg, var(--secondary), #0077b6); color: var(--dark-bg); padding: 14px; border: none; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all 0.3s ease; margin-top: 10px; width: 100%; }
-    .btn-submit:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0, 164, 204, 0.3); }
-
-    .btn-success-download { background: linear-gradient(135deg, #4cc9f0, #00a4cc); color: var(--dark-bg); padding: 12px; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 20px; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all 0.2s; }
-    .btn-success-download:hover { filter: brightness(1.1); }
-    .btn-go-home { background: transparent; color: var(--text-light); border: 1px solid var(--input-border); padding: 12px; border-radius: 8px; font-size: 14px; font-weight: 500; cursor: pointer; margin-top: 10px; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; transition: all 0.2s; }
-    .btn-go-home:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--secondary); }
-
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(2, 12, 27, 0.92); backdrop-filter: blur(8px); display: flex; justify-content: center; align-items: center; z-index: 9999; opacity: 0; visibility: hidden; transition: all 0.3s ease; padding: 15px; }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-content { background: var(--card-bg); border: 1px solid var(--secondary); padding: 30px 25px; border-radius: 14px; width: 100%; max-width: 440px; text-align: center; position: relative; }
-    .close-modal-btn { position: absolute; top: 10px; right: 14px; background: none; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; }
-
-    .desktop-only { display: none; }
-    .mobile-only { display: inline; }
-
-    @media (min-width: 481px) {
-      main { max-width: 750px; } 
-      .desktop-only { display: inline; }
-      .mobile-only { display: none; }
+    .form-container {
+      background-color: var(--panel-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      padding: 25px;
+      width: 100%;
+      max-width: 700px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+      box-sizing: border-box;
     }
-    @media (max-width: 480px) {
-      body { padding: 15px 10px; }
-      main { max-width: 100%; }
-      .registration-card { padding: 20px 15px; }
+
+    h2 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 25px;
+      font-size: 24px;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 650px) {
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+      .form-container {
+        padding: 15px;
+      }
+      h2 {
+        font-size: 20px;
+      }
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .form-group.full-width {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      font-size: 13px;
+      margin-bottom: 6px;
+      color: var(--text-light);
+    }
+
+    input, textarea, select {
+      background-color: var(--card-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      padding: 10px 12px;
+      color: #fff;
+      font-size: 14px;
+      outline: none;
+      transition: border 0.3s;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--secondary);
+    }
+
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 5px;
+    }
+
+    .checkbox-group input {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #0077b6, #00b4d8);
+      color: #fff;
+      border: none;
+      padding: 12px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 20px;
+      transition: opacity 0.3s;
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    /* Blood Group Custom CSS */
+    .custom-select-wrapper {
+      position: relative;
+      user-select: none;
+    }
+    .custom-select-trigger {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: var(--card-bg);
+      border: 1px solid var(--input-border);
+      padding: 10px 12px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    .custom-options {
+      position: absolute;
+      display: block;
+      top: 100%;
+      left: 0;
+      right: 0;
+      background: var(--panel-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      margin-top: 5px;
+      max-height: 180px;
+      overflow-y: auto;
+      z-index: 100;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+    }
+    .custom-select-wrapper.open .custom-options {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+    .search-box {
+      width: 100%;
+      box-sizing: border-box;
+      border-bottom: 1px solid var(--input-border);
+      border-radius: 6px 6px 0 0;
+    }
+    .custom-option {
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: 13px;
+    }
+    .custom-option:hover {
+      background: var(--secondary);
+    }
+
+    /* Modal Popups Overlay */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(2, 12, 27, 0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+    .modal-overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+    .modal-box {
+      background: var(--panel-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 12px;
+      width: 100%;
+      max-width: 460px;
+      padding: 25px;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+      text-align: center;
+      box-sizing: border-box;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: transparent;
+      border: none;
+      color: var(--text-muted);
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .modal-close:hover {
+      color: var(--danger);
+    }
+    .otp-inputs {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .otp-field {
+      width: 40px;
+      height: 40px;
+      text-align: center;
+      font-size: 18px;
+      font-weight: 600;
+      background: var(--dark-bg);
+      border: 1px solid var(--input-border);
+      border-radius: 6px;
+      color: #fff;
     }
   </style>
 </head>
 <body>
 
-  <main>
-    <a href="../Home/" class="back-home-link">
-      <i class="fa-solid fa-arrow-left"></i> Go Back To Home
-    </a>
-
-    <div class="branding-container">
-      <img src="../ros logo transparent.png" alt="ROS Logo" class="org-logo">
-      <h1 class="org-title">Rajshahi Olympiad Society</h1>
-      <p class="form-subtitle">Member Registration Form</p>
-      <div class="yellow-divider"></div>
-    </div>
-
-    <div class="registration-card">
-      <div class="attention-box">
-        <i class="fa-solid fa-triangle-exclamation"></i>
-        <div class="attention-text">
-          <strong><span class="desktop-only">বিশেষ দ্রষ্টব্য (Attention):</span><span class="mobile-only">Attention:</span></strong> <span class="desktop-only">ইতোমধ্যে আপনি আমাদের সদস্য হয়ে থাকলে এই ফরমটি পুনরায় পূরণ করার প্রয়োজন নেই। সদস্য পোর্টালে সরাসরি লগইন করার জন্য অনুগ্রহ করে <a href="../Login/">এখানে ক্লিক করুন</a>।</span>
-          <span class="attention-english">If you are already a member, no need to fill this form again. To login directly <a href="../Login/">Click Here</a>.</span>
-        </div>
-      </div>
-
-      <form id="registrationForm">
+  <div class="form-container">
+    <h2>সদস্য নিবন্ধন ফরম</h2>
+    <form id="registrationForm">
+      <div class="form-grid">
+        
         <div class="form-group">
-          <label><span class="desktop-only">বাংলায় পূর্ণ নাম (Bangla Full Name) *</span><span class="mobile-only">Full Name (Bangla) *</span></label>
-          <input type="text" id="banglaName" required placeholder="Ex: আবির হাসান">
+          <label for="banglaName">নাম (বাংলায়): *</label>
+          <input type="text" id="banglaName" required placeholder="উৎসবে সরকার">
         </div>
 
         <div class="form-group">
-          <label>English Full Name *</label>
-          <input type="text" id="englishName" required placeholder="Ex: Abir Hasan">
+          <label for="englishName">Name (English): *</label>
+          <input type="text" id="englishName" required placeholder="UTSAB SARKER">
         </div>
 
-        <div class="grid-2">
-          <div class="form-group">
-            <label><span class="desktop-only">পিতার নাম (Father's Name) *</span><span class="mobile-only">Father's Name *</span></label>
-            <input type="text" id="fatherName" required>
-          </div>
-          <div class="form-group">
-            <label><span class="desktop-only">মাতার নাম (Mother's Name) *</span><span class="mobile-only">Mother's Name *</span></label>
-            <input type="text" id="motherName" required>
-          </div>
+        <div class="form-group">
+          <label for="fatherName">পিতার নাম: *</label>
+          <input type="text" id="fatherName" required>
         </div>
 
-        <div class="grid-2">
-          <div class="form-group">
-            <label><span class="desktop-only">মোবাইল নম্বর (Mobile Number) *</span><span class="mobile-only">Mobile Number *</span></label>
-            <input type="tel" id="mobileNumber" required placeholder="017XXXXXXXX">
-          </div>
-          <div class="form-group">
-            <label><span class="desktop-only">ইমেইল ঠিকানা (Email Address) *</span><span class="mobile-only">Email Address *</span></label>
-            <input type="email" id="email" required placeholder="name@example.com">
-          </div>
+        <div class="form-group">
+          <label for="motherName">মাতার নাম: *</label>
+          <input type="text" id="motherName" required>
         </div>
 
-        <div class="grid-2">
-          <div class="form-group">
-            <label><span class="desktop-only">লিঙ্গ (Gender) *</span><span class="mobile-only">Gender *</span></label>
-            <select id="gender" required>
-              <option value="Male">Male</option>
-              <option value="Female">Female</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="form-group">
-            <label><span class="desktop-only">জন্ম তারিখ (Date of Birth) *</span><span class="mobile-only">Date of Birth *</span></label>
-            <input type="date" id="dob" required>
-          </div>
+        <div class="form-group">
+          <label for="mobileNumber">মোবাইল নম্বর: *</label>
+          <input type="tel" id="mobileNumber" required placeholder="017XXXXXXXX">
         </div>
 
-        <div class="form-group" style="margin-top: 5px; margin-bottom: 16px;">
-          <label><span class="desktop-only">রক্তের গ্রুপ (Blood Group)</span><span class="mobile-only">Blood Group</span></label>
+        <div class="form-group">
+          <label for="email">ইমেইল ঠিকানা: *</label>
+          <input type="email" id="email" required placeholder="example@gmail.com">
+        </div>
+
+        <div class="form-group">
+          <label>রক্তের গ্রুপ: *</label>
           <div class="custom-select-wrapper" id="bloodGroupWrapper">
-            <div class="custom-select-trigger"><span>Select Blood Group</span> <i class="fa-solid fa-chevron-down"></i></div>
+            <div class="custom-select-trigger">
+              <span>রক্তের গ্রুপ নির্বাচন করুন</span>
+              <i class="fas fa-chevron-down"></i>
+            </div>
             <div class="custom-options">
-              <input type="text" class="search-box" placeholder="Search...">
-              <div class="custom-option" data-value="A+">A+</div>
-              <div class="custom-option" data-value="A-">A-</div>
-              <div class="custom-option" data-value="B+">B+</div>
-              <div class="custom-option" data-value="B-">B-</div>
-              <div class="custom-option" data-value="AB+">AB+</div>
-              <div class="custom-option" data-value="AB-">AB-</div>
-              <div class="custom-option" data-value="O+">O+</div>
-              <div class="custom-option" data-value="O-">O-</div>
+              <input type="text" class="search-box" placeholder="খুঁজুন...">
+              <div class="custom-option" data-value="A+">A+ (A Positive)</div>
+              <div class="custom-option" data-value="A-">A- (A Negative)</div>
+              <div class="custom-option" data-value="B+">B+ (B Positive)</div>
+              <div class="custom-option" data-value="B-">B- (B Negative)</div>
+              <div class="custom-option" data-value="AB+">AB+ (AB Positive)</div>
+              <div class="custom-option" data-value="AB-">AB- (AB Negative)</div>
+              <div class="custom-option" data-value="O+">O+ (O Positive)</div>
+              <div class="custom-option" data-value="O-">O- (O Negative)</div>
             </div>
           </div>
-          <input type="hidden" id="bloodGroup">
+          <input type="hidden" id="bloodGroup" required>
         </div>
 
         <div class="form-group">
-          <label><span class="desktop-only">বর্তমান ঠিকানা (Present Address) *</span><span class="mobile-only">Present Address *</span></label>
-          <textarea id="presentAddress" rows="2" required placeholder="Ex: Village/Road, Upazila, District, Division"></textarea>
-        </div>
-
-        <div class="form-group checkbox-group">
-          <input type="checkbox" id="sameAddressCheck">
-          <label for="sameAddressCheck"><span class="desktop-only">স্থায়ী ঠিকানা বর্তমান ঠিকানার অনুরূপ</span><span class="mobile-only">Permanent Address Same As Present</span></label>
+          <label for="gender">লিঙ্গ: *</label>
+          <select id="gender" required>
+            <option value="">নির্বাচন করুন</option>
+            <option value="Male">পুরুষ</option>
+            <option value="Female">মহিলা</option>
+            <option value="Other">অন্যান্য</option>
+          </select>
         </div>
 
         <div class="form-group">
-          <label><span class="desktop-only">স্থায়ী ঠিকানা (Permanent Address) *</span><span class="mobile-only">Permanent Address *</span></label>
+          <label for="dob">জন্ম তারিখ: *</label>
+          <input type="date" id="dob" required>
+        </div>
+
+        <div class="form-group">
+          <label for="profession">পেশা: *</label>
+          <input type="text" id="profession" required placeholder="Student / Job Holder">
+        </div>
+
+        <div class="form-group full-width">
+          <label for="presentAddress">বর্তমান ঠিকানা: *</label>
+          <textarea id="presentAddress" rows="2" required></textarea>
+        </div>
+
+        <div class="form-group full-width">
+          <div class="checkbox-group">
+            <input type="checkbox" id="sameAddressCheck">
+            <label for="sameAddressCheck" style="margin-bottom:0; font-weight:500; color:var(--success);">বর্তমান ঠিকানা ও স্থায়ী ঠিকানা একই</label>
+          </div>
+        </div>
+
+        <div class="form-group full-width">
+          <label for="permanentAddress">স্থায়ী ঠিকানা: *</label>
           <textarea id="permanentAddress" rows="2" required></textarea>
         </div>
 
-        <div class="grid-2">
-          <div class="form-group">
-            <label><span class="desktop-only">শিক্ষা/ডিগ্রী (Education/Degree) *</span><span class="mobile-only">Education/Degree *</span></label>
-            <input type="text" id="education" required placeholder="HSC / B.Sc">
-          </div>
-          <div class="form-group">
-            <label><span class="desktop-only">शिक्षাবর্ষ (Academic Year) *</span><span class="mobile-only">Academic Year *</span></label>
-            <input type="text" id="academicYear" required placeholder="2026">
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="form-group">
-            <label><span class="desktop-only">পেশা (Profession) *</span><span class="mobile-only">Profession *</span></label>
-            <input type="text" id="profession" required placeholder="Student / Job">
-          </div>
-          <div class="form-group">
-            <label><span class="desktop-only">প্রতিষ্ঠান/कर्मस्थल (Institution/Workplace) *</span><span class="mobile-only">Institution/Workplace *</span></label>
-            <input type="text" id="institution" required>
-          </div>
+        <div class="form-group">
+          <label for="education">শিক্ষাগত যোগ্যতা/শ্রেণী: *</label>
+          <input type="text" id="education" required placeholder="HSC / B.Sc in CSE">
         </div>
 
         <div class="form-group">
-          <label><span class="desktop-only">প্রোফাইল ছবি (Profile Photo - Max 1MB) *</span><span class="mobile-only">Profile Photo (Max 1MB) *</span></label>
+          <label for="academicYear">শিক্ষাবর্ষ: *</label>
+          <input type="text" id="academicYear" required placeholder="2025-2026">
+        </div>
+
+        <div class="form-group full-width">
+          <label for="institution">শিক্ষা প্রতিষ্ঠান/কর্মক্ষেত্র: *</label>
+          <input type="text" id="institution" required>
+        </div>
+
+        <div class="form-group">
+          <label for="whatsappNumber">হোয়াটসঅ্যাপ নম্বর:</label>
+          <input type="tel" id="whatsappNumber">
+        </div>
+
+        <div class="form-group">
+          <label for="facebookLink">ফেসবুক আইডি লিঙ্ক:</label>
+          <input type="url" id="facebookLink">
+        </div>
+
+        <div class="form-group">
+          <label for="nidOrBrn">NID অথবা জন্ম নিবন্ধন নম্বর: *</label>
+          <input type="text" id="nidOrBrn" required>
+        </div>
+
+        <div class="form-group">
+          <label for="profilePhoto">প্রোফাইল ফটো (Max 1MB): *</label>
           <input type="file" id="profilePhoto" accept="image/*" required>
         </div>
 
-        <div class="section-header">
-          <span class="desktop-only">ঐচ্ছিক তথ্যাদি (Optional Fields)</span><span class="mobile-only">Optional Fields</span>
+        <div class="form-group full-width">
+          <label for="password">পাসওয়ার্ড তৈরি করুন: *</label>
+          <input type="password" id="password" required minlength="6">
         </div>
 
-        <div class="grid-2">
-          <div class="form-group">
-            <label><span class="desktop-only">হোয়াটসঅ্যাপ নম্বর (WhatsApp Number)</span><span class="mobile-only">WhatsApp Number</span></label>
-            <input type="tel" id="whatsappNumber">
-          </div>
-          <div class="form-group">
-            <label><span class="desktop-only">ফেসবুক প্রোফাইল লিঙ্ক (Facebook Profile Link)</span><span class="mobile-only">Facebook Profile Link</span></label>
-            <input type="url" id="facebookLink" placeholder="https://facebook.com/...">
-          </div>
-        </div>
+      </div>
 
-        <div class="form-group">
-          <label><span class="desktop-only">এনআইডি / জন্ম নিবন্ধন নম্বর (NID / Birth Registration Number)</span><span class="mobile-only">NID / BRN</span></label>
-          <input type="text" id="nidOrBrn">
-        </div>
+      <button type="submit" class="btn-submit" id="submitBtn">Proceed with Verification</button>
+    </form>
+  </div>
 
-        <div class="grid-2">
-          <div class="form-group">
-            <label><span class="desktop-only">পাসওয়ার্ড (Password) *</span><span class="mobile-only">Password *</span></label>
-            <input type="password" id="password" required minlength="6" placeholder="******">
-          </div>
-          <div class="form-group">
-            <label><span class="desktop-only">পাসওয়ার্ড নিশ্চিত করুন (Confirm Password) *</span><span class="mobile-only">Confirm Password *</span></label>
-            <input type="password" id="confirmPassword" required minlength="6" placeholder="******">
-          </div>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submitBtn">
-          <i class="fa-solid fa-paper-plane"></i> Send OTP & Proceed
-        </button>
-      </form>
-    </div>
-  </main>
-
-  <!-- ওটিপি এবং সাকসেস মডাল সেকশন -->
   <div class="modal-overlay" id="otpModal">
-    <div class="modal-content" id="modalContentBox">
-      <button class="close-modal-btn" id="closeModalBtn">&times;</button>
+    <div class="modal-box">
+      <button class="modal-close" id="closeModalBtn"><i class="fas fa-times"></i></button>
+      <h3 style="color:var(--secondary); margin-top:10px; font-size: 18px;">Email Verification</h3>
+      <p style="font-size:12px; color:var(--text-muted); line-height: 1.4;">আপনার ইমেইলে একটি ৬-ডিজিটের ভেরিফিকেশন কোড পাঠানো হয়েছে।</p>
       
-      <!-- ১. ওটিপি ভেরিফিকেশন সেকশন -->
-      <div id="otpSection">
-        <h3 style="color: var(--secondary); margin-bottom: 10px; font-family: 'Poppins', sans-serif;">Email Verification</h3>
-        <p style="font-size: 14px; color: #94a3b8;">Enter the 6-digit OTP code sent to your email:</p>
-        <div class="otp-input-fields" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px; margin: 20px 0;">
-          <input type="text" class="otp-field" style="height:45px; text-align:center; background:var(--dark-bg); color:#fff; border:1px solid var(--input-border); border-radius:6px;" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-          <input type="text" class="otp-field" style="height:45px; text-align:center; background:var(--dark-bg); color:#fff; border:1px solid var(--input-border); border-radius:6px;" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-          <input type="text" class="otp-field" style="height:45px; text-align:center; background:var(--dark-bg); color:#fff; border:1px solid var(--input-border); border-radius:6px;" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-          <input type="text" class="otp-field" style="height:45px; text-align:center; background:var(--dark-bg); color:#fff; border:1px solid var(--input-border); border-radius:6px;" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-          <input type="text" class="otp-field" style="height:45px; text-align:center; background:var(--dark-bg); color:#fff; border:1px solid var(--input-border); border-radius:6px;" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-          <input type="text" class="otp-field" style="height:45px; text-align:center; background:var(--dark-bg); color:#fff; border:1px solid var(--input-border); border-radius:6px;" maxlength="1" pattern="[0-9]*" inputmode="numeric">
-        </div>
-        <button class="btn-submit" id="verifyOtpBtn" style="margin-top:0;">Verify & Submit</button>
+      <div class="otp-inputs">
+        <input type="text" class="otp-field" maxlength="1" pattern="[0-9]*" inputmode="numeric">
+        <input type="text" class="otp-field" maxlength="1" pattern="[0-9]*" inputmode="numeric">
+        <input type="text" class="otp-field" maxlength="1" pattern="[0-9]*" inputmode="numeric">
+        <input type="text" class="otp-field" maxlength="1" pattern="[0-9]*" inputmode="numeric">
+        <input type="text" class="otp-field" maxlength="1" pattern="[0-9]*" inputmode="numeric">
+        <input type="text" class="otp-field" maxlength="1" pattern="[0-9]*" inputmode="numeric">
       </div>
-
-      <!-- ২. চূড়ান্ত সাকসেস মেসেজ সেকশন -->
-      <div id="successSection" style="display: none;">
-         <!-- JavaScript এর মাধ্যমে এটি সঠিকভাবে কন্ট্রোল করা হবে -->
-      </div>
+      <button class="btn-submit" id="verifyOtpBtn" style="margin-top:5px;">Verify & Submit</button>
     </div>
   </div>
 
-  <script src="../navigation.js"></script>
+  <div class="modal-overlay" id="successModal">
+    <div class="modal-box" style="max-width: 500px; border-top: 4px solid var(--success); padding: 30px 20px;">
+      <div style="font-size: 48px; color: var(--success); margin-bottom: 12px;">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      
+      <h3 style="color: #fff; margin: 0 0 4px 0; font-size: 22px; font-weight: 600;">Congratulations!</h3>
+      <p style="color: var(--success); font-size: 13px; font-weight: 500; margin: 0 0 18px 0;">Your registration was successful.</p>
+      
+      <div style="background: var(--card-bg); border: 1px dashed var(--input-border); padding: 10px 15px; border-radius: 8px; margin-bottom: 18px; display: inline-block; min-width: 240px;">
+        <span style="font-size: 10px; color: var(--text-muted); display: block; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px;">Registration Number</span>
+        <span id="displayRegNumber" style="font-size: 20px; font-weight: bold; color: var(--accent); letter-spacing: 0.5px;"></span>
+      </div>
+
+      <div style="text-align: left; font-size: 13px; color: #cbd5e1; line-height: 1.5; margin-bottom: 20px;">
+        <p style="margin-bottom: 8px; font-weight: 600;">Dear <span id="displayUserName" style="color: var(--secondary);"></span>,</p>
+        <p style="margin-bottom: 12px;">Your registration with the Rajshahi Olympiad Society has been successfully completed. Thank you sincerely for joining us.</p>
+        
+        <div style="display: flex; align-items: center; justify-content: center; background: rgba(255, 215, 0, 0.05); border: 1px solid rgba(255, 215, 0, 0.15); padding: 8px; border-radius: 6px; margin: 15px 0; gap: 8px;">
+          <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">Account Status:</span>
+          <span style="background: linear-gradient(135deg, #ffd700, #ffa500); color: #030a16; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.5px;">
+            <i class="fas fa-hourglass-half" style="margin-right: 3px;"></i> Pending
+          </span>
+        </div>
+
+        <p style="color: #94a3b8; font-size: 12.5px;">Your application is currently awaiting verification. Your account will be activated once the admin or president completes the verification process. You will be notified via email once your account is active.</p>
+        <p style="color: #94a3b8; font-size: 12.5px; margin-top: 8px;">Please keep your assigned password safe for future logins. May your journey with the Rajshahi Olympiad Society be joyful and successful. Best wishes!</p>
+      </div>
+
+      <button class="btn-submit" onclick="location.reload()" style="margin-top: 5px; background: var(--input-border); width: auto; padding: 8px 25px;">Close Window</button>
+    </div>
+  </div>
+
   <script src="../Registration/registration.js"></script>
 </body>
-</html>
+        </html>
+        
