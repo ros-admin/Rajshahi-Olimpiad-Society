@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rajshahi Olympiad Society</title>
+
+  <link rel="icon" type="image/png" href="../ros logo.png">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- বাংলা ও ইংরেজি ফন্টের সুন্দর কম্বিনেশন (Hind Siliguri এবং Poppins) -->
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      /* অলিম্পিয়াড ভাইব দেওয়ার জন্য একটি প্রিমিয়াম ডার্ক ব্লু এবং নেভি গ্রেডিয়েন্ট ব্যাকগ্রাউন্ড */
+      background: radial-gradient(circle at center, #0d1b2a 0%, #010811 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden;
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      position: relative;
+    }
+
+    /* ব্যাকগ্রাউন্ডের ভাসমান কণা (Glowing Particles) */
+    .particle {
+      position: absolute;
+      bottom: -20px;
+      background: rgba(0, 180, 216, 0.25);
+      border-radius: 50%;
+      pointer-events: none;
+      animation: floatUp 4s linear infinite;
+      box-shadow: 0 0 10px rgba(0, 180, 216, 0.5);
+    }
+
+    /* কণাগুলোর বিভিন্ন সাইজ ও টাইমিং */
+    .particle:nth-child(1) { left: 15%; width: 6px; height: 6px; animation-duration: 3.5s; animation-delay: 0.2s; }
+    .particle:nth-child(2) { left: 35%; width: 10px; height: 10px; animation-duration: 4.5s; animation-delay: 0.7s; background: rgba(255, 215, 0, 0.2); box-shadow: 0 0 10px rgba(255, 215, 0, 0.4); }
+    .particle:nth-child(3) { left: 55%; width: 5px; height: 5px; animation-duration: 3s; animation-delay: 0s; }
+    .particle:nth-child(4) { left: 75%; width: 12px; height: 12px; animation-duration: 5s; animation-delay: 1.2s; }
+    .particle:nth-child(5) { left: 90%; width: 8px; height: 8px; animation-duration: 4s; animation-delay: 0.5s; background: rgba(255, 215, 0, 0.2); }
+
+    /* মূল কন্টেইনার বক্স */
+    .content-box {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* লোগো কন্টেইনার এবং প্রিমিয়াম গ্লো অ্যানিমেশন */
+    .logo-container {
+      width: 140px;
+      height: 140px;
+      margin-bottom: 25px;
+      opacity: 0;
+      transform: scale(0.8);
+      animation: logoEntrance 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    }
+
+    .logo-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      animation: logoPulse 2.5s ease-in-out infinite alternate;
+    }
+
+    /* প্রতিষ্ঠানের নামের স্টাইল ও অ্যানিমেশন */
+    .institution-name {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin: 0;
+      letter-spacing: 1px;
+      opacity: 0;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+      animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    }
+
+    /* ছোট সাবটাইটেল (Tagline) */
+    .tagline {
+      font-size: 1rem;
+      color: #00b4d8;
+      letter-spacing: 1px;
+      margin-top: 8px;
+      opacity: 0;
+      font-weight: 600;
+      animation: fadeInUp 0.8s ease-out 0.5s forwards;
+    }
+
+    /* নতুন যুক্ত করা লাক্সারি কামিং সুন নোটিশ বাস্ট */
+    .status-badge {
+      margin-top: 35px;
+      padding: 10px 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(0, 180, 216, 0.3);
+      border-radius: 50px;
+      color: #ffd700; /* থিম অনুযায়ী গোল্ডেন কালার */
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      box-shadow: 0 0 20px rgba(0, 180, 216, 0.15);
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 0.8s forwards, badgeGlow 3s ease-in-out infinite alternate;
+    }
+
+    .status-subtext {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: rgba(255, 255, 255, 0.6);
+      max-width: 300px;
+      line-height: 1.5;
+      opacity: 0;
+      animation: fadeInUp 0.8s ease-out 1s forwards;
+    }
+
+    /* অ্যানিমেশন কি-ফ্রেমসমূহ */
+    @keyframes floatUp {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      30% { opacity: 0.8; }
+      90% { opacity: 0.4; }
+      100% { transform: translateY(-110vh) scale(0.3); opacity: 0; }
+    }
+
+    @keyframes logoEntrance {
+      0% { opacity: 0; transform: scale(0.5) translateY(30px); }
+      100% { opacity: 1; transform: scale(1) translateY(0); }
+    }
+
+    @keyframes logoPulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.04); }
+    }
+
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes badgeGlow {
+      0% { border-color: rgba(0, 180, 216, 0.3); box-shadow: 0 0 15px rgba(0, 180, 216, 0.1); }
+      100% { border-color: rgba(255, 215, 0, 0.5); box-shadow: 0 0 25px rgba(255, 215, 0, 0.2); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ব্যাকগ্রাউন্ডে ভাসমান কণা বা ইফেক্টস -->
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+  <div class="particle"></div>
+
+  <!-- মূল কন্টেন্ট এরিয়া -->
+  <div class="content-box">
+    <!-- লোগো সেকশন -->
+    <div class="logo-container">
+      <img src="ros logo transparent.png" alt="Rajshahi Olympiad Society Logo">
+    </div>
+
+    <!-- প্রতিষ্ঠানের নাম (বাংলা) -->
+    <h1 class="institution-name">রাজশাহী অলিম্পিয়াড সোসাইটি</h1>
+    
+    <!-- ট্যাগলাইন -->
+    <div class="tagline">মেধার লালন, দক্ষতার গঠন</div>
+
+    <!-- নতুন স্টাইলিশ স্ট্যাটাস মেসেজ -->
+    <div class="status-badge">ওয়েবসাইটটি দ্রুতই পাবলিশ করা হবে</div>
+    <div class="status-subtext">আমরা ব্যাকএন্ডে দারুণ কিছু তৈরি করছি। আমাদের সাথেই থাকুন!</div>
+  </div>
+
+</body>
+</html>
+
