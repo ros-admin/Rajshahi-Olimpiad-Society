@@ -239,33 +239,97 @@
       box-shadow: 0 0 30px rgba(0, 180, 216, 0.7); 
     }
 
-    /* পপআপ মডাল */
     .modal-overlay {
-      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-      background: rgba(2, 12, 27, 0.9); z-index: 9999; display: flex;
-      justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.3s ease;
-      backdrop-filter: blur(10px);
-    }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal-content {
-      background: #061121; width: 90%; max-width: 550px; border-radius: 20px;
-      overflow: hidden; position: relative; transform: scale(0.8); transition: 0.3s ease;
-      border: 1px solid rgba(0, 180, 216, 0.3);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.8);
-    }
-    .modal-overlay.active .modal-content { transform: scale(1); }
-    .modal-banner { width: 100%; height: 100%; object-fit: cover; }
-    .modal-body { padding: 35px; text-align: left; }
-    .modal-close {
-      position: absolute; top: 15px; right: 15px; background: rgba(0,0,0,0.5); color: white;
-      border: none; width: 35px; height: 35px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; z-index: 10;
-    }
-    .btn-volunteer {
-      display: block; text-align: center; width: 100%; padding: 14px; background: #10b981;
-      color: white; text-decoration: none; font-weight: bold; margin-top: 25px; border-radius: 30px; transition: 0.3s;
-    }
-    .btn-volunteer:hover { background: #059669; box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); }
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+  width: 100%; 
+  height: 100%;
+  background: rgba(2, 12, 27, 0.9); 
+  z-index: 9999; 
+  display: flex;
+  justify-content: center; 
+  align-items: flex-start; /* পপআপ জেনো স্ক্রিনের উপর থেকে শুরু হয় */
+  opacity: 0; 
+  visibility: hidden; 
+  transition: 0.3s ease;
+  backdrop-filter: blur(10px);
+  padding: 20px 0; /* মোবাইল বা ছোট স্ক্রিনে উপরে-নিচে জায়গা রাখার জন্য */
+  overflow-y: auto; /* পপআপ স্ক্রিনের চেয়ে বড় হলে পুরো ওভারলে স্ক্রল হবে */
+}
 
+.modal-overlay.active { 
+  opacity: 1; 
+  visibility: visible; 
+}
+
+.modal-content {
+  background: #061121; 
+  width: 90%; 
+  max-width: 550px; 
+  border-radius: 20px;
+  /* overflow: hidden সরিয়ে দেওয়া হয়েছে যাতে স্ক্রলিং সমস্যা না হয় */
+  position: relative; 
+  transform: scale(0.8); 
+  transition: 0.3s ease;
+  border: 1px solid rgba(0, 180, 216, 0.3);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+  margin: auto 0; /* জেনো ভার্টিক্যালি সুন্দরভাবে এলাইন থাকে */
+  max-height: 90vh; /* স্ক্রিনের ৮০-৯০% এর বেশি বড় হবে না */
+  overflow-y: auto; /* বিষয়বস্তু বেশি হলে পপআপের ভেতরে স্ক্রল বার আসবে */
+}
+
+.modal-overlay.active .modal-content { 
+  transform: scale(1); 
+}
+
+.modal-banner { 
+  width: 100%; 
+  height: auto; /* নিশ্চিত করে যে ব্যানার ইমেজ কেটে যাবে না */
+  max-height: 250px;
+  object-fit: cover; 
+  display: block;
+}
+
+.modal-body { 
+  padding: 35px; 
+  text-align: left; 
+}
+
+.modal-close {
+  position: absolute; 
+  top: 15px; 
+  right: 15px; 
+  background: rgba(0,0,0,0.5); 
+  color: white;
+  border: none; 
+  width: 35px; 
+  height: 35px; 
+  border-radius: 50%; 
+  font-size: 1.4rem; 
+  cursor: pointer; 
+  z-index: 10;
+}
+
+.btn-volunteer {
+  display: block; 
+  text-align: center; 
+  width: 100%; 
+  padding: 14px; 
+  background: #10b981;
+  color: white; 
+  text-decoration: none; 
+  font-weight: bold; 
+  margin-top: 25px; 
+  border-radius: 30px; 
+  transition: 0.3s;
+}
+
+.btn-volunteer:hover { 
+  background: #059669; 
+  box-shadow: 0 0 20px rgba(16, 185, 129, 0.5); 
+}
+    
     /* --- ৪. নোটিশ সেকশন --- */
     .notice-section {
       padding: 100px 10%;
@@ -387,7 +451,7 @@
       <div class="modal-body">
         <h3 id="modalTitle" style="margin-top:0; color:var(--secondary); font-size: 1.5rem;"></h3>
         <p id="modalFullText" style="line-height: 1.7; font-size:0.95rem; color:#cbd5e1;"></p>
-        <a href="" target="_blank" class="btn-volunteer" id="volunteerLink">ভলিন্টিয়ার হতে চাই</a>
+        <a href="" target="_blank" class="btn-volunteer" id="volunteerLink">রেজিস্ট্রেশন করতে চাই</a>
       </div>
     </div>
   </div>
