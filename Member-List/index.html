@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>কাজ চলমান রয়েছে - রাজশাহী অলিম্পিয়াড সোসাইটি</title>
+  
+  <!-- FontAwesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* --- অফিশিয়াল প্রিমিয়াম ব্র্যান্ড কালার থিম --- */
+    :root {
+      --dark-bg: #020c1b;
+      --card-bg: rgba(10, 25, 47, 0.65);
+      --panel-inner: #040d1a;
+      --secondary: #00b4d8; /* নীল */
+      --accent: #ffd700;    /* হলুদ */
+      --text-light: #f1f5f9;
+      --text-muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0; padding: 0;
+      font-family: 'Hind Siliguri', 'Poppins', sans-serif;
+      background-color: var(--dark-bg); 
+      color: var(--text-light);
+      overflow-x: hidden;
+      display: flex; 
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    ros-header { display: block; width: 100%; }
+    ros-footer { display: block; width: 100%; margin-top: auto; }
+
+    main {
+      max-width: 1200px; 
+      margin: 0 auto;
+      padding: 60px 20px 80px 20px;
+      flex-grow: 1; 
+      width: 100%; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* --- ওয়ার্ক ইন প্রগ্রেস কার্ড --- */
+    .wip-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(0, 180, 216, 0.2);
+      border-radius: 24px;
+      padding: 50px 30px;
+      text-align: center;
+      max-width: 680px;
+      width: 100%;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .wip-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary), var(--accent), var(--secondary));
+      border-top-left-radius: 24px;
+      border-top-right-radius: 24px;
+    }
+
+    /* অ্যানিমেটেড আইকন কন্টেইনার */
+    .icon-wrapper {
+      position: relative;
+      width: 110px;
+      height: 110px;
+      margin: 0 auto 25px auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0, 180, 216, 0.08);
+      border: 2px dashed var(--secondary);
+      border-radius: 50%;
+      animation: pulseBorder 3s infinite ease-in-out;
+    }
+
+    .icon-wrapper i.main-icon {
+      font-size: 3rem;
+      color: var(--secondary);
+      filter: drop-shadow(0 0 10px rgba(0, 180, 216, 0.5));
+    }
+
+    .icon-wrapper i.gear-icon {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      font-size: 1.4rem;
+      color: var(--accent);
+      animation: spin 6s linear infinite;
+    }
+
+    @keyframes spin {
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulseBorder {
+      0%, 100% { box-shadow: 0 0 15px rgba(0, 180, 216, 0.2); }
+      50% { box-shadow: 0 0 30px rgba(0, 180, 216, 0.5); }
+    }
+
+    /* টেক্সট ও হেডিং */
+    .wip-badge {
+      display: inline-block;
+      background: rgba(255, 215, 0, 0.12);
+      color: var(--accent);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      padding: 6px 16px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 15px;
+      letter-spacing: 0.5px;
+    }
+
+    .page-title {
+      font-size: 2.3rem;
+      margin: 0 0 15px 0;
+      color: var(--text-light);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    .title-divider {
+      width: 80px;
+      height: 4px;
+      background-color: var(--accent);
+      margin: 0 auto 20px;
+      border-radius: 2px;
+    }
+
+    .page-subtitle {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 520px;
+      margin: 0 auto 30px auto;
+      line-height: 1.7;
+    }
+
+    /* লোডিং অ্যানিমেশন বার */
+    .progress-bar-container {
+      width: 100%;
+      max-width: 400px;
+      height: 8px;
+      background: var(--panel-inner);
+      border-radius: 10px;
+      margin: 0 auto 35px auto;
+      overflow: hidden;
+      border: 1px solid rgba(0, 180, 216, 0.2);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      width: 65%;
+      background: linear-gradient(90deg, var(--secondary), var(--accent));
+      border-radius: 10px;
+      position: relative;
+      animation: progressGlow 2s infinite alternate;
+    }
+
+    @keyframes progressGlow {
+      0% { opacity: 0.7; }
+      100% { opacity: 1; filter: drop-shadow(0 0 8px var(--secondary)); }
+    }
+
+    /* হোমপেজ বাটন */
+    .btn-home {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(0, 180, 216, 0.15);
+      border: 1px solid var(--secondary);
+      color: var(--text-light);
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-family: inherit;
+      font-size: 1rem;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-home:hover {
+      background: var(--secondary);
+      color: #020c1b;
+      box-shadow: 0 0 20px rgba(0, 180, 216, 0.4);
+      transform: translateY(-2px);
+    }
+
+    /* --- রেসপন্সিভ মিডিয়া কুয়েরি --- */
+    @media (max-width: 768px) {
+      main { padding: 40px 15px; }
+      .wip-card { padding: 35px 20px; }
+      .page-title { font-size: 1.8rem; }
+      .page-subtitle { font-size: 0.98rem; }
+      .icon-wrapper { width: 90px; height: 90px; }
+      .icon-wrapper i.main-icon { font-size: 2.4rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ওয়েবসাইটের স্ট্যান্ডার্ড হেডার -->
+  <ros-header></ros-header>
+
+  <main>
+    <div class="wip-card">
+      
+      <!-- আইকন ও অ্যানিমেশন -->
+      <div class="icon-wrapper">
+        <i class="fa-solid fa-person-digging main-icon"></i>
+        <i class="fa-solid fa-gear gear-icon"></i>
+      </div>
+
+      <span class="wip-badge">
+        <i class="fa-solid fa-clock"></i> শীঘ্রই আসছে
+      </span>
+
+      <h1 class="page-title">পাতাটির ডেভেলপমেন্ট কাজ চলমান রয়েছে</h1>
+      <div class="title-divider"></div>
+      
+      <p class="page-subtitle">
+        আমরা এই পাতাটি প্রস্তুত করতে নিরলসভাবে কাজ করে যাচ্ছি। খুব শীঘ্রই সেরা অভিজ্ঞতার সাথে এটি আপনার জন্য উন্মুক্ত করা হবে। আমাদের সাথেই থাকুন!
+      </p>
+
+      <!-- ভিজ্যুয়াল লোডিং বার -->
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill"></div>
+      </div>
+
+      <!-- হোম পেজে ফেরার বাটন -->
+      <a href="../" class="btn-home">
+        <i class="fa-solid fa-house"></i> প্রচ্ছদে ফিরে যান
+      </a>
+
+    </div>
+  </main>
+
+  <!-- ওয়েবসাইটের স্ট্যান্ডার্ড ফুটার -->
+  <ros-footer></ros-footer>
+
+  <!-- নেভিগেশন স্ক্রিপ্ট -->
+  <script src="../navigation.js"></script>
+</body>
+</html>
+
