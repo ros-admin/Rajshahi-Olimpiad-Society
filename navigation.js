@@ -409,22 +409,22 @@ class RosHeader extends HTMLElement {
             <ul class="nav-menu" id="navMenu">
               <li class="nav-item"><a href="../../About-Us/" class="nav-link">আমাদের সম্পর্কে</a></li>
               <li class="nav-item"><a href="../../Notice/" class="nav-link">বিজ্ঞপ্তি</a></li>
-              <li class="nav-item"><a href="../../Our-Activities/" class="nav-link">আমাদের কার্যক্রম</a></li>
+              <li class="nav-item"><a href="../../Under-Constraction/" class="nav-link">আমাদের কার্যক্রম</a></li>
               
               <li class="nav-item">
                 <span class="nav-link">কমিটি <i class="fa-solid fa-chevron-down" style="font-size:0.7rem"></i></span>
                 <ul class="dropdown-menu">
-                  <li class="dropdown-item"><a href="../../Committee/">আহবায়ক কমিটি</a></li>
+                  <li class="dropdown-item"><a href="../../Under-Constraction/">আহবায়ক কমিটি</a></li>
                   <li class="dropdown-item"><a href="../../Committee/Executive-Commiitee-2026/">কার্যনির্বাহী কমিটি-২০২৬</a></li>
                 </ul>
               </li>
               
-              <li class="nav-item"><a href="../../Member-List/" class="nav-link">সদস্য তালিকা</a></li>
-              <li class="nav-item"><a href="gallery.html" class="nav-link">ছবি</a></li>
-              <li class="nav-item"><a href="contact.html" class="nav-link">যোগাযোগ</a></li>
+              <li class="nav-item"><a href="../../Under-Constraction/" class="nav-link">সদস্য তালিকা</a></li>
+              <li class="nav-item"><a href="../../Under-Constraction/" class="nav-link">ছবি</a></li>
+              <li class="nav-item"><a href="../../Under-Constraction/" class="nav-link">যোগাযোগ</a></li>
               
               <li class="nav-item">
-                <a href="../../Home/" class="btn-join">সদস্য হতে চাই</a>
+                <a href="../../Under-Constraction/" class="btn-join">সদস্য হতে চাই</a>
               </li>
             </ul>
           </nav>
@@ -515,22 +515,22 @@ class RosFooter extends HTMLElement {
               <li><a href="../../About-Us/">আমাদের সম্পর্কে</a></li>
               <li><a href="../../About-Logo/">লোগো সম্পর্কে</a></li>
               <li><a href="../../FAQ/">সাধারণ জিজ্ঞাসা</a></li>
-              <li><a href="gallery.html">ছবি</a></li>
+              <li><a href="../../Under-Constraction/">ছবি</a></li>
             </ul>
           </div>
 
           <div class="footer-col">
             <h3>গোপনীয়তা</h3>
             <ul class="footer-links">
-              <li><a href="terms.html">শর্তাবলী</a></li>
-              <li><a href="constitution.html">গঠনতন্ত্র</a></li>
+              <li><a href="../../Under-Constraction/">শর্তাবলী</a></li>
+              <li><a href="../../Under-Constraction/">গঠনতন্ত্র</a></li>
             </ul>
           </div>
 
           <div class="footer-col">
             <h3>কুইক লিংক</h3>
             <ul class="footer-links" style="margin-bottom: 15px;">
-              <li><a href="contact.html">যোগাযোগ</a></li>
+              <li><a href="../../Under-Constraction/">যোগাযোগ</a></li>
             </ul>
             <div class="social-links">
               <a href="https://www.facebook.com/share/18nJSiYvtY/" target="_blank" class="fb" title="Facebook"><i class="fa-brands fa-facebook"></i></a>
