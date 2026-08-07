@@ -414,7 +414,117 @@
       box-shadow: 0 15px 30px rgba(0, 180, 216, 0.6); 
       border-color: var(--secondary); 
     }
-  </style>
+
+    
+
+<!-- =======================================================
+     CSS Styles (গ্লাস-মরফিজম ও ডার্ক-সাইবার থিম)
+     ======================================================= -->
+  .ros-bottom-info-bar {
+    background: var(--panel-bg, #040d1a);
+    padding: 25px 0;
+    border-top: 1px solid rgba(0, 180, 216, 0.2);
+    border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+    font-family: 'Poppins', 'Hind Siliguri', sans-serif;
+    color: var(--text-light, #f1f5f9);
+  }
+
+  .ros-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+
+  .ros-info-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    align-items: center;
+  }
+
+  .ros-info-card {
+    background: var(--card-bg, rgba(10, 25, 47, 0.65));
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(0, 180, 216, 0.2);
+    border-radius: 12px;
+    padding: 16px 20px;
+    text-align: center;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90px;
+  }
+
+  .ros-info-card:hover {
+    transform: translateY(-5px) scale(1.01);
+    box-shadow: 0 10px 30px rgba(0, 180, 216, 0.25);
+    border-color: var(--secondary, #00b4d8);
+  }
+
+  .ros-info-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9rem;
+    color: var(--text-muted, #94a3b8);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+
+  .ros-icon {
+    color: var(--secondary, #00b4d8);
+    font-size: 1rem;
+  }
+
+  .ros-counter-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .ros-counter-box {
+    display: inline-block;
+    filter: drop-shadow(0 0 5px rgba(0, 180, 216, 0.4));
+  }
+
+  .ros-time-display {
+    font-size: 1.35rem;
+    font-weight: 600;
+    color: var(--accent, #ffd700);
+    letter-spacing: 1px;
+    text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+  }
+
+  .ros-date-display {
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-light, #f1f5f9);
+    letter-spacing: 0.5px;
+  }
+
+  @media (max-width: 768px) {
+    .ros-info-grid {
+      grid-template-columns: 1fr;
+      gap: 15px;
+    }
+
+    .ros-info-card {
+      padding: 14px 16px;
+      min-height: auto;
+    }
+
+    .ros-time-display {
+      font-size: 1.2rem;
+    }
+
+    .ros-date-display {
+      font-size: 0.95rem;
+    }
+  }
+</style>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -490,6 +600,50 @@
       </div>
     </div>
   </section>
+
+  <!-- =======================================================
+     ROS Bottom Info Bar Component (Exact BST Engine)
+     ======================================================= -->
+<section class="ros-bottom-info-bar">
+  <div class="ros-container">
+    <div class="ros-info-grid">
+      
+      <!-- ১. বাম অংশ: ভিজিটর কাউন্টার -->
+      <div class="ros-info-card ros-counter-card">
+        <div class="ros-info-label">
+          <i class="fa-solid fa-users ros-icon"></i>
+          <span>মোট ভিজিটর</span>
+        </div>
+        <div class="ros-counter-wrapper">
+          <div id="sfcs8yxg7me83p9sp73hlrm4jjp3jt4p8w4" class="ros-counter-box"></div>
+          <noscript>
+            <img src="https://counter11.optistats.ovh/private/freecounterstat.php?c=s8yxg7me83p9sp73hlrm4jjp3jt4p8w4" border="0" title="website counter" alt="website counter">
+          </noscript>
+        </div>
+      </div>
+
+      <!-- ২. মাঝের অংশ: অরিজিনাল বাংলাদেশ সময় -->
+      <div class="ros-info-card ros-time-card">
+        <div class="ros-info-label">
+          <i class="fa-regular fa-clock ros-icon"></i>
+          <span>বর্তমান সময় (BST)</span>
+        </div>
+        <div id="ros-live-time" class="ros-time-display">00:00:00 AM</div>
+      </div>
+
+      <!-- ৩. ডান অংশ: অরিজিনাল বাংলাদেশ তারিখ -->
+      <div class="ros-info-card ros-date-card">
+        <div class="ros-info-label">
+          <i class="fa-regular fa-calendar-days ros-icon"></i>
+          <span>আজকের তারিখ</span>
+        </div>
+        <div id="ros-live-date" class="ros-date-display">01 July, 2026, Sunday</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 
   <ros-footer></ros-footer>
 
@@ -636,6 +790,61 @@
     };
   </script>
 
+  <!-- =======================================================
+     JavaScript (Fail-safe Guaranteed BST Time Engine)
+     ======================================================= -->
+<script>
+  (function () {
+    const timeElement = document.getElementById('ros-live-time');
+    const dateElement = document.getElementById('ros-live-date');
+
+    function updateClockAndDate() {
+      const now = new Date();
+
+      // ১. ঢাকা/বাংলাদেশ সময় (Asia/Dhaka) অনুযায়ী ১২ ঘণ্টার ফরম্যাটে নিখুঁত সময় তৈরি
+      const timeOptions = {
+        timeZone: 'Asia/Dhaka',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+      };
+
+      const formattedTime = new Intl.DateTimeFormat('en-US', timeOptions).format(now);
+      timeElement.textContent = formattedTime;
+
+      // ২. ঢাকা/বাংলাদেশ সময় অনুযায়ী 'DD Month, YYYY, Day' ফরম্যাটে তারিখ তৈরি
+      const dateOptions = {
+        timeZone: 'Asia/Dhaka',
+        day: '2-digit',
+        month: 'long',
+        year: 'numeric',
+        weekday: 'long'
+      };
+
+      const dateParts = new Intl.DateTimeFormat('en-US', dateOptions).formatToParts(now);
+      
+      let day = '', month = '', year = '', weekday = '';
+
+      dateParts.forEach(part => {
+        if (part.type === 'day') day = part.value;
+        if (part.type === 'month') month = part.value;
+        if (part.type === 'year') year = part.value;
+        if (part.type === 'weekday') weekday = part.value;
+      });
+
+      dateElement.textContent = `${day} ${month}, ${year}, ${weekday}`;
+    }
+
+    // তৎক্ষণাৎ রান করা এবং প্রতি ১ সেকেন্ড পর পর সেকেন্ডের ঘর রিয়েল-টাইমে আপডেট করা
+    updateClockAndDate();
+    setInterval(updateClockAndDate, 1000);
+  })();
+</script>
+  
+<!-- ভিজিটর কাউন্টার স্ক্রিপ্ট -->
+<script type="text/javascript" src="https://counter11.optistats.ovh/private/counter.js?c=s8yxg7me83p9sp73hlrm4jjp3jt4p8w4&down=async" async></script>
+  
   <script src="../navigation.js"></script>
 </body>
 </html>
